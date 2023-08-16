@@ -2,10 +2,10 @@ import {
   getTarget,
   hasEffect,
   removeEffects,
-  filterEffectsByMatch,
-  removeEffectsByMatch,
+  filterEffectsByGroup,
+  removeEffectsByGroup,
   undoEffect,
-} from "./utils";
+} from "./effectUtils";
 
 const damage = (G, target, { value = 0 }) => {
   const player = target === "0" ? "1" : "0";
@@ -29,6 +29,11 @@ const damage = (G, target, { value = 0 }) => {
 
 const heal = (G, target, { value = 0 }) => {
   G.players[target].hp += value;
+
+  G.players[target].hp = Math.min(
+    G.players[target].hp,
+    G.players[target].maxHp
+  );
 };
 
 const buffAtk = (G, target, { value = 0 }) => {
@@ -48,21 +53,27 @@ const debuffDef = (G, target, { value = 0 }) => {
 };
 
 const purify = (G, target) => {
-  const debuffs = filterEffectsByMatch(G, target, "debuff");
+  const debuffs = filterEffectsByGroup(G, target, "debuff");
+
+  if (!debuffs || debuffs.length === 0) return;
+
   debuffs.forEach((e) => {
     undoEffect(G, target, e);
   });
 
-  removeEffectsByMatch(G, target, "debuff");
+  removeEffectsByGroup(G, target, "debuff");
 };
 
 const dispel = (G, target) => {
-  const buffs = filterEffectsByMatch(G, target, "buff");
+  const buffs = filterEffectsByGroup(G, target, "buff");
+
+  if (!buffs || buffs.length === 0) return;
+
   buffs.forEach((e) => {
     undoEffect(G, target, e);
   });
 
-  removeEffectsByMatch(G, target, "buff");
+  removeEffectsByGroup(G, target, "buff");
 };
 
 const doubleDmg = () => {};
@@ -85,13 +96,16 @@ const effectHandlers = {
 export const applyEffect = (G, ctx, effect) => {
   const handler = effectHandlers[effect.type];
 
-  if (handler) {
-    const target = getTarget(ctx.currentPlayer, effect.target);
+  if (!handler) {
+    console.error(`Invalid effect type: ${effect.type}`);
+    return;
+  }
 
-    handler(G, target, effect);
+  const target = getTarget(ctx.currentPlayer, effect.target);
 
-    if (effect.duration === "active") {
-      G.players[target].effects.push(effect);
-    }
+  handler(G, target, effect);
+
+  if (effect.duration === "active") {
+    G.players[target].effects.push(effect);
   }
 };

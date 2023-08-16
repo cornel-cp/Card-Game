@@ -1,13 +1,3 @@
-export const shuffle = (deck) => {
-  for (let i = deck.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp = deck[i];
-    deck[i] = deck[j];
-    deck[j] = temp;
-  }
-  return deck;
-};
-
 export const getTarget = (currentPlayer, targetType) => {
   switch (targetType) {
     case "player":
@@ -15,6 +5,7 @@ export const getTarget = (currentPlayer, targetType) => {
     case "opponent":
       return currentPlayer === "0" ? "1" : "0";
     default:
+      console.error(`Invalid target type: ${targetType}`);
       return null;
   }
 };
@@ -29,15 +20,21 @@ export const removeEffects = (G, target, effectType) => {
   );
 };
 
-export const filterEffectsByMatch = (G, target, effectTypeStr) => {
+const effectGroups = {
+  buff: ["buffAtk", "buffDef"],
+
+  debuff: ["debuffAtk", "debuffDef"],
+};
+
+export const filterEffectsByGroup = (G, target, groupType) => {
   G.players[target].effects = G.players[target].effects.filter((e) =>
-    e.type.includes(effectTypeStr)
+    effectGroups[groupType].includes(e.type)
   );
 };
 
-export const removeEffectsByMatch = (G, target, effectTypeStr) => {
+export const removeEffectsByGroup = (G, target, groupType) => {
   G.players[target].effects = G.players[target].effects.filter(
-    (e) => !e.type.includes(effectTypeStr)
+    (e) => !effectGroups[groupType].includes(e.type)
   );
 };
 
@@ -56,6 +53,7 @@ export const undoEffect = (G, target, { type, value = 0 }) => {
       G.players[target].def += value;
       break;
     default:
+      console.error(`Invalid effect type: ${type}`);
       return;
   }
 };

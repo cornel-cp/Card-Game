@@ -1,5 +1,5 @@
 import { Client } from "boardgame.io/react";
-import { WizardDuel } from "./gameLogic";
+import { WizardDuel } from "./game/game";
 
 const App = Client({ game: WizardDuel });
 

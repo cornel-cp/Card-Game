@@ -203,7 +203,7 @@ export const CurseOfNecromancer = {
       type: "debuffAtk",
       duration: "active",
       target: "opponent",
-      value: -3,
+      value: 3,
     },
   ],
 };
@@ -217,7 +217,7 @@ export const CurseOfWarlock = {
       type: "debuffDef",
       duration: "active",
       target: "opponent",
-      value: -3,
+      value: 3,
     },
   ],
 };
