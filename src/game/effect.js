@@ -2,7 +2,7 @@ import {
   getTarget,
   hasEffect,
   removeEffects,
-  filterEffectsByGroup,
+  selectEffectsByGroup,
   removeEffectsByGroup,
   undoEffect,
 } from "./effectUtils";
@@ -53,7 +53,7 @@ const debuffDef = (G, target, { value = 0 }) => {
 };
 
 const purify = (G, target) => {
-  const debuffs = filterEffectsByGroup(G, target, "debuff");
+  const debuffs = selectEffectsByGroup(G, target, "debuff");
 
   if (!debuffs || debuffs.length === 0) return;
 
@@ -65,7 +65,7 @@ const purify = (G, target) => {
 };
 
 const dispel = (G, target) => {
-  const buffs = filterEffectsByGroup(G, target, "buff");
+  const buffs = selectEffectsByGroup(G, target, "buff");
 
   if (!buffs || buffs.length === 0) return;
 

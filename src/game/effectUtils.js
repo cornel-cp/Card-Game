@@ -26,8 +26,8 @@ const effectGroups = {
   debuff: ["debuffAtk", "debuffDef"],
 };
 
-export const filterEffectsByGroup = (G, target, groupType) => {
-  G.players[target].effects = G.players[target].effects.filter((e) =>
+export const selectEffectsByGroup = (G, target, groupType) => {
+  return G.players[target].effects.filter((e) =>
     effectGroups[groupType].includes(e.type)
   );
 };

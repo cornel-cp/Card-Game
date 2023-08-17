@@ -15,11 +15,11 @@ import {
 const setupData = () => {
   let G = {
     players: {
-      0: p0,
-      1: p1,
+      0: { ...p0 },
+      1: { ...p1 },
     },
 
-    deck: shuffle(deck),
+    deck: shuffle([...deck]),
   };
 
   G.players[0].hand = G.deck.splice(0, 5);
@@ -35,6 +35,10 @@ const drawCard = ({ G, ctx }) => {
   if (hand.length >= 5 || G.deck.length === 0) return INVALID_MOVE;
 
   hand.push(G.deck.pop());
+
+  if (G.deck.length === 0) {
+    G.deck = shuffle([...deck]);
+  }
 };
 
 const playCard = ({ G, ctx }, card) => {
@@ -71,6 +75,7 @@ export const WizardDuel = {
   endIf: isVictory,
 
   onEnd: logGameResult,
+  // onEnd: ({ ctx }) => console.log(ctx.turn),
 
   ai: {
     enumerate: generateAIMoves,

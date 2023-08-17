@@ -23,7 +23,6 @@ export const removeCard = (hand, cid) => {
 export const logPlay = (G, ctx, card) => {
   const p = G.players[ctx.currentPlayer];
   console.log(`Turn ${ctx.turn}: ${p.name} played ${card.name} (${card.text})`);
-
   Object.keys(G.players).forEach((pid) => {
     const p = G.players[pid];
     console.log(
@@ -33,8 +32,8 @@ export const logPlay = (G, ctx, card) => {
   });
 };
 
-export const isVictory = ({ G }) => {
-  if ((G.players[0].hp <= 0 && G.players[1].hp <= 0) || G.deck.length === 0) {
+export const isVictory = ({ G, ctx }) => {
+  if ((G.players[0].hp <= 0 && G.players[1].hp <= 0) || ctx.turn >= 50) {
     return { draw: true };
   } else if (G.players[0].hp <= 0) {
     return { winner: "1" };
