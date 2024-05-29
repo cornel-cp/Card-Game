@@ -1,5 +1,6 @@
 export const p0 = {
   name: `Player`,
+  id: "0",
   maxHp: 30,
   hp: 30,
   atk: 3,
@@ -10,6 +11,7 @@ export const p0 = {
 
 export const p1 = {
   name: `AI`,
+  id: "1",
   maxHp: 30,
   hp: 30,
   atk: 3,
