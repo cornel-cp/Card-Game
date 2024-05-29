@@ -10,6 +10,7 @@ import {
   isVictory,
   logGameResult,
   generateAIMoves,
+  dealCards,
 } from "./gameUtils";
 
 const setupData = () => {
@@ -22,8 +23,8 @@ const setupData = () => {
     deck: shuffle([...deck]),
   };
 
-  G.players[0].hand = G.deck.splice(0, 5);
-  G.players[1].hand = G.deck.splice(0, 5);
+  dealCards(G.players[0].hand, G.deck);
+  dealCards(G.players[1].hand, G.deck);
 
   return G;
 };

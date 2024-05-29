@@ -8,6 +8,10 @@ export const shuffle = (deck) => {
   return deck;
 };
 
+export const dealCards = (hand, deck) => {
+  hand.push(...deck.splice(0, 5 - hand.length));
+};
+
 export const hasCard = (hand, cid) => {
   const idx = hand.findIndex((card) => card.id === cid);
   return idx !== -1;
