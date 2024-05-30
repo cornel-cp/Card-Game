@@ -1,7 +1,11 @@
-const WizardDuelBoard = ({ G, deck, ctx }) => {
-  // console.log(JSON.stringify(props));
+import Card from './Card';
+import { FireballI } from '../data/cards';
 
-  return <div>WizardDuelBoard</div>;
+const WizardDuelBoard = ({ ctx, G, moves }) => {
+  // console.log(JSON.stringify(props));
+  // console.log(props.moves);
+
+  return <Card onClick={() => moves.playCard(FireballI)} />;
 };
 
 export default WizardDuelBoard;
