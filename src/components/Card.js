@@ -1,15 +1,38 @@
-import React from 'react';
+const Card = ({
+  type = 'default',
+  isOpponent = false,
+  name = '',
+  height = '8%',
+  width = '8%',
+  onCardClick = () => {},
+}) => {
+  const imgPrefix = 'images/cards';
 
-const Card = ({ onClick }) => {
-  // TODO: Pass name and isOpponent from props
-  const name = 'Fireball I';
-  const frontImage = `images/cards/front/${name}.png`;
-  const backImage = 'images/cards/back/player.png';
+  const frontImg = `${imgPrefix}/front/${name}.png`;
+  const backImg = `${imgPrefix}/back/${isOpponent ? 'opponent' : 'player'}.png`;
+  const defaultImg = `${imgPrefix}/default/${
+    isOpponent ? 'opponent' : 'player'
+  }.png`;
+
+  const cardContent = {
+    front: (
+      <img
+        src={frontImg}
+        alt={name}
+        height={height}
+        width={width}
+        onClick={onCardClick}
+      />
+    ),
+    back: <img src={backImg} alt='back' height={height} width={width} />,
+    default: (
+      <img src={defaultImg} alt='default' height={height} width={width} />
+    ),
+  };
 
   return (
-    <div>
-      <img src={frontImage} alt='card front' width='10%' height='10%' onClick={onClick} />
-      {/* <img src={backImage} alt="card back" width="10%" height="10%" /> */}
+    <div className={`card ${type}`}>
+      {cardContent[type] || cardContent.default}
     </div>
   );
 };

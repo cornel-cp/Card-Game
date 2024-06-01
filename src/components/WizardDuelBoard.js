@@ -5,7 +5,16 @@ const WizardDuelBoard = ({ ctx, G, moves }) => {
   // console.log(JSON.stringify(props));
   // console.log(props.moves);
 
-  return <Card onClick={() => moves.playCard(FireballI)} />;
+  return (
+    <div>
+      <Card
+        type='front'
+        isOpponent={false}
+        name='Fireball I'
+        onCardClick={() => moves.playCard(FireballI)}
+      />
+    </div>
+  );
 };
 
 export default WizardDuelBoard;
