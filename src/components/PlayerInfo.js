@@ -13,7 +13,7 @@ const PlayerInfo = ({ name, avatar, hp, atk, def }) => {
       <div className='d-flex flex-column'>
         <div className='d-flex align-items-center mb-2'>
           <img className='me-2' src={hpImg} alt='hp' />
-          <span>45</span>
+          <span>{hp}</span>
         </div>
         <div className='d-flex align-items-center mb-2'>
           <img className='me-2' src={atkImg} alt='atk' />
