@@ -1,40 +1,42 @@
 const Card = ({
-  type = 'default',
-  isOpponent = false,
-  name = '',
-  height = '8%',
-  width = '8%',
-  onCardClick = () => {},
+  type = 'PLACEHOLDER',
+  player, // 0 - PLAYER, 1 - OPPONENT
+  name,
+  card,
+  handleCardClick,
+  height = '210px',
+  width = '150px',
 }) => {
   const imgPrefix = 'images/cards';
 
   const frontImg = `${imgPrefix}/front/${name}.png`;
-  const backImg = `${imgPrefix}/back/${isOpponent ? 'opponent' : 'player'}.png`;
-  const defaultImg = `${imgPrefix}/default/${
-    isOpponent ? 'opponent' : 'player'
-  }.png`;
+  const backImg = `${imgPrefix}/back/${player}.png`;
+  const placeholderImg = `${imgPrefix}/placeholder/${player}.png`;
 
   const cardContent = {
-    front: (
+    FRONT: (
       <img
         src={frontImg}
         alt={name}
         height={height}
         width={width}
-        onClick={onCardClick}
+        onClick={() => handleCardClick(card)}
       />
     ),
-    back: <img src={backImg} alt='back' height={height} width={width} />,
-    default: (
-      <img src={defaultImg} alt='default' height={height} width={width} />
+
+    BACK: <img src={backImg} alt='card back' height={height} width={width} />,
+
+    PLACEHOLDER: (
+      <img
+        src={placeholderImg}
+        alt='card placeholder'
+        height={height}
+        width={width}
+      />
     ),
   };
 
-  return (
-    <div className={`card ${type}`}>
-      {cardContent[type] || cardContent.default}
-    </div>
-  );
+  return <div>{cardContent[type] || cardContent.PLACEHOLDER}</div>;
 };
 
 export default Card;
