@@ -1,7 +1,5 @@
-import Card from './Card';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
-import { FireballI } from '../data/cards';
 
 const WizardDuelBoard = ({ ctx, G, moves }) => {
   // console.log(JSON.stringify(props));
@@ -9,15 +7,15 @@ const WizardDuelBoard = ({ ctx, G, moves }) => {
 
   const handleCardClick = async (card) => {
     // Check if currentPlayer is same as card owner
-    
+
     // Player turn
     moves.playCard(card);
 
     // TODO: Preview the played card at center of the board
-  
+
     // // Sleep
     // await sleep(2000);
-  
+
     // // AI turn if game does not end yet
     // moves.playCard(card);
 
@@ -31,22 +29,33 @@ const WizardDuelBoard = ({ ctx, G, moves }) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
-  // TODO - If game ends, bring up game over overlay screen
-
   return (
-    <div>
-      {/* <Card
-        type='FRONT'
-        player={ctx.currentPlayer}
-        name='Fireball I'
-        onCardClick={onCardClick}
-      /> */}
-      <PlayerHand
-        player={0}
-        hand={G.players[0].hand}
-        handleCardClick={handleCardClick}
-      />
-      {/* <PlayerInfo hp={G.players[ctx.currentPlayer].hp} /> */}
+    <div className='container-fluid vh-100 d-flex flex-column bg-primary'>
+      <div className='row bg-success'>
+        <div className='col-2'>
+          <PlayerInfo player={G.players[1]} />
+        </div>
+        <div className='col-8'>
+          <PlayerHand player={G.players[1]} handleCardClick={handleCardClick} />
+        </div>
+        <div className='col-2'>Column</div>
+      </div>
+
+      <div className='row flex-grow-1 bg-warning'>
+        <div className='col-2'>Column</div>
+        <div className='col-8'>Column</div>
+        <div className='col-2'>Column</div>
+      </div>
+
+      <div className='row align-items-end bg-info'>
+        <div className='col-2'>
+          <PlayerInfo player={G.players[0]} />
+        </div>
+        <div className='col-8'>
+          <PlayerHand player={G.players[0]} handleCardClick={handleCardClick} />
+        </div>
+        <div className='col-2'>Column</div>
+      </div>
     </div>
   );
 };

@@ -1,14 +1,14 @@
 import Card from './Card';
 
-const PlayerHand = ({ player, hand, handleCardClick }) => {
+const PlayerHand = ({ player, handleCardClick }) => {
   return (
-    <div className='d-flex p-2'>
-      {hand.map((card, index) => (
-        <div key={index} className='mx-2'>
+    <div className='d-flex'>
+      {player.hand.map((card, index) => (
+        <div key={index} className='me-2'>
           <Card
-            type={player === 0 ? 'FRONT' : 'BACK'}
+            // type={player.id === 0 ? 'FRONT' : 'BACK'}
+            type='FRONT' // FOR DEBUGGING
             player={player}
-            name={card.name}
             card={card}
             handleCardClick={handleCardClick}
           />
