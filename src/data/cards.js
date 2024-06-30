@@ -42,7 +42,7 @@ export const FireballIII = {
 
 export const FrostBoltI = {
   id: "004",
-  name: "FrostBolt I",
+  name: "Frostbolt I",
   text: "Damage 4",
   effects: [
     {
@@ -56,7 +56,7 @@ export const FrostBoltI = {
 
 export const FrostBoltII = {
   id: "005",
-  name: "FrostBolt II",
+  name: "Frostbolt II",
   text: "Damage 6",
   effects: [
     {
@@ -70,7 +70,7 @@ export const FrostBoltII = {
 
 export const FrostBoltIII = {
   id: "006",
-  name: "FrostBolt III",
+  name: "Frostbolt III",
   text: "Damage 8",
   effects: [
     {
