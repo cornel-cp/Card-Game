@@ -1,14 +1,15 @@
 const Card = ({
   type = 'PLACEHOLDER',
   player,
-  card,
+  name,
+  index,
   handleCardClick = () => {},
   height = '210px',
   width = '150px',
 }) => {
   const imgPrefix = 'images/cards';
 
-  const frontImg = `${imgPrefix}/front/${card.name}.png`;
+  const frontImg = `${imgPrefix}/front/${name}.png`;
   const backImg = `${imgPrefix}/back/${player.id}.png`;
   const placeholderImg = `${imgPrefix}/placeholder/${player.id}.png`;
 
@@ -16,10 +17,10 @@ const Card = ({
     FRONT: (
       <img
         src={frontImg}
-        alt={card.name}
+        alt={name}
         height={height}
         width={width}
-        onClick={() => handleCardClick(card)}
+        onClick={() => handleCardClick(index)}
       />
     ),
 

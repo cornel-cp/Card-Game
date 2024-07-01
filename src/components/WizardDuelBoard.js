@@ -10,7 +10,6 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
     const handleDrawCard = async () => {
       await sleep(2000);
       moves.drawCard();
-      await sleep(2000);
     };
 
     handleDrawCard();
@@ -18,10 +17,10 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
 
   useEffect(() => {
     const handleAiPlayCard = async () => {
-      await sleep(2000);
       if (ctx.currentPlayer === '1' && G.players[1].hand.length === 5) {
-        moves.playCard(G.players[1].hand[Math.floor(Math.random() * 5)]);
-        // moves.playCard(G.players[1].hand[0]);
+        await sleep(2000);
+        moves.playCard(Math.floor(Math.random() * 5));
+        // moves.playCard(0);
         // TODO: Preview the played card at center of the board
       }
     };
@@ -31,8 +30,9 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
 
   // TODO: Track the state of ctx.gameover to render end game screen
 
-  const handleCardClick = async (card) => {
-    moves.playCard(card);
+  const handleCardClick = async (index) => {
+    // TODO: Check if player has already played card this turn
+    moves.playCard(index);
     // TODO: Preview the played card at center of the board
   };
 

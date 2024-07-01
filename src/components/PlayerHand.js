@@ -9,7 +9,8 @@ const PlayerHand = ({ player, handleCardClick }) => {
             // type={player.id === '0' ? 'FRONT' : 'BACK'}
             type='FRONT' // FOR DEBUGGING
             player={player}
-            card={card}
+            name={card.name}
+            index={index}
             handleCardClick={handleCardClick}
           />
         </div>

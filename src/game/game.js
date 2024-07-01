@@ -1,17 +1,16 @@
-import { INVALID_MOVE } from "boardgame.io/core";
-import { p0, p1 } from "../data/player";
-import { deck } from "../data/deck";
-import { applyEffect } from "./effect";
+import { INVALID_MOVE } from 'boardgame.io/core';
+import { p0, p1 } from '../data/player';
+import { deck } from '../data/deck';
+import { applyEffect } from './effect';
 import {
   shuffle,
-  hasCard,
   removeCard,
   logPlay,
   isVictory,
   logGameResult,
   generateAIMoves,
   dealCards,
-} from "./gameUtils";
+} from './gameUtils';
 
 const setupData = () => {
   let G = {
@@ -42,24 +41,24 @@ const drawCard = ({ G, ctx }) => {
   }
 };
 
-// Pass hand index not card
-const playCard = ({ G, ctx }, card) => {
+const playCard = ({ G, ctx }, index) => {
   const hand = G.players[ctx.currentPlayer].hand;
-  if (!hasCard(hand, card.id)) return INVALID_MOVE;
+  if (index < 0 || index >= hand.length) return INVALID_MOVE;
 
+  const card = hand[index];
   if (!card.effects || card.effects.length === 0) return INVALID_MOVE;
 
   card.effects.forEach((e) => {
     applyEffect(G, ctx, e);
   });
 
-  removeCard(hand, card.id);
+  removeCard(hand, index);
 
   logPlay(G, ctx, card);
 };
 
 export const WizardDuel = {
-  name: "wizard-duel",
+  name: 'wizard-duel',
 
   setup: setupData,
 
