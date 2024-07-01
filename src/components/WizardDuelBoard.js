@@ -1,29 +1,50 @@
+import { useEffect } from 'react';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
 
-const WizardDuelBoard = ({ ctx, G, moves }) => {
+const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   // console.log(JSON.stringify(props));
   // console.log(props.moves);
 
+  useEffect(() => {
+    const handleDrawCard = async () => {
+      await sleep(2000);
+      moves.drawCard();
+      await sleep(2000);
+    };
+
+    handleDrawCard();
+  }, [ctx.currentPlayer]);
+
+  useEffect(() => {
+    const handleAiPlayCard = async () => {
+      await sleep(2000);
+      if (ctx.currentPlayer === '1' && G.players[1].hand.length === 5) {
+        moves.playCard(G.players[1].hand[Math.floor(Math.random() * 5)]);
+        // moves.playCard(G.players[1].hand[0]);
+        // TODO: Preview the played card at center of the board
+      }
+    };
+
+    handleAiPlayCard();
+  }, [ctx.currentPlayer, G.players[1].hand]);
+
+  // TODO: Track the state of ctx.gameover to render end game screen
+
   const handleCardClick = async (card) => {
-    // Check if currentPlayer is same as card owner
-
-    // Player turn
     moves.playCard(card);
-
     // TODO: Preview the played card at center of the board
-
-    // // Sleep
-    // await sleep(2000);
-
-    // // AI turn if game does not end yet
-    // moves.playCard(card);
-
-    // TODO: Preview the played card at center of the board
-
-    // // Sleep
-    // await sleep(2000);
   };
+
+  // const handleEndTurn = () => {
+  //   if (ctx.currentPlayer === '0') {
+  //     // TODO: Render error notification
+  //     alert(
+  //       "Your turn hasn't ended yet, please make a move before clicking end turn"
+  //     );
+  //     return;
+  //   }
+  // };
 
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -36,7 +57,7 @@ const WizardDuelBoard = ({ ctx, G, moves }) => {
           <PlayerInfo player={G.players[1]} />
         </div>
         <div className='col-8'>
-          <PlayerHand player={G.players[1]} handleCardClick={handleCardClick} />
+          <PlayerHand player={G.players[1]} />
         </div>
         <div className='col-2'>Column</div>
       </div>
@@ -54,7 +75,12 @@ const WizardDuelBoard = ({ ctx, G, moves }) => {
         <div className='col-8'>
           <PlayerHand player={G.players[0]} handleCardClick={handleCardClick} />
         </div>
-        <div className='col-2'>Column</div>
+        <div className='col-2'>
+          Column
+          {/* <button className='btn btn-primary' onClick={handleEndTurn}>
+            End Turn
+          </button> */}
+        </div>
       </div>
     </div>
   );

@@ -42,6 +42,7 @@ const drawCard = ({ G, ctx }) => {
   }
 };
 
+// Pass hand index not card
 const playCard = ({ G, ctx }, card) => {
   const hand = G.players[ctx.currentPlayer].hand;
   if (!hasCard(hand, card.id)) return INVALID_MOVE;
@@ -63,14 +64,16 @@ export const WizardDuel = {
   setup: setupData,
 
   moves: {
+    drawCard,
     playCard,
   },
 
   turn: {
-    onBegin: drawCard,
+    // Call this manually via moves as a client workaround to have a delay interval between actions
+    // onBegin: drawCard,
 
-    minMoves: 1,
-    maxMoves: 1,
+    minMoves: 2,
+    maxMoves: 2,
   },
 
   endIf: isVictory,
@@ -79,6 +82,9 @@ export const WizardDuel = {
   // onEnd: ({ ctx }) => console.log(ctx.turn),
 
   ai: {
+    // Remove drawCard from moves
+    // Uncomment onBegin: drawCard
+    // Change minMoves and maxMoves to 1
     enumerate: generateAIMoves,
   },
 };
