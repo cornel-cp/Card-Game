@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import CardPile from './CardPile';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
 
@@ -65,7 +66,9 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
       <div className='row flex-grow-1 bg-warning'>
         <div className='col-2'>Column</div>
         <div className='col-8'>Column</div>
-        <div className='col-2'>Column</div>
+        <div className='col-2'>
+          <CardPile />
+        </div>
       </div>
 
       <div className='row align-items-end bg-info'>
