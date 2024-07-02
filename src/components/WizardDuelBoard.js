@@ -4,7 +4,11 @@ import CardPreview from './CardPreview';
 import EndTurnButton from './EndTurnButton';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
-import { BattleState, SHORT_INTERVAL, MEDIUM_INTERVAL } from './constants';
+import {
+  BattleState,
+  SHORT_INTERVAL,
+  MEDIUM_INTERVAL,
+} from './utils/constants';
 
 const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   const [selectedCard, setSelectedCard] = useState(null);

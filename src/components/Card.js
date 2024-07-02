@@ -1,4 +1,14 @@
-import { CardType, BASE_SCALE, CARD_HEIGHT, CARD_WIDTH } from './constants';
+import {
+  CardType,
+  BASE_SCALE,
+  CARD_HEIGHT,
+  CARD_WIDTH,
+} from './utils/constants';
+import {
+  getCardFrontPath,
+  getCardBackPath,
+  getCardPlaceholderPath,
+} from './utils/assetPaths';
 
 const Card = ({
   cardType = CardType.PLACEHOLDER,
@@ -8,11 +18,9 @@ const Card = ({
   handleCardClick = () => {},
   scale = BASE_SCALE,
 }) => {
-  const imgPrefix = 'images/cards';
-
-  const frontImg = `${imgPrefix}/front/${cardName}.png`;
-  const backImg = `${imgPrefix}/back/${playerId}.png`;
-  const placeholderImg = `${imgPrefix}/placeholder/${playerId}.png`;
+  const frontImg = getCardFrontPath(cardName);
+  const backImg = getCardBackPath(playerId);
+  const placeholderImg = getCardPlaceholderPath(playerId);
 
   const height = CARD_HEIGHT * scale;
   const width = CARD_WIDTH * scale;

@@ -1,15 +1,21 @@
-import { AVATAR_HEIGHT, AVATAR_WIDTH } from './constants';
+import { AVATAR_HEIGHT, AVATAR_WIDTH } from './utils/constants';
+import { getAvatarPath, ICON_PATHS } from './utils/assetPaths';
 
 const PlayerInfo = ({ player }) => {
-  const avatarImg = `images/avatars/${player.id}.png`;
-  const hpImg = 'images/icons/hp.svg';
-  const atkImg = 'images/icons/atk.svg';
-  const defImg = 'images/icons/def.svg';
+  const avatarImg = getAvatarPath(player.id);
+  const hpImg = ICON_PATHS.hp;
+  const atkImg = ICON_PATHS.atk;
+  const defImg = ICON_PATHS.def;
 
   return (
     <div className='d-flex align-items-center'>
       <div className='me-2'>
-        <img src={avatarImg} alt='avatar' height={AVATAR_HEIGHT} width={AVATAR_WIDTH} />
+        <img
+          src={avatarImg}
+          alt='avatar'
+          height={AVATAR_HEIGHT}
+          width={AVATAR_WIDTH}
+        />
       </div>
 
       <div className='d-flex flex-column'>
