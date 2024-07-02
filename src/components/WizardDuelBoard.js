@@ -4,11 +4,12 @@ import CardPreview from './CardPreview';
 import EndTurnButton from './EndTurnButton';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
+import { sleep } from './clientUtils/utils';
 import {
   BattleState,
   SHORT_INTERVAL,
   MEDIUM_INTERVAL,
-} from './utils/constants';
+} from './clientUtils/constants';
 
 const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   const [selectedCard, setSelectedCard] = useState(null);
@@ -71,10 +72,6 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
 
       setBattleState(BattleState.AI_TURN);
     }
-  };
-
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
   return (

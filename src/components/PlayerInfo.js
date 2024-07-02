@@ -1,5 +1,5 @@
-import { AVATAR_HEIGHT, AVATAR_WIDTH } from './utils/constants';
-import { getAvatarPath, ICON_PATHS } from './utils/assetPaths';
+import { AVATAR_HEIGHT, AVATAR_WIDTH } from './clientUtils/constants';
+import { getAvatarPath, ICON_PATHS } from './clientUtils/assetPaths';
 
 const PlayerInfo = ({ player }) => {
   const avatarImg = getAvatarPath(player.id);

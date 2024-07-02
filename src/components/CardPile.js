@@ -1,5 +1,5 @@
-import { BASE_SCALE, CARD_HEIGHT, CARD_WIDTH } from './utils/constants';
-import { CARD_PILE_PATH } from './utils/assetPaths';
+import { BASE_SCALE, CARD_HEIGHT, CARD_WIDTH } from './clientUtils/constants';
+import { CARD_PILE_PATH } from './clientUtils/assetPaths';
 
 const CardPile = ({ scale = BASE_SCALE }) => {
   const height = CARD_HEIGHT * scale;
