@@ -7,7 +7,7 @@ export const BattleState = {
   // The end turn button is labeled as player's turn and is clickable.
   END_TURN_ENABLED: 'end turn enabled',
 
-  // State after the player ends their turn but before drawing a card ends.
+  // State after the player ends their turn but before drawing a card finishes in the player's next turn.
   // The end turn button is labeled as AI's turn and is disabled.
   AI_TURN: 'ai turn',
 };
