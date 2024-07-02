@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CardPile from './CardPile';
+import CardPreview from './CardPreview';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
 
@@ -7,9 +8,15 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   // console.log(JSON.stringify(props));
   // console.log(props.moves);
 
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [playerSelectedIndex, setPlayerSelectedIndex] = useState(null);
+
   useEffect(() => {
     const handleDrawCard = async () => {
-      await sleep(2000);
+      await sleep(1000);
+      setSelectedCard(null);
+      setPlayerSelectedIndex(null);
+      await sleep(1000);
       moves.drawCard();
     };
 
@@ -19,10 +26,14 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   useEffect(() => {
     const handleAiPlayCard = async () => {
       if (ctx.currentPlayer === '1' && G.players[1].hand.length === 5) {
-        await sleep(2000);
-        moves.playCard(Math.floor(Math.random() * 5));
-        // moves.playCard(0);
-        // TODO: Preview the played card at center of the board
+        if (ctx.turn <= 2) {
+          await sleep(2000);
+        } else {
+          await sleep(1000);
+        }
+        const aiSelectedIndex = Math.floor(Math.random() * 5);
+        setSelectedCard(G.players[1].hand[aiSelectedIndex]);
+        moves.playCard(aiSelectedIndex);
       }
     };
 
@@ -32,27 +43,21 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   // TODO: Track the state of ctx.gameover to render end game screen
 
   const handleCardClick = async (index) => {
-    // TODO: Check if player has already played card this turn
-    moves.playCard(index);
-    // TODO: Preview the played card at center of the board
+    setSelectedCard(G.players[0].hand[index]);
+    setPlayerSelectedIndex(index);
   };
 
-  // const handleEndTurn = () => {
-  //   if (ctx.currentPlayer === '0') {
-  //     // TODO: Render error notification
-  //     alert(
-  //       "Your turn hasn't ended yet, please make a move before clicking end turn"
-  //     );
-  //     return;
-  //   }
-  // };
+  const handleEndTurn = () => {
+    // TODO: Only pressable after card selection, disable in AI turn
+    moves.playCard(playerSelectedIndex);
+  };
 
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
   return (
-    <div className='container-fluid vh-100 d-flex flex-column bg-primary'>
+    <div className='container-fluid vh-100 d-flex flex-column'>
       <div className='row bg-success'>
         <div className='col-2'>
           <PlayerInfo player={G.players[1]} />
@@ -65,7 +70,13 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
 
       <div className='row flex-grow-1 bg-warning'>
         <div className='col-2'>Column</div>
-        <div className='col-8'>Column</div>
+        <div className='col-8'>
+          {selectedCard === null ? (
+            ''
+          ) : (
+            <CardPreview cardName={selectedCard.name} />
+          )}
+        </div>
         <div className='col-2'>
           <CardPile />
         </div>
@@ -79,10 +90,9 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
           <PlayerHand player={G.players[0]} handleCardClick={handleCardClick} />
         </div>
         <div className='col-2'>
-          Column
-          {/* <button className='btn btn-primary' onClick={handleEndTurn}>
+          <button className='btn btn-primary' onClick={handleEndTurn}>
             End Turn
-          </button> */}
+          </button>
         </div>
       </div>
     </div>
