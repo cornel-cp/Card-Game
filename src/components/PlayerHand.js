@@ -1,4 +1,5 @@
 import Card from './Card';
+import { CardType } from './constants';
 
 const PlayerHand = ({ player, handleCardClick }) => {
   return (
@@ -7,7 +8,7 @@ const PlayerHand = ({ player, handleCardClick }) => {
         <div key={index} className='me-2'>
           {/* FOR DEBUGGING */}
           <Card
-            type='FRONT'
+            cardType={CardType.FRONT}
             cardName={card.name}
             cardIndex={index}
             handleCardClick={handleCardClick}
@@ -15,16 +16,13 @@ const PlayerHand = ({ player, handleCardClick }) => {
 
           {/* {player.id === '0' ? (
             <Card
-              type='FRONT'
+              cardType={CardType.FRONT}
               cardName={card.name}
               cardIndex={index}
               handleCardClick={handleCardClick}
             />
           ) : (
-            <Card
-              type='BACK' 
-              playerId='1'
-            />
+            <Card cardType={CardType.BACK} playerId='1' />
           )} */}
         </div>
       ))}

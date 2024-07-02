@@ -4,7 +4,7 @@ import CardPreview from './CardPreview';
 import EndTurnButton from './EndTurnButton';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
-import { BattleState } from './constants';
+import { BattleState, SHORT_INTERVAL, MEDIUM_INTERVAL } from './constants';
 
 const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   // console.log(JSON.stringify(props));
@@ -17,13 +17,16 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
 
   useEffect(() => {
     const handleDrawCard = async () => {
-      await sleep(1000);
-      setSelectedCard(null);
-      setPlayerSelectedIndex(null);
-      await sleep(1000);
+      if (ctx.turn > 1) {
+        await sleep(SHORT_INTERVAL);
+        setSelectedCard(null);
+        setPlayerSelectedIndex(null);
+        await sleep(SHORT_INTERVAL);
+      }
+
       moves.drawCard();
 
-      if (ctx.currentPlayer === '0') {
+      if (ctx.turn > 1 && ctx.currentPlayer === '0') {
         setBattleState(BattleState.END_TURN_DISABLED);
       }
     };
@@ -35,12 +38,14 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
     const handleAiPlayCard = async () => {
       if (ctx.currentPlayer === '1' && G.players[1].hand.length === 5) {
         if (ctx.turn <= 2) {
-          await sleep(2000);
+          await sleep(MEDIUM_INTERVAL);
         } else {
-          await sleep(1000);
+          await sleep(SHORT_INTERVAL);
         }
+
         const aiSelectedIndex = Math.floor(Math.random() * 5);
         setSelectedCard(G.players[1].hand[aiSelectedIndex]);
+
         moves.playCard(aiSelectedIndex);
       }
     };
@@ -54,6 +59,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
     if (battleState !== BattleState.AI_TURN) {
       setSelectedCard(G.players[0].hand[index]);
       setPlayerSelectedIndex(index);
+
       setBattleState(BattleState.END_TURN_ENABLED);
     }
   };
@@ -61,6 +67,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   const handleButtonClick = () => {
     if (battleState === BattleState.END_TURN_ENABLED) {
       moves.playCard(playerSelectedIndex);
+
       setBattleState(BattleState.AI_TURN);
     }
   };
@@ -84,11 +91,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
       <div className='row flex-grow-1 bg-warning'>
         <div className='col-2'>Column</div>
         <div className='col-8'>
-          {selectedCard === null ? (
-            ''
-          ) : (
-            <CardPreview cardName={selectedCard.name} />
-          )}
+          <CardPreview selectedCard={selectedCard} />
         </div>
         <div className='col-2'>
           <CardPile />

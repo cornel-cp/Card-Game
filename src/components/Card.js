@@ -1,10 +1,12 @@
+import { CardType, BASE_SCALE, CARD_HEIGHT, CARD_WIDTH } from './constants';
+
 const Card = ({
-  type = 'PLACEHOLDER',
+  cardType = CardType.PLACEHOLDER,
   cardName,
   cardIndex,
   playerId = '0',
   handleCardClick = () => {},
-  scale = 1,
+  scale = BASE_SCALE,
 }) => {
   const imgPrefix = 'images/cards';
 
@@ -12,11 +14,11 @@ const Card = ({
   const backImg = `${imgPrefix}/back/${playerId}.png`;
   const placeholderImg = `${imgPrefix}/placeholder/${playerId}.png`;
 
-  const height = 210 * scale;
-  const width = 150 * scale;
+  const height = CARD_HEIGHT * scale;
+  const width = CARD_WIDTH * scale;
 
   const cardContent = {
-    FRONT: (
+    [CardType.FRONT]: (
       <img
         src={frontImg}
         alt={cardName}
@@ -26,13 +28,15 @@ const Card = ({
       />
     ),
 
-    BACK: <img src={backImg} alt='card back' height={height} width={width} />,
+    [CardType.BACK]: (
+      <img src={backImg} alt='card back' height={height} width={width} />
+    ),
 
-    PREVIEW: (
+    [CardType.PREVIEW]: (
       <img src={frontImg} alt={cardName} height={height} width={width} />
     ),
 
-    PLACEHOLDER: (
+    [CardType.PLACEHOLDER]: (
       <img
         src={placeholderImg}
         alt='card placeholder'
@@ -42,7 +46,7 @@ const Card = ({
     ),
   };
 
-  return <div>{cardContent[type] || cardContent.PLACEHOLDER}</div>;
+  return <div>{cardContent[cardType]}</div>;
 };
 
 export default Card;

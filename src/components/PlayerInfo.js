@@ -1,3 +1,5 @@
+import { AVATAR_HEIGHT, AVATAR_WIDTH } from './constants';
+
 const PlayerInfo = ({ player }) => {
   const avatarImg = `images/avatars/${player.id}.png`;
   const hpImg = 'images/icons/hp.svg';
@@ -7,7 +9,7 @@ const PlayerInfo = ({ player }) => {
   return (
     <div className='d-flex align-items-center'>
       <div className='me-2'>
-        <img src={avatarImg} alt='avatar' height='125px' width='125px' />
+        <img src={avatarImg} alt='avatar' height={AVATAR_HEIGHT} width={AVATAR_WIDTH} />
       </div>
 
       <div className='d-flex flex-column'>

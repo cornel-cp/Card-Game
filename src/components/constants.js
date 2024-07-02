@@ -1,3 +1,5 @@
+// Enums
+
 export const BattleState = {
   // State during a player's turn after drawing a card but before clicking a card for preview.
   // The end turn button is labeled as player's turn and is disabled.
@@ -11,3 +13,36 @@ export const BattleState = {
   // The end turn button is labeled as AI's turn and is disabled.
   AI_TURN: 'ai turn',
 };
+
+export const CardType = {
+  // Required props: cardType, cardName, cardIndex, handleCardClick
+  FRONT: 'front',
+
+  // Required props: cardType, playerId
+  BACK: 'back',
+
+  // Required props: cardType, cardName, scale
+  PREVIEW: 'preview',
+
+  // Required props: cardType, playerId
+  // Optional props: scale
+  PLACEHOLDER: 'placeholder',
+};
+
+// Constants
+
+export const SHORT_INTERVAL = 1000;
+export const MEDIUM_INTERVAL = 2000;
+
+// Styles
+
+export const BASE_SCALE = 1;
+export const MEDIUM_SCALE = 1.25;
+
+export const CARD_HEIGHT = 210;
+export const CARD_WIDTH = 150;
+
+export const AVATAR_HEIGHT = 125;
+export const AVATAR_WIDTH = 125;
+
+// TODO: Create a class to organize asset paths

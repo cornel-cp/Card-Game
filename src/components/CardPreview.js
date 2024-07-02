@@ -1,9 +1,22 @@
 import Card from './Card';
+import { CardType, MEDIUM_SCALE } from './constants';
 
-const CardPreview = ({ cardName }) => {
+const CardPreview = ({ selectedCard }) => {
   return (
     <div className='d-flex justify-content-center align-items-center h-100'>
-      <Card type='PREVIEW' cardName={cardName} scale={1.25} />
+      {selectedCard === null ? (
+        <Card
+          cardType={CardType.PLACEHOLDER}
+          playerId='0'
+          scale={MEDIUM_SCALE}
+        />
+      ) : (
+        <Card
+          cardType={CardType.PREVIEW}
+          cardName={selectedCard.name}
+          scale={MEDIUM_SCALE}
+        />
+      )}
     </div>
   );
 };
