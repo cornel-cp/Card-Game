@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import CardPile from './CardPile';
 import CardPreview from './CardPreview';
+import EndTurnButton from './EndTurnButton';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
+import { BattleState } from './constants';
 
 const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   // console.log(JSON.stringify(props));
@@ -11,6 +13,8 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [playerSelectedIndex, setPlayerSelectedIndex] = useState(null);
 
+  const [battleState, setBattleState] = useState(BattleState.END_TURN_DISABLED);
+
   useEffect(() => {
     const handleDrawCard = async () => {
       await sleep(1000);
@@ -18,6 +22,10 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
       setPlayerSelectedIndex(null);
       await sleep(1000);
       moves.drawCard();
+
+      if (ctx.currentPlayer === '0') {
+        setBattleState(BattleState.END_TURN_DISABLED);
+      }
     };
 
     handleDrawCard();
@@ -43,13 +51,18 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   // TODO: Track the state of ctx.gameover to render end game screen
 
   const handleCardClick = async (index) => {
-    setSelectedCard(G.players[0].hand[index]);
-    setPlayerSelectedIndex(index);
+    if (battleState !== BattleState.AI_TURN) {
+      setSelectedCard(G.players[0].hand[index]);
+      setPlayerSelectedIndex(index);
+      setBattleState(BattleState.END_TURN_ENABLED);
+    }
   };
 
-  const handleEndTurn = () => {
-    // TODO: Only pressable after card selection, disable in AI turn
-    moves.playCard(playerSelectedIndex);
+  const handleButtonClick = () => {
+    if (battleState === BattleState.END_TURN_ENABLED) {
+      moves.playCard(playerSelectedIndex);
+      setBattleState(BattleState.AI_TURN);
+    }
   };
 
   const sleep = (ms) => {
@@ -90,9 +103,10 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
           <PlayerHand player={G.players[0]} handleCardClick={handleCardClick} />
         </div>
         <div className='col-2'>
-          <button className='btn btn-primary' onClick={handleEndTurn}>
-            End Turn
-          </button>
+          <EndTurnButton
+            battleState={battleState}
+            handleButtonClick={handleButtonClick}
+          />
         </div>
       </div>
     </div>

@@ -4,14 +4,16 @@ const Card = ({
   cardIndex,
   playerId = '0',
   handleCardClick = () => {},
-  height = '210px',
-  width = '150px',
+  scale = 1,
 }) => {
   const imgPrefix = 'images/cards';
 
   const frontImg = `${imgPrefix}/front/${cardName}.png`;
   const backImg = `${imgPrefix}/back/${playerId}.png`;
   const placeholderImg = `${imgPrefix}/placeholder/${playerId}.png`;
+
+  const height = 210 * scale;
+  const width = 150 * scale;
 
   const cardContent = {
     FRONT: (
