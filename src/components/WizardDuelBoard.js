@@ -7,49 +7,46 @@ import PlayerInfo from './PlayerInfo';
 import { BattleState, SHORT_INTERVAL, MEDIUM_INTERVAL } from './constants';
 
 const WizardDuelBoard = ({ ctx, G, moves, events }) => {
-  // console.log(JSON.stringify(props));
-  // console.log(props.moves);
-
   const [selectedCard, setSelectedCard] = useState(null);
   const [playerSelectedIndex, setPlayerSelectedIndex] = useState(null);
 
   const [battleState, setBattleState] = useState(BattleState.END_TURN_DISABLED);
 
+  const handleDrawCard = async () => {
+    if (ctx.turn > 1) {
+      await sleep(SHORT_INTERVAL);
+      setSelectedCard(null);
+      setPlayerSelectedIndex(null);
+      await sleep(SHORT_INTERVAL);
+    }
+
+    moves.drawCard();
+
+    if (ctx.turn > 1 && ctx.currentPlayer === '0') {
+      setBattleState(BattleState.END_TURN_DISABLED);
+    }
+  };
+
+  const handleAiPlayCard = async () => {
+    if (ctx.currentPlayer === '1' && G.players[1].hand.length === 5) {
+      if (ctx.turn <= 2) {
+        await sleep(MEDIUM_INTERVAL);
+      } else {
+        await sleep(SHORT_INTERVAL);
+      }
+
+      const aiSelectedIndex = Math.floor(Math.random() * 5);
+      setSelectedCard(G.players[1].hand[aiSelectedIndex]);
+
+      moves.playCard(aiSelectedIndex);
+    }
+  };
+
   useEffect(() => {
-    const handleDrawCard = async () => {
-      if (ctx.turn > 1) {
-        await sleep(SHORT_INTERVAL);
-        setSelectedCard(null);
-        setPlayerSelectedIndex(null);
-        await sleep(SHORT_INTERVAL);
-      }
-
-      moves.drawCard();
-
-      if (ctx.turn > 1 && ctx.currentPlayer === '0') {
-        setBattleState(BattleState.END_TURN_DISABLED);
-      }
-    };
-
     handleDrawCard();
   }, [ctx.currentPlayer]);
 
   useEffect(() => {
-    const handleAiPlayCard = async () => {
-      if (ctx.currentPlayer === '1' && G.players[1].hand.length === 5) {
-        if (ctx.turn <= 2) {
-          await sleep(MEDIUM_INTERVAL);
-        } else {
-          await sleep(SHORT_INTERVAL);
-        }
-
-        const aiSelectedIndex = Math.floor(Math.random() * 5);
-        setSelectedCard(G.players[1].hand[aiSelectedIndex]);
-
-        moves.playCard(aiSelectedIndex);
-      }
-    };
-
     handleAiPlayCard();
   }, [ctx.currentPlayer, G.players[1].hand]);
 
