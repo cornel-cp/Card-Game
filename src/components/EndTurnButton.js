@@ -1,6 +1,6 @@
 import { BattleState } from './clientUtils/constants';
 
-const EndTurnButton = ({ battleState, handleButtonClick }) => {
+const EndTurnButton = ({ battleState, handleEndTurnButtonClick }) => {
   const buttonStyles = {
     [BattleState.END_TURN_DISABLED]: 'btn-secondary',
     [BattleState.END_TURN_ENABLED]: 'btn-dark',
@@ -11,7 +11,7 @@ const EndTurnButton = ({ battleState, handleButtonClick }) => {
     <div className='d-flex justify-content-end mb-2'>
       <button
         className={`btn btn-lg ${buttonStyles[battleState]}`}
-        onClick={handleButtonClick}
+        onClick={handleEndTurnButtonClick}
         disabled={battleState !== BattleState.END_TURN_ENABLED}
       >
         {battleState === BattleState.AI_TURN ? 'AI Turn' : 'End Turn'}

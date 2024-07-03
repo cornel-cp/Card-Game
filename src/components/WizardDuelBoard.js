@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import CardPile from './CardPile';
 import CardPreview from './CardPreview';
 import EndTurnButton from './EndTurnButton';
+import GameEndModal from './GameEndModal';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
 import { sleep } from './clientUtils/utils';
@@ -11,13 +12,20 @@ import {
   MEDIUM_INTERVAL,
 } from './clientUtils/constants';
 
-const WizardDuelBoard = ({ ctx, G, moves, events }) => {
+const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [playerSelectedIndex, setPlayerSelectedIndex] = useState(null);
 
   const [battleState, setBattleState] = useState(BattleState.END_TURN_DISABLED);
 
+  const [showGameEndModal, setShowGameEndModal] = useState(false);
+  const [winner, setWinner] = useState(null);
+
   const handleDrawCard = async () => {
+    if (ctx.gameover) {
+      return;
+    }
+
     if (ctx.turn > 1) {
       await sleep(SHORT_INTERVAL);
       setSelectedCard(null);
@@ -33,6 +41,10 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
   };
 
   const handleAiPlayCard = async () => {
+    if (ctx.gameover) {
+      return;
+    }
+
     if (ctx.currentPlayer === '1' && G.players[1].hand.length === 5) {
       if (ctx.turn <= 2) {
         await sleep(MEDIUM_INTERVAL);
@@ -47,15 +59,36 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
     }
   };
 
+  const handleShowGameEndModal = async () => {
+    if (ctx.gameover) {
+      await sleep(SHORT_INTERVAL);
+      if (ctx.gameover.winner !== null) {
+        setWinner(ctx.gameover.winner);
+      }
+      setShowGameEndModal(true);
+    }
+    // Not needed if game restart is implemented via a full page reload
+    // else {
+    //   setShowGameEndModal(false);
+    // }
+  };
+
   useEffect(() => {
     handleDrawCard();
-  }, [ctx.currentPlayer]);
+  }, [ctx.currentPlayer, ctx.gameover]);
 
   useEffect(() => {
     handleAiPlayCard();
-  }, [ctx.currentPlayer, G.players[1].hand]);
+  }, [ctx.currentPlayer, G.players[1].hand, ctx.gameover]);
 
-  // TODO: Track the state of ctx.gameover to render end game screen
+  useEffect(() => {
+    handleShowGameEndModal();
+  }, [ctx.gameover]);
+
+  const handleRestart = () => {
+    window.location.reload();
+    // The alternative is to call reset() and clean up manual states on the client side
+  };
 
   const handleCardClick = async (index) => {
     if (battleState !== BattleState.AI_TURN) {
@@ -66,7 +99,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
     }
   };
 
-  const handleButtonClick = () => {
+  const handleEndTurnButtonClick = () => {
     if (battleState === BattleState.END_TURN_ENABLED) {
       moves.playCard(playerSelectedIndex);
 
@@ -106,10 +139,16 @@ const WizardDuelBoard = ({ ctx, G, moves, events }) => {
         <div className='col-2'>
           <EndTurnButton
             battleState={battleState}
-            handleButtonClick={handleButtonClick}
+            handleEndTurnButtonClick={handleEndTurnButtonClick}
           />
         </div>
       </div>
+
+      <GameEndModal
+        showGameEndModal={showGameEndModal}
+        winner={winner}
+        handleRestart={handleRestart}
+      />
     </div>
   );
 };
