@@ -27,10 +27,10 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     }
 
     if (ctx.turn > 1) {
-      await sleep(SHORT_INTERVAL);
+      await sleep(SHORT_INTERVAL); // Preview card duration
       setSelectedCard(null);
       setPlayerSelectedIndex(null);
-      await sleep(SHORT_INTERVAL);
+      await sleep(SHORT_INTERVAL); // Interval between preview and draw
     }
 
     moves.drawCard();
@@ -46,8 +46,9 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     }
 
     if (ctx.currentPlayer === '1' && G.players[1].hand.length === 5) {
-      if (ctx.turn <= 2) {
-        await sleep(MEDIUM_INTERVAL);
+      // Interval between draw and play
+      if (ctx.turn === 2) {
+        await sleep(MEDIUM_INTERVAL); // x2 since AI does not draw in first turn
       } else {
         await sleep(SHORT_INTERVAL);
       }
@@ -61,7 +62,8 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
   const handleShowGameEndModal = async () => {
     if (ctx.gameover) {
-      await sleep(SHORT_INTERVAL);
+      // Add a delay so that the modal does not pop up immediately after the end move
+      await sleep(SHORT_INTERVAL); 
       if (ctx.gameover.winner !== null) {
         setWinner(ctx.gameover.winner);
       }
