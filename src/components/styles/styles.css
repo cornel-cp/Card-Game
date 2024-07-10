@@ -1,0 +1,7 @@
+.board-background {
+  background: radial-gradient(
+    circle,
+    rgba(245, 222, 179, 0.7),
+    rgba(210, 180, 140, 0.7)
+  );
+}

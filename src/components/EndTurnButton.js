@@ -8,7 +8,7 @@ const EndTurnButton = ({ battleState, handleEndTurnButtonClick }) => {
   };
 
   return (
-    <div className='d-flex justify-content-end mb-2'>
+    <div className='d-flex justify-content-end'>
       <button
         className={`btn btn-lg ${buttonStyles[battleState]}`}
         onClick={handleEndTurnButtonClick}

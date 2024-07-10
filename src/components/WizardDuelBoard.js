@@ -11,6 +11,7 @@ import {
   SHORT_INTERVAL,
   MEDIUM_INTERVAL,
 } from './clientUtils/constants';
+import './styles/styles.css';
 
 const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const [selectedCard, setSelectedCard] = useState(null);
@@ -63,7 +64,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const handleShowGameEndModal = async () => {
     if (ctx.gameover) {
       // Add a delay so that the modal does not pop up immediately after the end move
-      await sleep(SHORT_INTERVAL); 
+      await sleep(SHORT_INTERVAL);
       if (ctx.gameover.winner !== null) {
         setWinner(ctx.gameover.winner);
       }
@@ -110,19 +111,19 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   };
 
   return (
-    <div className='container-fluid vh-100 d-flex flex-column'>
-      <div className='row bg-success'>
+    <div className='container-fluid vh-100 d-flex flex-column p-2 board-background'>
+      <div className='row'>
         <div className='col-2'>
           <PlayerInfo player={G.players[1]} />
         </div>
         <div className='col-8'>
           <PlayerHand player={G.players[1]} />
         </div>
-        <div className='col-2'>Column</div>
+        <div className='col-2'></div>
       </div>
 
-      <div className='row flex-grow-1 bg-warning'>
-        <div className='col-2'>Column</div>
+      <div className='row flex-grow-1'>
+        <div className='col-2'></div>
         <div className='col-8'>
           <CardPreview selectedCard={selectedCard} />
         </div>
@@ -131,7 +132,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         </div>
       </div>
 
-      <div className='row align-items-end bg-info'>
+      <div className='row align-items-end'>
         <div className='col-2'>
           <PlayerInfo player={G.players[0]} />
         </div>
