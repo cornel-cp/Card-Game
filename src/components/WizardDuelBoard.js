@@ -5,12 +5,12 @@ import EndTurnButton from './EndTurnButton';
 import GameEndModal from './GameEndModal';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
-import { sleep } from './clientUtils/utils';
+import { sleep } from './utils/utils';
 import {
   BattleState,
   SHORT_INTERVAL,
   MEDIUM_INTERVAL,
-} from './clientUtils/constants';
+} from './utils/constants';
 import './styles/styles.css';
 
 const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {

@@ -1,5 +1,5 @@
 import Card from './Card';
-import { CardType, MEDIUM_SCALE } from './clientUtils/constants';
+import { CardType, MEDIUM_SCALE } from './utils/constants';
 
 const CardPreview = ({ selectedCard }) => {
   return (

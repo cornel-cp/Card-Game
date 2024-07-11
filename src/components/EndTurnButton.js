@@ -1,4 +1,4 @@
-import { BattleState } from './clientUtils/constants';
+import { BattleState } from './utils/constants';
 
 const EndTurnButton = ({ battleState, handleEndTurnButtonClick }) => {
   const buttonStyles = {

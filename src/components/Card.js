@@ -3,12 +3,12 @@ import {
   BASE_SCALE,
   CARD_HEIGHT,
   CARD_WIDTH,
-} from './clientUtils/constants';
+} from './utils/constants';
 import {
   getCardFrontPath,
   getCardBackPath,
   getCardPlaceholderPath,
-} from './clientUtils/assetPaths';
+} from './utils/assetPaths';
 
 const Card = ({
   cardType = CardType.PLACEHOLDER,
