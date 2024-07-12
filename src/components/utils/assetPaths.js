@@ -16,7 +16,8 @@ const cardPlaceholder = (playerId) =>
 const cardPile = `${cardPrefix}/pile.png`;
 
 const cardAudio = (media) => `${audioPrefix}/${media}.ogg`;
-const click = `${audioPrefix}/click.ogg`; 
+const click = `${audioPrefix}/click.ogg`;
+const draw = `${audioPrefix}/draw.ogg`;
 const victory = `${audioPrefix}/victory.ogg`;
 const defeat = `${audioPrefix}/defeat.ogg`;
 
@@ -32,6 +33,7 @@ export {
   // AUDIO
   cardAudio,
   click,
+  draw,
   victory,
   defeat,
 };
