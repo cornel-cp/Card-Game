@@ -5,12 +5,14 @@ import EndTurnButton from './EndTurnButton';
 import GameEndModal from './GameEndModal';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
+import useAudioPlayer from './hooks/useAudioPlayer';
 import { sleep } from './utils/utils';
 import {
   BattleState,
   SHORT_INTERVAL,
   MEDIUM_INTERVAL,
 } from './utils/constants';
+import { cardAudio, click, victory, defeat } from './utils/assetPaths';
 import './styles/styles.css';
 
 const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
@@ -21,6 +23,12 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
   const [showGameEndModal, setShowGameEndModal] = useState(false);
   const [winner, setWinner] = useState(null);
+
+  const { play } = useAudioPlayer();
+
+  const handlePlaySoundEffect = (src) => {
+    play(src);
+  };
 
   const handleDrawCard = async () => {
     if (ctx.gameover) {
@@ -55,9 +63,11 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
       }
 
       const aiSelectedIndex = Math.floor(Math.random() * 5);
-      setSelectedCard(G.players[1].hand[aiSelectedIndex]);
+      const aiSelectedCard = G.players[1].hand[aiSelectedIndex];
+      setSelectedCard(aiSelectedCard);
 
       moves.playCard(aiSelectedIndex);
+      handlePlaySoundEffect(cardAudio(aiSelectedCard.media));
     }
   };
 
@@ -69,6 +79,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         setWinner(ctx.gameover.winner);
       }
       setShowGameEndModal(true);
+      handlePlaySoundEffect(ctx.gameover.winner === '0' ? victory : defeat);
     }
     // Not needed if game restart is implemented via a full page reload
     // else {
@@ -97,6 +108,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     if (battleState !== BattleState.AI_TURN) {
       setSelectedCard(G.players[0].hand[index]);
       setPlayerSelectedIndex(index);
+      handlePlaySoundEffect(click);
 
       setBattleState(BattleState.END_TURN_ENABLED);
     }
@@ -105,6 +117,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const handleEndTurnButtonClick = () => {
     if (battleState === BattleState.END_TURN_ENABLED) {
       moves.playCard(playerSelectedIndex);
+      handlePlaySoundEffect(cardAudio(selectedCard.media));
 
       setBattleState(BattleState.AI_TURN);
     }

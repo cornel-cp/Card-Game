@@ -1,33 +1,37 @@
-const IMG_PREFIX = 'images';
+const imgPrefix = 'images';
+const cardPrefix = `${imgPrefix}/cards`;
+const audioPrefix = 'audio';
 
-const getAvatarPath = (playerId) => {
-  return `${IMG_PREFIX}/avatars/${playerId}.png`;
-};
-const ICON_PATHS = {
-  hp: `${IMG_PREFIX}/icons/hp.svg`,
-  atk: `${IMG_PREFIX}/icons/atk.svg`,
-  def: `${IMG_PREFIX}/icons/def.svg`,
-};
-
-const CARD_PREFIX = `${IMG_PREFIX}/cards`;
-
-const getCardFrontPath = (cardName) => {
-  return `${CARD_PREFIX}/front/${cardName}.png`;
-};
-const getCardBackPath = (playerId) => {
-  return `${CARD_PREFIX}/back/${playerId}.png`;
-};
-const getCardPlaceholderPath = (playerId) => {
-  return `${CARD_PREFIX}/placeholder/${playerId}.png`;
+const avatar = (playerId) => `${imgPrefix}/avatars/${playerId}.png`;
+const icon = {
+  hp: `${imgPrefix}/icons/hp.svg`,
+  atk: `${imgPrefix}/icons/atk.svg`,
+  def: `${imgPrefix}/icons/def.svg`,
 };
 
-const CARD_PILE_PATH = 'images/cards/pile.png';
+const cardFront = (cardName) => `${cardPrefix}/front/${cardName}.png`;
+const cardBack = (playerId) => `${cardPrefix}/back/${playerId}.png`;
+const cardPlaceholder = (playerId) =>
+  `${cardPrefix}/placeholder/${playerId}.png`;
+const cardPile = `${cardPrefix}/pile.png`;
+
+const cardAudio = (media) => `${audioPrefix}/${media}.ogg`;
+const click = `${audioPrefix}/click.ogg`; 
+const victory = `${audioPrefix}/victory.ogg`;
+const defeat = `${audioPrefix}/defeat.ogg`;
 
 export {
-  getAvatarPath,
-  ICON_PATHS,
-  getCardFrontPath,
-  getCardBackPath,
-  getCardPlaceholderPath,
-  CARD_PILE_PATH,
+  // IMAGES
+  avatar,
+  icon,
+  cardFront,
+  cardBack,
+  cardPlaceholder,
+  cardPile,
+
+  // AUDIO
+  cardAudio,
+  click,
+  victory,
+  defeat,
 };
