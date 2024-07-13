@@ -15,7 +15,29 @@ const cardPlaceholder = (playerId) =>
   `${cardPrefix}/placeholder/${playerId}.png`;
 const cardPile = `${cardPrefix}/pile.png`;
 
-const cardAudio = (media) => `${audioPrefix}/${media}.ogg`;
+const cardAudioType = {
+  0: 'fireball',
+  1: 'fireball',
+  2: 'fireball',
+  3: 'freeze',
+  4: 'freeze',
+  5: 'freeze',
+  6: 'thunder',
+  7: 'thunder',
+  8: 'thunder',
+  9: 'heal',
+  10: 'heal',
+  11: 'heal',
+  12: 'sword',
+  13: 'shield',
+  14: 'weaken',
+  15: 'weaken',
+  16: 'magic',
+  17: 'magic',
+  18: 'sword',
+  19: 'shield',
+};
+const cardAudio = (cardId) => `${audioPrefix}/${cardAudioType[cardId]}.ogg`;
 const click = `${audioPrefix}/click.ogg`;
 const draw = `${audioPrefix}/draw.ogg`;
 const victory = `${audioPrefix}/victory.ogg`;

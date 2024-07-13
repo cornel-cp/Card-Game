@@ -1,9 +1,9 @@
 export const getTarget = (currentPlayer, targetType) => {
   switch (targetType) {
-    case "player":
+    case 'self':
       return currentPlayer;
-    case "opponent":
-      return currentPlayer === "0" ? "1" : "0";
+    case 'opponent':
+      return currentPlayer === '0' ? '1' : '0';
     default:
       console.error(`Invalid target type: ${targetType}`);
       return null;
@@ -21,9 +21,9 @@ export const removeEffects = (G, target, effectType) => {
 };
 
 const effectGroups = {
-  buff: ["buffAtk", "buffDef"],
+  buff: ['buffAtk', 'buffDef'],
 
-  debuff: ["debuffAtk", "debuffDef"],
+  debuff: ['debuffAtk', 'debuffDef'],
 };
 
 export const selectEffectsByGroup = (G, target, groupType) => {
@@ -40,16 +40,16 @@ export const removeEffectsByGroup = (G, target, groupType) => {
 
 export const undoEffect = (G, target, { type, value = 0 }) => {
   switch (type) {
-    case "buffAtk":
+    case 'buffAtk':
       G.players[target].atk -= value;
       break;
-    case "buffDef":
+    case 'buffDef':
       G.players[target].def -= value;
       break;
-    case "debuffAtk":
+    case 'debuffAtk':
       G.players[target].atk += value;
       break;
-    case "debuffDef":
+    case 'debuffDef':
       G.players[target].def += value;
       break;
     default:

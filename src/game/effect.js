@@ -5,22 +5,22 @@ import {
   selectEffectsByGroup,
   removeEffectsByGroup,
   undoEffect,
-} from "./effectUtils";
+} from './effectUtils';
 
 const damage = (G, target, { value = 0 }) => {
-  const player = target === "0" ? "1" : "0";
+  const player = target === '0' ? '1' : '0';
 
   value = value + G.players[player].atk - G.players[target].def;
 
-  if (hasEffect(G, player, "doubleDmg")) {
+  if (hasEffect(G, player, 'doubleDmg')) {
     value *= 2;
   }
-  removeEffects(G, player, "doubleDmg");
+  removeEffects(G, player, 'doubleDmg');
 
-  if (hasEffect(G, target, "blockDmg")) {
+  if (hasEffect(G, target, 'preventDmg')) {
     value = 0;
   }
-  removeEffects(G, target, "blockDmg");
+  removeEffects(G, target, 'preventDmg');
 
   value = Math.max(value, 0);
 
@@ -52,8 +52,8 @@ const debuffDef = (G, target, { value = 0 }) => {
   G.players[target].def -= value;
 };
 
-const purify = (G, target) => {
-  const debuffs = selectEffectsByGroup(G, target, "debuff");
+const removeDebuff = (G, target) => {
+  const debuffs = selectEffectsByGroup(G, target, 'debuff');
 
   if (!debuffs || debuffs.length === 0) return;
 
@@ -61,11 +61,11 @@ const purify = (G, target) => {
     undoEffect(G, target, e);
   });
 
-  removeEffectsByGroup(G, target, "debuff");
+  removeEffectsByGroup(G, target, 'debuff');
 };
 
-const dispel = (G, target) => {
-  const buffs = selectEffectsByGroup(G, target, "buff");
+const removeBuff = (G, target) => {
+  const buffs = selectEffectsByGroup(G, target, 'buff');
 
   if (!buffs || buffs.length === 0) return;
 
@@ -73,12 +73,12 @@ const dispel = (G, target) => {
     undoEffect(G, target, e);
   });
 
-  removeEffectsByGroup(G, target, "buff");
+  removeEffectsByGroup(G, target, 'buff');
 };
 
 const doubleDmg = () => {};
 
-const blockDmg = () => {};
+const preventDmg = () => {};
 
 const effectHandlers = {
   damage,
@@ -87,10 +87,10 @@ const effectHandlers = {
   buffDef,
   debuffAtk,
   debuffDef,
-  purify,
-  dispel,
+  removeDebuff,
+  removeBuff,
   doubleDmg,
-  blockDmg,
+  preventDmg,
 };
 
 export const applyEffect = (G, ctx, effect) => {
@@ -105,7 +105,7 @@ export const applyEffect = (G, ctx, effect) => {
 
   handler(G, target, effect);
 
-  if (effect.duration === "active") {
+  if (effect.duration === 'enduring') {
     G.players[target].effects.push(effect);
   }
 };

@@ -63,7 +63,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
       setSelectedCard(aiSelectedCard);
 
       moves.playCard(aiSelectedIndex);
-      handlePlaySoundEffect(cardAudio(aiSelectedCard.media));
+      handlePlaySoundEffect(cardAudio(aiSelectedCard.id));
     }
   };
 
@@ -113,7 +113,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const handleEndTurnButtonClick = () => {
     if (gameState === GameState.endTurnEnabled) {
       moves.playCard(playerSelectedIndex);
-      handlePlaySoundEffect(cardAudio(selectedCard.media));
+      handlePlaySoundEffect(cardAudio(selectedCard.id));
 
       setGameState(GameState.aiTurn);
     }
