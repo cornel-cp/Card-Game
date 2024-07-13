@@ -2,7 +2,7 @@ const imgPrefix = 'images';
 const cardPrefix = `${imgPrefix}/cards`;
 const audioPrefix = 'audio';
 
-const avatar = (playerId) => `${imgPrefix}/avatars/${playerId}.png`;
+const avatar = (playerId) => `${imgPrefix}/avatars/${playerId}.svg`;
 const icon = {
   hp: `${imgPrefix}/icons/hp.svg`,
   atk: `${imgPrefix}/icons/atk.svg`,
@@ -10,10 +10,10 @@ const icon = {
 };
 
 const cardFront = (cardId) => `${cardPrefix}/front/${cardId}.svg`;
-const cardBack = (playerId) => `${cardPrefix}/back/${playerId}.png`;
+const cardBack = (playerId) => `${cardPrefix}/back/${playerId}.svg`;
 const cardPlaceholder = (playerId) =>
-  `${cardPrefix}/placeholder/${playerId}.png`;
-const cardPile = `${cardPrefix}/pile.png`;
+  `${cardPrefix}/placeholder/${playerId}.svg`;
+const cardPile = `${cardPrefix}/pile.svg`;
 
 const cardAudioType = {
   0: 'fireball',
