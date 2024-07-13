@@ -39,7 +39,6 @@ const cardAudioType = {
 };
 const cardAudio = (cardId) => `${audioPrefix}/${cardAudioType[cardId]}.ogg`;
 const click = `${audioPrefix}/click.ogg`;
-const draw = `${audioPrefix}/draw.ogg`;
 const victory = `${audioPrefix}/victory.ogg`;
 const defeat = `${audioPrefix}/defeat.ogg`;
 
@@ -55,7 +54,6 @@ export {
   // AUDIO
   cardAudio,
   click,
-  draw,
   victory,
   defeat,
 };

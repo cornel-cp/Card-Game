@@ -15,7 +15,6 @@ This project uses audio resources from Freesound.com.
 - **[Poison Spell Magic](https://freesound.org/s/219566/)** by qubodup -- License: [Attribution 4.0](https://creativecommons.org/licenses/by/4.0/)
 - **[Jingle_Lose_00.wav](https://freesound.org/s/270467/)** by LittleRobotSoundFactory -- License: [Attribution 4.0](https://creativecommons.org/licenses/by/4.0/)
 - **[VS Button Click 05.mp3](https://freesound.org/s/707042/)** by Vilkas_Sound -- License: [Attribution 4.0](https://creativecommons.org/licenses/by/4.0/)
-- **[card_deck_flick_click.mp3](https://freesound.org/s/682449/)** by Geoff-Bremner-Audio -- License: [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)
 
 ## Music Credits
 
