@@ -1,9 +1,9 @@
-const GameEndModal = ({ showGameEndModal, winner, handleRestart }) => {
-  if (!showGameEndModal) {
+const GameoverModal = ({ showGameoverModal, winner, handleRestart }) => {
+  if (!showGameoverModal) {
     return null;
   }
 
-  const gameEndMessage = {
+  const gameoverMessage = {
     0: 'Player wins!',
     1: 'AI wins!',
   };
@@ -22,7 +22,7 @@ const GameEndModal = ({ showGameEndModal, winner, handleRestart }) => {
               <h5 className='modal-title'>Game Over</h5>
             </div>
             <div className='modal-body'>
-              {gameEndMessage[winner] || 'Draw!'}
+              {gameoverMessage[winner] || 'Draw!'}
             </div>
             <div className='modal-footer'>
               <button
@@ -41,4 +41,4 @@ const GameEndModal = ({ showGameEndModal, winner, handleRestart }) => {
   );
 };
 
-export default GameEndModal;
+export default GameoverModal;

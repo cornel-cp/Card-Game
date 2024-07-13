@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import CardPile from './CardPile';
 import CardPreview from './CardPreview';
 import EndTurnButton from './EndTurnButton';
-import GameEndModal from './GameEndModal';
+import GameoverModal from './GameoverModal';
 import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
 import useAudioPlayer from './hooks/useAudioPlayer';
@@ -17,7 +17,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
   const [gameState, setGameState] = useState(GameState.endTurnDisabled);
 
-  const [showGameEndModal, setShowGameEndModal] = useState(false);
+  const [showGameoverModal, setShowGameoverModal] = useState(false);
   const [winner, setWinner] = useState(null);
 
   const { play } = useAudioPlayer();
@@ -67,19 +67,19 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     }
   };
 
-  const handleShowGameEndModal = async () => {
+  const handleShowGameoverModal = async () => {
     if (ctx.gameover) {
       // Add a delay so that the modal does not pop up immediately after the end move
       await sleep(pauseInterval);
       if (ctx.gameover.winner !== null) {
         setWinner(ctx.gameover.winner);
       }
-      setShowGameEndModal(true);
+      setShowGameoverModal(true);
       handlePlaySoundEffect(ctx.gameover.winner === '0' ? victory : defeat);
     }
     // Not needed if game restart is implemented via a full page reload
     // else {
-    //   setShowGameEndModal(false);
+    //   setShowGameoverModal(false);
     // }
   };
 
@@ -92,7 +92,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   }, [ctx.currentPlayer, G.players[1].hand, ctx.gameover]);
 
   useEffect(() => {
-    handleShowGameEndModal();
+    handleShowGameoverModal();
   }, [ctx.gameover]);
 
   const handleRestart = () => {
@@ -156,8 +156,8 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         </div>
       </div>
 
-      <GameEndModal
-        showGameEndModal={showGameEndModal}
+      <GameoverModal
+        showGameoverModal={showGameoverModal}
         winner={winner}
         handleRestart={handleRestart}
       />
