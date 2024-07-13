@@ -1,7 +1,7 @@
 import { avatarHeight, avatarWidth } from './utils/constants';
 import { avatar, icon } from './utils/assetPaths';
 
-const PlayerInfo = ({ player }) => {
+const PlayerStatus = ({ player }) => {
   return (
     <div className='d-flex align-items-center'>
       <div className='me-2'>
@@ -31,4 +31,4 @@ const PlayerInfo = ({ player }) => {
   );
 };
 
-export default PlayerInfo;
+export default PlayerStatus;
