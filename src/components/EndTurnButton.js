@@ -1,20 +1,20 @@
-import { BattleState } from './utils/constants';
+import { GameState } from './utils/constants';
 
-const EndTurnButton = ({ battleState, handleEndTurnButtonClick }) => {
+const EndTurnButton = ({ gameState, handleEndTurnButtonClick }) => {
   const buttonStyles = {
-    [BattleState.END_TURN_DISABLED]: 'btn-secondary',
-    [BattleState.END_TURN_ENABLED]: 'btn-dark',
-    [BattleState.AI_TURN]: 'btn-secondary',
+    [GameState.endTurnDisabled]: 'btn-secondary',
+    [GameState.endTurnEnabled]: 'btn-dark',
+    [GameState.aiTurn]: 'btn-secondary',
   };
 
   return (
     <div className='d-flex justify-content-end'>
       <button
-        className={`btn btn-lg ${buttonStyles[battleState]}`}
+        className={`btn btn-lg ${buttonStyles[gameState]}`}
         onClick={handleEndTurnButtonClick}
-        disabled={battleState !== BattleState.END_TURN_ENABLED}
+        disabled={gameState !== GameState.endTurnEnabled}
       >
-        {battleState === BattleState.AI_TURN ? 'AI Turn' : 'End Turn'}
+        {gameState === GameState.aiTurn ? 'AI Turn' : 'End Turn'}
       </button>
     </div>
   );

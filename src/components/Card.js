@@ -1,28 +1,23 @@
-import {
-  CardType,
-  BASE_SCALE,
-  CARD_HEIGHT,
-  CARD_WIDTH,
-} from './utils/constants';
+import { CardType, baseScale, cardHeight, cardWidth } from './utils/constants';
 import { cardFront, cardBack, cardPlaceholder } from './utils/assetPaths';
 
 const Card = ({
-  cardType = CardType.PLACEHOLDER,
+  cardType = CardType.placeholder,
   cardName,
   cardIndex,
   playerId = '0',
   handleCardClick = () => {},
-  scale = BASE_SCALE,
+  scale = baseScale,
 }) => {
   const frontImg = cardFront(cardName);
   const backImg = cardBack(playerId);
   const placeholderImg = cardPlaceholder(playerId);
 
-  const height = CARD_HEIGHT * scale;
-  const width = CARD_WIDTH * scale;
+  const height = cardHeight * scale;
+  const width = cardWidth * scale;
 
   const cardContent = {
-    [CardType.FRONT]: (
+    [CardType.front]: (
       <img
         src={frontImg}
         alt={cardName}
@@ -32,15 +27,15 @@ const Card = ({
       />
     ),
 
-    [CardType.BACK]: (
+    [CardType.back]: (
       <img src={backImg} alt='card back' height={height} width={width} />
     ),
 
-    [CardType.PREVIEW]: (
+    [CardType.preview]: (
       <img src={frontImg} alt={cardName} height={height} width={width} />
     ),
 
-    [CardType.PLACEHOLDER]: (
+    [CardType.placeholder]: (
       <img
         src={placeholderImg}
         alt='card placeholder'

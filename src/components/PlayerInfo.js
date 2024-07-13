@@ -1,4 +1,4 @@
-import { AVATAR_HEIGHT, AVATAR_WIDTH } from './utils/constants';
+import { avatarHeight, avatarWidth } from './utils/constants';
 import { avatar, icon } from './utils/assetPaths';
 
 const PlayerInfo = ({ player }) => {
@@ -8,8 +8,8 @@ const PlayerInfo = ({ player }) => {
         <img
           src={avatar(player.id)}
           alt='avatar'
-          height={AVATAR_HEIGHT}
-          width={AVATAR_WIDTH}
+          height={avatarHeight}
+          width={avatarWidth}
         />
       </div>
 

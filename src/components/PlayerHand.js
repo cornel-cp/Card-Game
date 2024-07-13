@@ -8,7 +8,7 @@ const PlayerHand = ({ player, handleCardClick }) => {
         <div key={index} className='me-2'>
           {/* FOR DEBUGGING */}
           <Card
-            cardType={CardType.FRONT}
+            cardType={CardType.front}
             cardName={card.name}
             cardIndex={index}
             handleCardClick={handleCardClick}
@@ -16,13 +16,13 @@ const PlayerHand = ({ player, handleCardClick }) => {
 
           {/* {player.id === '0' ? (
             <Card
-              cardType={CardType.FRONT}
+              cardType={CardType.front}
               cardName={card.name}
               cardIndex={index}
               handleCardClick={handleCardClick}
             />
           ) : (
-            <Card cardType={CardType.BACK} playerId='1' />
+            <Card cardType={CardType.back} playerId='1' />
           )} */}
         </div>
       ))}

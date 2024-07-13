@@ -7,11 +7,7 @@ import PlayerHand from './PlayerHand';
 import PlayerInfo from './PlayerInfo';
 import useAudioPlayer from './hooks/useAudioPlayer';
 import { sleep } from './utils/utils';
-import {
-  BattleState,
-  SHORT_INTERVAL,
-  MEDIUM_INTERVAL,
-} from './utils/constants';
+import { GameState, pauseInterval } from './utils/constants';
 import { cardAudio, click, victory, defeat } from './utils/assetPaths';
 import './styles/styles.css';
 
@@ -19,7 +15,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [playerSelectedIndex, setPlayerSelectedIndex] = useState(null);
 
-  const [battleState, setBattleState] = useState(BattleState.END_TURN_DISABLED);
+  const [gameState, setGameState] = useState(GameState.endTurnDisabled);
 
   const [showGameEndModal, setShowGameEndModal] = useState(false);
   const [winner, setWinner] = useState(null);
@@ -36,16 +32,16 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     }
 
     if (ctx.turn > 1) {
-      await sleep(SHORT_INTERVAL); // Preview card duration
+      await sleep(pauseInterval); // Preview card duration
       setSelectedCard(null);
       setPlayerSelectedIndex(null);
-      await sleep(SHORT_INTERVAL); // Interval between preview and draw
+      await sleep(pauseInterval); // Interval between preview and draw
     }
 
     moves.drawCard();
 
     if (ctx.turn > 1 && ctx.currentPlayer === '0') {
-      setBattleState(BattleState.END_TURN_DISABLED);
+      setGameState(GameState.endTurnDisabled);
     }
   };
 
@@ -57,9 +53,9 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     if (ctx.currentPlayer === '1' && G.players[1].hand.length === 5) {
       // Interval between draw and play
       if (ctx.turn === 2) {
-        await sleep(MEDIUM_INTERVAL); // x2 since AI does not draw in first turn
+        await sleep(pauseInterval * 2); // x2 since AI does not draw in first turn
       } else {
-        await sleep(SHORT_INTERVAL);
+        await sleep(pauseInterval);
       }
 
       const aiSelectedIndex = Math.floor(Math.random() * 5);
@@ -74,7 +70,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const handleShowGameEndModal = async () => {
     if (ctx.gameover) {
       // Add a delay so that the modal does not pop up immediately after the end move
-      await sleep(SHORT_INTERVAL);
+      await sleep(pauseInterval);
       if (ctx.gameover.winner !== null) {
         setWinner(ctx.gameover.winner);
       }
@@ -105,21 +101,21 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   };
 
   const handleCardClick = async (index) => {
-    if (battleState !== BattleState.AI_TURN) {
+    if (gameState !== GameState.aiTurn) {
       setSelectedCard(G.players[0].hand[index]);
       setPlayerSelectedIndex(index);
       handlePlaySoundEffect(click);
 
-      setBattleState(BattleState.END_TURN_ENABLED);
+      setGameState(GameState.endTurnEnabled);
     }
   };
 
   const handleEndTurnButtonClick = () => {
-    if (battleState === BattleState.END_TURN_ENABLED) {
+    if (gameState === GameState.endTurnEnabled) {
       moves.playCard(playerSelectedIndex);
       handlePlaySoundEffect(cardAudio(selectedCard.media));
 
-      setBattleState(BattleState.AI_TURN);
+      setGameState(GameState.aiTurn);
     }
   };
 
@@ -154,7 +150,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         </div>
         <div className='col-2'>
           <EndTurnButton
-            battleState={battleState}
+            gameState={gameState}
             handleEndTurnButtonClick={handleEndTurnButtonClick}
           />
         </div>
