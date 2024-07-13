@@ -6,21 +6,26 @@ import {
   removeEffectsByGroup,
   undoEffect,
 } from './effectUtils';
+import {
+  EffectType,
+  EffectDuration,
+  EffectGroupName,
+} from '../data/cardEffects';
 
 const damage = (G, target, { value = 0 }) => {
   const player = target === '0' ? '1' : '0';
 
   value = value + G.players[player].atk - G.players[target].def;
 
-  if (hasEffect(G, player, 'doubleDmg')) {
+  if (hasEffect(G, player, EffectType.doubleDmg)) {
     value *= 2;
   }
-  removeEffects(G, player, 'doubleDmg');
+  removeEffects(G, player, EffectType.doubleDmg);
 
-  if (hasEffect(G, target, 'preventDmg')) {
+  if (hasEffect(G, target, EffectType.preventDmg)) {
     value = 0;
   }
-  removeEffects(G, target, 'preventDmg');
+  removeEffects(G, target, EffectType.preventDmg);
 
   value = Math.max(value, 0);
 
@@ -53,7 +58,7 @@ const debuffDef = (G, target, { value = 0 }) => {
 };
 
 const removeDebuff = (G, target) => {
-  const debuffs = selectEffectsByGroup(G, target, 'debuff');
+  const debuffs = selectEffectsByGroup(G, target, EffectGroupName.debuff);
 
   if (!debuffs || debuffs.length === 0) return;
 
@@ -61,11 +66,11 @@ const removeDebuff = (G, target) => {
     undoEffect(G, target, e);
   });
 
-  removeEffectsByGroup(G, target, 'debuff');
+  removeEffectsByGroup(G, target, EffectGroupName.debuff);
 };
 
 const removeBuff = (G, target) => {
-  const buffs = selectEffectsByGroup(G, target, 'buff');
+  const buffs = selectEffectsByGroup(G, target, EffectGroupName.buff);
 
   if (!buffs || buffs.length === 0) return;
 
@@ -73,7 +78,7 @@ const removeBuff = (G, target) => {
     undoEffect(G, target, e);
   });
 
-  removeEffectsByGroup(G, target, 'buff');
+  removeEffectsByGroup(G, target, EffectGroupName.buff);
 };
 
 const doubleDmg = () => {};
@@ -81,16 +86,16 @@ const doubleDmg = () => {};
 const preventDmg = () => {};
 
 const effectHandlers = {
-  damage,
-  heal,
-  buffAtk,
-  buffDef,
-  debuffAtk,
-  debuffDef,
-  removeDebuff,
-  removeBuff,
-  doubleDmg,
-  preventDmg,
+  [EffectType.damage]: damage,
+  [EffectType.heal]: heal,
+  [EffectType.buffAtk]: buffAtk,
+  [EffectType.buffDef]: buffDef,
+  [EffectType.debuffAtk]: debuffAtk,
+  [EffectType.debuffDef]: debuffDef,
+  [EffectType.removeDebuff]: removeDebuff,
+  [EffectType.removeBuff]: removeBuff,
+  [EffectType.doubleDmg]: doubleDmg,
+  [EffectType.preventDmg]: preventDmg,
 };
 
 export const applyEffect = (G, ctx, effect) => {
@@ -105,7 +110,7 @@ export const applyEffect = (G, ctx, effect) => {
 
   handler(G, target, effect);
 
-  if (effect.duration === 'enduring') {
+  if (effect.duration === EffectDuration.enduring) {
     G.players[target].effects.push(effect);
   }
 };

@@ -1,8 +1,10 @@
+import { EffectType, EffectTarget, EffectGroup } from '../data/cardEffects';
+
 export const getTarget = (currentPlayer, targetType) => {
   switch (targetType) {
-    case 'self':
+    case EffectTarget.self:
       return currentPlayer;
-    case 'opponent':
+    case EffectTarget.opponent:
       return currentPlayer === '0' ? '1' : '0';
     default:
       console.error(`Invalid target type: ${targetType}`);
@@ -20,36 +22,30 @@ export const removeEffects = (G, target, effectType) => {
   );
 };
 
-const effectGroups = {
-  buff: ['buffAtk', 'buffDef'],
-
-  debuff: ['debuffAtk', 'debuffDef'],
-};
-
 export const selectEffectsByGroup = (G, target, groupType) => {
   return G.players[target].effects.filter((e) =>
-    effectGroups[groupType].includes(e.type)
+    EffectGroup[groupType].includes(e.type)
   );
 };
 
 export const removeEffectsByGroup = (G, target, groupType) => {
   G.players[target].effects = G.players[target].effects.filter(
-    (e) => !effectGroups[groupType].includes(e.type)
+    (e) => !EffectGroup[groupType].includes(e.type)
   );
 };
 
 export const undoEffect = (G, target, { type, value = 0 }) => {
   switch (type) {
-    case 'buffAtk':
+    case EffectType.buffAtk:
       G.players[target].atk -= value;
       break;
-    case 'buffDef':
+    case EffectType.buffDef:
       G.players[target].def -= value;
       break;
-    case 'debuffAtk':
+    case EffectType.debuffAtk:
       G.players[target].atk += value;
       break;
-    case 'debuffDef':
+    case EffectType.debuffDef:
       G.players[target].def += value;
       break;
     default:

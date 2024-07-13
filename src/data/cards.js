@@ -9,7 +9,7 @@ import {
   removeBuff,
   doubleDmg,
   preventDmg,
-} from './cardUtils';
+} from './cardEffects';
 
 export const Fireball1 = {
   id: '0',
