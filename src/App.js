@@ -4,7 +4,12 @@ import { WizardDuel } from './game/game';
 import WizardDuelBoard from './components/WizardDuelBoard';
 import Card from './components/Card';
 
-const WizardDuelClient = Client({ game: WizardDuel, board: WizardDuelBoard });
+const WizardDuelClient = Client({
+  game: WizardDuel,
+  board: WizardDuelBoard,
+  // Set to false for enabling debug panel
+  debug: { collapseOnLoad: true, hideToggleButton: true },
+});
 
 const App = () => {
   return (
