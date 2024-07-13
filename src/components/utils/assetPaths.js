@@ -9,7 +9,7 @@ const icon = {
   def: `${imgPrefix}/icons/def.svg`,
 };
 
-const cardFront = (cardName) => `${cardPrefix}/front/${cardName}.png`;
+const cardFront = (cardId) => `${cardPrefix}/front/${cardId}.svg`;
 const cardBack = (playerId) => `${cardPrefix}/back/${playerId}.png`;
 const cardPlaceholder = (playerId) =>
   `${cardPrefix}/placeholder/${playerId}.png`;

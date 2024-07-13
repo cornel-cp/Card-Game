@@ -1,8 +1,8 @@
-export const FireballI = {
-  id: '001',
-  name: 'Fireball I',
-  text: 'Damage 3',
-  media: 'fireball',
+import { MediaType } from './constants';
+
+export const Fireball1 = {
+  id: '0',
+  media: MediaType.fireball,
   effects: [
     {
       type: 'damage',
@@ -13,11 +13,9 @@ export const FireballI = {
   ],
 };
 
-export const FireballII = {
-  id: '002',
-  name: 'Fireball II',
-  text: 'Damage 5',
-  media: 'fireball',
+export const Fireball2 = {
+  id: '1',
+  media: MediaType.fireball,
   effects: [
     {
       type: 'damage',
@@ -28,11 +26,9 @@ export const FireballII = {
   ],
 };
 
-export const FireballIII = {
-  id: '003',
-  name: 'Fireball III',
-  text: 'Damage 9',
-  media: 'fireball',
+export const Fireball3 = {
+  id: '2',
+  media: MediaType.fireball,
   effects: [
     {
       type: 'damage',
@@ -43,11 +39,9 @@ export const FireballIII = {
   ],
 };
 
-export const FrostBoltI = {
-  id: '004',
-  name: 'Frostbolt I',
-  text: 'Damage 4',
-  media: 'freeze',
+export const Freeze1 = {
+  id: '3',
+  media: MediaType.freeze,
   effects: [
     {
       type: 'damage',
@@ -58,11 +52,9 @@ export const FrostBoltI = {
   ],
 };
 
-export const FrostBoltII = {
-  id: '005',
-  name: 'Frostbolt II',
-  text: 'Damage 6',
-  media: 'freeze',
+export const Freeze2 = {
+  id: '4',
+  media: MediaType.freeze,
   effects: [
     {
       type: 'damage',
@@ -73,11 +65,9 @@ export const FrostBoltII = {
   ],
 };
 
-export const FrostBoltIII = {
-  id: '006',
-  name: 'Frostbolt III',
-  text: 'Damage 8',
-  media: 'freeze',
+export const Freeze3 = {
+  id: '5',
+  media: MediaType.freeze,
   effects: [
     {
       type: 'damage',
@@ -88,11 +78,9 @@ export const FrostBoltIII = {
   ],
 };
 
-export const ArcaneBarrageI = {
-  id: '007',
-  name: 'Arcane Barrage I',
-  text: 'Damage 7',
-  media: 'thunder',
+export const Thunder1 = {
+  id: '6',
+  media: MediaType.thunder,
   effects: [
     {
       type: 'damage',
@@ -103,11 +91,9 @@ export const ArcaneBarrageI = {
   ],
 };
 
-export const ArcaneBarrageII = {
-  id: '008',
-  name: 'Arcane Barrage II',
-  text: 'Damage 12',
-  media: 'thunder',
+export const Thunder2 = {
+  id: '7',
+  media: MediaType.thunder,
   effects: [
     {
       type: 'damage',
@@ -118,11 +104,9 @@ export const ArcaneBarrageII = {
   ],
 };
 
-export const ArcaneBarrageIII = {
-  id: '009',
-  name: 'Arcane Barrage III',
-  text: 'Damage 18',
-  media: 'thunder',
+export const Thunder3 = {
+  id: '8',
+  media: MediaType.thunder,
   effects: [
     {
       type: 'damage',
@@ -133,11 +117,9 @@ export const ArcaneBarrageIII = {
   ],
 };
 
-export const AngelicHealingI = {
-  id: '010',
-  name: 'Angelic Healing I',
-  text: '+5 HP',
-  media: 'heal',
+export const Heal1 = {
+  id: '9',
+  media: MediaType.heal,
   effects: [
     {
       type: 'heal',
@@ -148,11 +130,9 @@ export const AngelicHealingI = {
   ],
 };
 
-export const AngelicHealingII = {
-  id: '011',
-  name: 'Angelic Healing II',
-  text: '+10 HP',
-  media: 'heal',
+export const Heal2 = {
+  id: '10',
+  media: MediaType.heal,
   effects: [
     {
       type: 'heal',
@@ -163,11 +143,9 @@ export const AngelicHealingII = {
   ],
 };
 
-export const AngelicHealingIII = {
-  id: '012',
-  name: 'Angelic Healing III',
-  text: '+15 HP',
-  media: 'heal',
+export const Heal3 = {
+  id: '11',
+  media: MediaType.heal,
   effects: [
     {
       type: 'heal',
@@ -178,11 +156,9 @@ export const AngelicHealingIII = {
   ],
 };
 
-export const BlessingOfKing = {
-  id: '013',
-  name: 'Blessing of King',
-  text: '+3 Attack',
-  media: 'sword',
+export const Blessing = {
+  id: '12',
+  media: MediaType.sword,
   effects: [
     {
       type: 'buffAtk',
@@ -193,11 +169,9 @@ export const BlessingOfKing = {
   ],
 };
 
-export const BlessingOfGuardian = {
-  id: '014',
-  name: 'Blessing of Guardian',
-  text: '+3 Shield',
-  media: 'shield',
+export const Armor = {
+  id: '13',
+  media: MediaType.shield,
   effects: [
     {
       type: 'buffDef',
@@ -208,11 +182,9 @@ export const BlessingOfGuardian = {
   ],
 };
 
-export const CurseOfNecromancer = {
-  id: '015',
-  name: 'Curse of Necromancer',
-  text: 'Enemy -3 Attack',
-  media: 'weaken',
+export const Weaken = {
+  id: '14',
+  media: MediaType.weaken,
   effects: [
     {
       type: 'debuffAtk',
@@ -223,11 +195,9 @@ export const CurseOfNecromancer = {
   ],
 };
 
-export const CurseOfWarlock = {
-  id: '016',
-  name: 'Curse of Warlock',
-  text: 'Enemy -3 Shield',
-  media: 'weaken',
+export const Curse = {
+  id: '15',
+  media: MediaType.weaken,
   effects: [
     {
       type: 'debuffDef',
@@ -238,11 +208,9 @@ export const CurseOfWarlock = {
   ],
 };
 
-export const HolyPrayer = {
-  id: '017',
-  name: 'Holy Prayer',
-  text: 'Remove Debuffs',
-  media: 'magic',
+export const Purify = {
+  id: '16',
+  media: MediaType.magic,
   effects: [
     {
       type: 'purify',
@@ -252,11 +220,9 @@ export const HolyPrayer = {
   ],
 };
 
-export const SwordOfJustice = {
-  id: '018',
-  name: 'Sword of Justice',
-  text: 'Remove Enemy Buffs',
-  media: 'magic',
+export const Dispel = {
+  id: '17',
+  media: MediaType.magic,
   effects: [
     {
       type: 'dispel',
@@ -266,11 +232,9 @@ export const SwordOfJustice = {
   ],
 };
 
-export const BerserkerRage = {
-  id: '019',
-  name: 'Berserker Rage',
-  text: 'Double Next Damage',
-  media: 'sword',
+export const Berserker = {
+  id: '18',
+  media: MediaType.sword,
   effects: [
     {
       type: 'doubleDmg',
@@ -280,11 +244,9 @@ export const BerserkerRage = {
   ],
 };
 
-export const ShieldBlock = {
-  id: '020',
-  name: 'Shield Block',
-  text: 'Block Next Damage',
-  media: 'shield',
+export const Block = {
+  id: '19',
+  media: MediaType.shield,
   effects: [
     {
       type: 'blockDmg',

@@ -13,13 +13,13 @@ export const GameState = {
 };
 
 export const CardType = {
-  // Required props: cardType, cardName, cardIndex, handleCardClick
+  // Required props: cardType, cardId, cardIndex, handleCardClick
   front: 'front',
 
   // Required props: cardType, playerId
   back: 'back',
 
-  // Required props: cardType, cardName, scale
+  // Required props: cardType, cardId, scale
   preview: 'preview',
 
   // Required props: cardType, playerId

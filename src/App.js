@@ -3,8 +3,6 @@ import { Client } from 'boardgame.io/react';
 import { WizardDuel } from './game/game';
 import WizardDuelBoard from './components/WizardDuelBoard';
 import Card from './components/Card';
-import PlayerHand from './components/PlayerHand';
-import PlayerInfo from './components/PlayerInfo';
 
 const WizardDuelClient = Client({ game: WizardDuel, board: WizardDuelBoard });
 
@@ -16,8 +14,6 @@ const App = () => {
 
         {/* for testing */}
         <Route path='/card' element={<Card />} />
-        <Route path='/hand' element={<PlayerHand />} />
-        <Route path='/info' element={<PlayerInfo />} />
       </Routes>
     </BrowserRouter>
   );

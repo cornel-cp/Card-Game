@@ -3,13 +3,13 @@ import { cardFront, cardBack, cardPlaceholder } from './utils/assetPaths';
 
 const Card = ({
   cardType = CardType.placeholder,
-  cardName,
+  cardId,
   cardIndex,
   playerId = '0',
   handleCardClick = () => {},
   scale = baseScale,
 }) => {
-  const frontImg = cardFront(cardName);
+  const frontImg = cardFront(cardId);
   const backImg = cardBack(playerId);
   const placeholderImg = cardPlaceholder(playerId);
 
@@ -20,7 +20,7 @@ const Card = ({
     [CardType.front]: (
       <img
         src={frontImg}
-        alt={cardName}
+        alt='card front'
         height={height}
         width={width}
         onClick={() => handleCardClick(cardIndex)}
@@ -32,7 +32,7 @@ const Card = ({
     ),
 
     [CardType.preview]: (
-      <img src={frontImg} alt={cardName} height={height} width={width} />
+      <img src={frontImg} alt='card preview' height={height} width={width} />
     ),
 
     [CardType.placeholder]: (

@@ -13,7 +13,7 @@ const CardPreview = ({ selectedCard }) => {
       ) : (
         <Card
           cardType={CardType.preview}
-          cardName={selectedCard.name}
+          cardId={selectedCard.id}
           scale={mediumScale}
         />
       )}
