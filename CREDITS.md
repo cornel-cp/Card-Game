@@ -18,8 +18,12 @@ This project uses audio resources from Freesound.com.
 
 ## Music Credits
 
-All music used in this project is created using Suno.AI.
+All music used in this project is created using **Suno.AI**.
 
 ## Art Credits
 
-All card art used in this project is created using Midjourney under a paid subscription.
+All card art used in this project is created using **Midjourney** under a paid subscription.
+
+## Inspiration
+
+The game mechanics are inspired by **Maganic Wars**, a Flash game I enjoyed playing when I was young.

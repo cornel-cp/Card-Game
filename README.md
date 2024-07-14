@@ -1,7 +1,23 @@
-# Wizard Duel
+## About Wizard Duel
 
-## Dev Instructions
+This is a single-player, turn-based card game where you and an AI opponent take turns playing cards. The goal is to reduce your opponent's health to zero to win the game.
 
-1. `npm i`
-2. `npm start`
-3. Navigate to the AI section of the debug panel, select Random BOT, click "play" to simulate one game.
+Try it out yourself at [Wizard Duel](https://wizard-duel-ten.vercel.app/game).
+
+## Built with
+
+- React
+- Bootstrap
+- [boardgame.io](https://boardgame.io/)
+
+## Supported Platforms
+
+For the best experience, please play the game in a web browser, specifically Chrome.
+
+## Contributing
+
+WIP
+
+## Credits
+
+See [CREDITS.md](./CREDITS.md)
