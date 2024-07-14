@@ -123,35 +123,35 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   return (
     <div className='container-fluid vh-100 d-flex flex-column p-2 board-background'>
       <div className='row'>
-        <div className='col-2'>
+        <div className='col-3'>
           <PlayerStats player={G.players[1]} />
         </div>
-        <div className='col-8'>
+        <div className='col-6'>
           <PlayerHand player={G.players[1]} />
         </div>
-        <div className='col-2'>
+        <div className='col-3'>
           <IconList />
         </div>
       </div>
 
       <div className='row flex-grow-1'>
-        <div className='col-2'></div>
-        <div className='col-8'>
+        <div className='col-3'></div>
+        <div className='col-6'>
           <CardPreview selectedCard={selectedCard} />
         </div>
-        <div className='col-2'>
+        <div className='col-3'>
           <CardPile />
         </div>
       </div>
 
       <div className='row align-items-end'>
-        <div className='col-2'>
+        <div className='col-3'>
           <PlayerStats player={G.players[0]} />
         </div>
-        <div className='col-8'>
+        <div className='col-6'>
           <PlayerHand player={G.players[0]} handleCardClick={handleCardClick} />
         </div>
-        <div className='col-2'>
+        <div className='col-3'>
           <EndTurnButton
             gameState={gameState}
             handleEndTurnButtonClick={handleEndTurnButtonClick}
