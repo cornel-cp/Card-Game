@@ -4,7 +4,7 @@ import CardPreview from './CardPreview';
 import EndTurnButton from './EndTurnButton';
 import GameoverModal from './GameoverModal';
 import PlayerHand from './PlayerHand';
-import PlayerStatus from './PlayerStatus';
+import PlayerStats from './PlayerStats';
 import useAudioPlayer from './hooks/useAudioPlayer';
 import { sleep } from './utils/utils';
 import { GameState, pauseInterval } from './utils/constants';
@@ -123,7 +123,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     <div className='container-fluid vh-100 d-flex flex-column p-2 board-background'>
       <div className='row'>
         <div className='col-2'>
-          <PlayerStatus player={G.players[1]} />
+          <PlayerStats player={G.players[1]} />
         </div>
         <div className='col-8'>
           <PlayerHand player={G.players[1]} />
@@ -143,7 +143,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
       <div className='row align-items-end'>
         <div className='col-2'>
-          <PlayerStatus player={G.players[0]} />
+          <PlayerStats player={G.players[0]} />
         </div>
         <div className='col-8'>
           <PlayerHand player={G.players[0]} handleCardClick={handleCardClick} />
