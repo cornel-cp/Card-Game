@@ -3,6 +3,7 @@ import CardPile from './CardPile';
 import CardPreview from './CardPreview';
 import EndTurnButton from './EndTurnButton';
 import GameoverModal from './GameoverModal';
+import IconList from './IconList';
 import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
 import useAudioPlayer from './hooks/useAudioPlayer';
@@ -128,7 +129,9 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         <div className='col-8'>
           <PlayerHand player={G.players[1]} />
         </div>
-        <div className='col-2'></div>
+        <div className='col-2'>
+          <IconList />
+        </div>
       </div>
 
       <div className='row flex-grow-1'>
