@@ -27,7 +27,7 @@ export const CardType = {
   placeholder: 'placeholder',
 };
 
-export const pauseInterval = 1500;
+export const pauseInterval = 1200;
 
 export const baseScale = 1;
 export const mediumScale = 1.25;
