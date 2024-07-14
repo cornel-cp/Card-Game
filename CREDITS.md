@@ -2,7 +2,7 @@
 
 ## Audio Credits
 
-This project uses audio resources from Freesound.com.
+This project uses audio resources from **Freesound.com**.
 
 - **[Fast Freezing (ice)](https://freesound.org/s/192415/)** by urupin -- License: [Attribution NonCommercial 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
 - **[Short-Fireball-Woosh.flac](https://freesound.org/s/267887/)** by wjl -- License: [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)
