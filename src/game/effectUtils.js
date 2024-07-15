@@ -48,6 +48,10 @@ export const undoEffect = (G, target, { type, value = 0 }) => {
     case EffectType.debuffDef:
       G.players[target].def += value;
       break;
+    case EffectType.doubleDmg:
+      break;
+    case EffectType.preventDmg:
+      break;  
     default:
       console.error(`Invalid effect type: ${type}`);
       return;

@@ -27,7 +27,12 @@ export const EffectGroupName = {
 };
 
 export const EffectGroup = {
-  buff: [EffectType.buffAtk, EffectType.buffDef],
+  buff: [
+    EffectType.buffAtk,
+    EffectType.buffDef,
+    EffectType.doubleDmg,
+    EffectType.preventDmg,
+  ],
 
   debuff: [EffectType.debuffAtk, EffectType.debuffDef],
 };
