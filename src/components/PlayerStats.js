@@ -1,6 +1,5 @@
 import { avatarHeight, avatarWidth } from './utils/constants';
 import { avatar, icon } from './utils/assetPaths';
-import './styles/styles.css';
 
 const PlayerStats = ({ player }) => {
   return (
@@ -17,15 +16,15 @@ const PlayerStats = ({ player }) => {
       <div className='d-flex flex-column'>
         <div className='d-flex align-items-center mb-2'>
           <img src={icon.hp} className='me-2' alt='hp' />
-          <span className='font-lora-bold'>{player.hp}</span>
+          <span className='fw-semibold'>{player.hp}</span>
         </div>
         <div className='d-flex align-items-center mb-2'>
           <img src={icon.atk} className='me-2' alt='atk' />
-          <span className='font-lora-bold'>{player.atk}</span>
+          <span className='fw-semibold'>{player.atk}</span>
         </div>
         <div className='d-flex align-items-center'>
           <img src={icon.def} className='me-2' alt='def' />
-          <span className='font-lora-bold'>{player.def}</span>
+          <span className='fw-semibold'>{player.def}</span>
         </div>
       </div>
     </div>
