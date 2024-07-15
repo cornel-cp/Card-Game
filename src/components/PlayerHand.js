@@ -3,7 +3,7 @@ import { CardType } from './utils/constants';
 
 const PlayerHand = ({ player, handleCardClick }) => {
   return (
-    <div className='d-flex'>
+    <div className='d-flex justify-content-center'>
       {player.hand.map((card, index) => (
         <div key={index} className='me-2'>
           {/* FOR DEBUGGING */}
