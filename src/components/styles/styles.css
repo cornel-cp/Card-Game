@@ -5,3 +5,8 @@
     rgba(210, 180, 140, 0.7)
   );
 }
+
+.font-lora-bold {
+  font-family: 'Lora', serif;
+  font-weight: 700;
+}
