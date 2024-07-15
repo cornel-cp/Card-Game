@@ -1,4 +1,13 @@
 import { useEffect, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Tooltip } from 'bootstrap';
+import './styles/styles.css';
+
+import useAudioPlayer from './hooks/useAudioPlayer';
+import { sleep } from './utils/utils';
+import { GameState, pauseInterval } from './utils/constants';
+import { cardAudio, click, victory, defeat } from './utils/assetPaths';
+
 import CardPile from './CardPile';
 import CardPreview from './CardPreview';
 import EndTurnButton from './EndTurnButton';
@@ -6,18 +15,21 @@ import GameoverModal from './GameoverModal';
 import IconList from './IconList';
 import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
-import useAudioPlayer from './hooks/useAudioPlayer';
-import { sleep } from './utils/utils';
-import { GameState, pauseInterval } from './utils/constants';
-import { cardAudio, click, victory, defeat } from './utils/assetPaths';
-import './styles/styles.css';
 
 const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
+  // Initialize Bootstrap tooltips
+  useEffect(() => {
+    const tooltipTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]'
+    );
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+      new Tooltip(tooltipTriggerEl);
+    });
+  }, []);
+
   const [selectedCard, setSelectedCard] = useState(null);
   const [playerSelectedIndex, setPlayerSelectedIndex] = useState(null);
-
   const [gameState, setGameState] = useState(GameState.endTurnDisabled);
-
   const [showGameoverModal, setShowGameoverModal] = useState(false);
   const [winner, setWinner] = useState(null);
 
@@ -126,9 +138,11 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         <div className='col-3'>
           <PlayerStats player={G.players[1]} />
         </div>
+
         <div className='col-6'>
           <PlayerHand player={G.players[1]} />
         </div>
+
         <div className='col-3'>
           <IconList />
         </div>
@@ -136,9 +150,11 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
       <div className='row flex-grow-1'>
         <div className='col-3'></div>
+
         <div className='col-6'>
           <CardPreview selectedCard={selectedCard} />
         </div>
+
         <div className='col-3'>
           <CardPile />
         </div>
@@ -148,9 +164,11 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         <div className='col-3'>
           <PlayerStats player={G.players[0]} />
         </div>
+
         <div className='col-6'>
           <PlayerHand player={G.players[0]} handleCardClick={handleCardClick} />
         </div>
+
         <div className='col-3'>
           <EndTurnButton
             gameState={gameState}

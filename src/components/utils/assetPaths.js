@@ -7,9 +7,9 @@ const icon = {
   hp: `${imgPrefix}/icons/hp.svg`,
   atk: `${imgPrefix}/icons/atk.svg`,
   def: `${imgPrefix}/icons/def.svg`,
-  library: `${imgPrefix}/icons/library.svg`,
-  instructions: `${imgPrefix}/icons/instructions.svg`,
   settings: `${imgPrefix}/icons/settings.svg`,
+  library: `${imgPrefix}/icons/library.svg`,
+  help: `${imgPrefix}/icons/help.svg`,
 };
 
 const cardFront = (cardId) => `${cardPrefix}/front/${cardId}.svg`;

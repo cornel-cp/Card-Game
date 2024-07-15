@@ -1,5 +1,5 @@
-import Card from './Card';
 import { CardType, mediumScale } from './utils/constants';
+import Card from './Card';
 
 const CardPreview = ({ selectedCard }) => {
   return (

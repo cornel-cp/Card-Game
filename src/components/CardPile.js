@@ -7,7 +7,15 @@ const CardPile = ({ scale = baseScale }) => {
 
   return (
     <div className='d-flex justify-content-end align-items-center h-100'>
-      <img src={cardPile} alt='card pile' height={height} width={width} />
+      <img
+        src={cardPile}
+        alt='card pile'
+        height={height}
+        width={width}
+        data-bs-toggle='tooltip'
+        data-bs-placement='bottom'
+        data-bs-title='Deck'
+      />
     </div>
   );
 };

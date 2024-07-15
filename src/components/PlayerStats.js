@@ -10,6 +10,9 @@ const PlayerStats = ({ player }) => {
           alt='avatar'
           height={avatarHeight}
           width={avatarWidth}
+          data-bs-toggle='tooltip'
+          data-bs-placement={player.id === '0' ? 'top' : 'bottom'}
+          data-bs-title={player.id === '0' ? 'Player' : 'Opponent'}
         />
       </div>
 
