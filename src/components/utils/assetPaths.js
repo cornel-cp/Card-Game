@@ -21,6 +21,14 @@ const cardFronts = Array.from(
   { length: 20 },
   (_, cardId) => `${cardPrefix}/front/${cardId}.svg`
 );
+const images = [
+  ...cardFronts,
+  `${cardPrefix}/back/0.svg`,
+  `${cardPrefix}/back/1.svg`,
+  `${cardPrefix}/placeholder/0.svg`,
+  `${cardPrefix}/placeholder/1.svg`,
+  cardPile,
+];
 
 const cardAudioType = {
   0: 'fireball',
@@ -70,7 +78,7 @@ export {
   cardBack,
   cardPlaceholder,
   cardPile,
-  cardFronts,
+  images,
 
   // AUDIO
   cardAudio,
