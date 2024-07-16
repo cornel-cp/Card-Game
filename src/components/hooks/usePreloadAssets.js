@@ -10,6 +10,7 @@ const usePreloadAssets = (imageArray, audioArray) => {
     audioArray.forEach((audioSrc) => {
       const audio = new Audio();
       audio.src = audioSrc;
+      audio.preload = 'auto';
     });
   }, []);
 };

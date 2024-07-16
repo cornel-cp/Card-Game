@@ -25,7 +25,7 @@ import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
 
 const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
-  // Preload all card images and audio files to reduce latency
+  // Preload to use memory cache and reduce network requests
   usePreloadAssets(cardFronts, audio);
 
   // Initialize Bootstrap tooltips
