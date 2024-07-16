@@ -17,34 +17,34 @@ import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
 
 const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
-  const faceArray = [
-    '/images/cards/front/0.svg',
-    '/images/cards/front/1.svg',
-    '/images/cards/front/2.svg',
-    '/images/cards/front/3.svg',
-    '/images/cards/front/4.svg',
-    '/images/cards/front/5.svg',
-    '/images/cards/front/6.svg',
-    '/images/cards/front/7.svg',
-    '/images/cards/front/8.svg',
-    '/images/cards/front/9.svg',
-    '/images/cards/front/10.svg',
-    '/images/cards/front/11.svg',
-    '/images/cards/front/12.svg',
-    '/images/cards/front/13.svg',
-    '/images/cards/front/14.svg',
-    '/images/cards/front/15.svg',
-    '/images/cards/front/16.svg',
-    '/images/cards/front/17.svg',
-    '/images/cards/front/18.svg',
-    '/images/cards/front/19.svg',
-  ];
-  useEffect(() => {
-    faceArray.forEach((face) => {
-      const img = new Image();
-      img.src = face;
-    });
-  }, []);
+  // const faceArray = [
+  //   '/images/cards/front/0.svg',
+  //   '/images/cards/front/1.svg',
+  //   '/images/cards/front/2.svg',
+  //   '/images/cards/front/3.svg',
+  //   '/images/cards/front/4.svg',
+  //   '/images/cards/front/5.svg',
+  //   '/images/cards/front/6.svg',
+  //   '/images/cards/front/7.svg',
+  //   '/images/cards/front/8.svg',
+  //   '/images/cards/front/9.svg',
+  //   '/images/cards/front/10.svg',
+  //   '/images/cards/front/11.svg',
+  //   '/images/cards/front/12.svg',
+  //   '/images/cards/front/13.svg',
+  //   '/images/cards/front/14.svg',
+  //   '/images/cards/front/15.svg',
+  //   '/images/cards/front/16.svg',
+  //   '/images/cards/front/17.svg',
+  //   '/images/cards/front/18.svg',
+  //   '/images/cards/front/19.svg',
+  // ];
+  // useEffect(() => {
+  //   faceArray.forEach((face) => {
+  //     const img = new Image();
+  //     img.src = face;
+  //   });
+  // }, []);
 
   // Initialize Bootstrap tooltips
   useEffect(() => {
