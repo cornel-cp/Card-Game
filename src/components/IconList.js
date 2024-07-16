@@ -4,12 +4,12 @@ const IconList = () => {
   return (
     <div className='d-flex justify-content-end m-2'>
       <img
-        src={icon.library}
+        src={icon.log}
         className='me-3'
-        alt='library'
+        alt='log'
         data-bs-toggle='tooltip'
         data-bs-placement='bottom'
-        data-bs-title='Card library'
+        data-bs-title='Battle log'
       />
       <img
         src={icon.settings}
