@@ -4,9 +4,17 @@ import { Tooltip } from 'bootstrap';
 import './styles/styles.css';
 
 import useAudioPlayer from './hooks/useAudioPlayer';
+import usePreloadAssets from './hooks/usePreloadAssets';
 import { sleep } from './utils/utils';
 import { GameState, pauseInterval } from './utils/constants';
-import { cardAudio, click, victory, defeat } from './utils/assetPaths';
+import {
+  cardFronts,
+  cardAudio,
+  click,
+  victory,
+  defeat,
+  audio,
+} from './utils/assetPaths';
 
 import CardPile from './CardPile';
 import CardPreview from './CardPreview';
@@ -17,34 +25,8 @@ import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
 
 const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
-  // const faceArray = [
-  //   '/images/cards/front/0.svg',
-  //   '/images/cards/front/1.svg',
-  //   '/images/cards/front/2.svg',
-  //   '/images/cards/front/3.svg',
-  //   '/images/cards/front/4.svg',
-  //   '/images/cards/front/5.svg',
-  //   '/images/cards/front/6.svg',
-  //   '/images/cards/front/7.svg',
-  //   '/images/cards/front/8.svg',
-  //   '/images/cards/front/9.svg',
-  //   '/images/cards/front/10.svg',
-  //   '/images/cards/front/11.svg',
-  //   '/images/cards/front/12.svg',
-  //   '/images/cards/front/13.svg',
-  //   '/images/cards/front/14.svg',
-  //   '/images/cards/front/15.svg',
-  //   '/images/cards/front/16.svg',
-  //   '/images/cards/front/17.svg',
-  //   '/images/cards/front/18.svg',
-  //   '/images/cards/front/19.svg',
-  // ];
-  // useEffect(() => {
-  //   faceArray.forEach((face) => {
-  //     const img = new Image();
-  //     img.src = face;
-  //   });
-  // }, []);
+  // Preload all card images and audio files to reduce latency
+  usePreloadAssets(cardFronts, audio);
 
   // Initialize Bootstrap tooltips
   useEffect(() => {

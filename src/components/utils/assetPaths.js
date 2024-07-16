@@ -17,6 +17,10 @@ const cardBack = (playerId) => `${cardPrefix}/back/${playerId}.svg`;
 const cardPlaceholder = (playerId) =>
   `${cardPrefix}/placeholder/${playerId}.svg`;
 const cardPile = `${cardPrefix}/pile.svg`;
+const cardFronts = Array.from(
+  { length: 20 },
+  (_, cardId) => `${cardPrefix}/front/${cardId}.svg`
+);
 
 const cardAudioType = {
   0: 'fireball',
@@ -44,6 +48,19 @@ const cardAudio = (cardId) => `${audioPrefix}/${cardAudioType[cardId]}.ogg`;
 const click = `${audioPrefix}/click.ogg`;
 const victory = `${audioPrefix}/victory.ogg`;
 const defeat = `${audioPrefix}/defeat.ogg`;
+const audio = [
+  `${audioPrefix}/fireball.ogg`,
+  `${audioPrefix}/freeze.ogg`,
+  `${audioPrefix}/thunder.ogg`,
+  `${audioPrefix}/heal.ogg`,
+  `${audioPrefix}/sword.ogg`,
+  `${audioPrefix}/shield.ogg`,
+  `${audioPrefix}/weaken.ogg`,
+  `${audioPrefix}/magic.ogg`,
+  `${audioPrefix}/click.ogg`,
+  `${audioPrefix}/victory.ogg`,
+  `${audioPrefix}/defeat.ogg`,
+];
 
 export {
   // IMAGES
@@ -53,10 +70,12 @@ export {
   cardBack,
   cardPlaceholder,
   cardPile,
+  cardFronts,
 
   // AUDIO
   cardAudio,
   click,
   victory,
   defeat,
+  audio,
 };
