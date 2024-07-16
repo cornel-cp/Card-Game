@@ -76,7 +76,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
       setSelectedCard(aiSelectedCard);
 
       moves.playCard(aiSelectedIndex);
-      handlePlaySoundEffect(cardAudio(aiSelectedCard.id));
+      // handlePlaySoundEffect(cardAudio(aiSelectedCard.id));
     }
   };
 
@@ -88,7 +88,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         setWinner(ctx.gameover.winner);
       }
       setShowGameoverModal(true);
-      handlePlaySoundEffect(ctx.gameover.winner === '0' ? victory : defeat);
+      // handlePlaySoundEffect(ctx.gameover.winner === '0' ? victory : defeat);
     }
     // Not needed if game restart is implemented via a full page reload
     // else {
@@ -117,7 +117,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     if (gameState !== GameState.aiTurn) {
       setSelectedCard(G.players[0].hand[index]);
       setPlayerSelectedIndex(index);
-      handlePlaySoundEffect(click);
+      // handlePlaySoundEffect(click);
 
       setGameState(GameState.endTurnEnabled);
     }
@@ -126,7 +126,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const handleEndTurnButtonClick = () => {
     if (gameState === GameState.endTurnEnabled) {
       moves.playCard(playerSelectedIndex);
-      handlePlaySoundEffect(cardAudio(selectedCard.id));
+      // handlePlaySoundEffect(cardAudio(selectedCard.id));
 
       setGameState(GameState.aiTurn);
     }
