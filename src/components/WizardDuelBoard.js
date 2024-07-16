@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Tooltip } from 'bootstrap';
 import './styles/styles.css';
 
 import useAudioPlayer from './hooks/useAudioPlayer';
+import useBsTooltip from './hooks/useBsTooltip';
 import usePreloadAssets from './hooks/usePreloadAssets';
 import { sleep } from './utils/utils';
 import { GameState, pauseInterval } from './utils/constants';
@@ -29,14 +28,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   usePreloadAssets(images, audio);
 
   // Initialize Bootstrap tooltips
-  useEffect(() => {
-    const tooltipTriggerList = document.querySelectorAll(
-      '[data-bs-toggle="tooltip"]'
-    );
-    tooltipTriggerList.forEach((tooltipTriggerEl) => {
-      new Tooltip(tooltipTriggerEl);
-    });
-  }, []);
+  useBsTooltip();
 
   const [selectedCard, setSelectedCard] = useState(null);
   const [playerSelectedIndex, setPlayerSelectedIndex] = useState(null);
