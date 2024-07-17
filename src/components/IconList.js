@@ -1,11 +1,11 @@
 import { icon } from './utils/assetPaths';
 
-const IconList = () => {
+const IconList = ({ setShowHelpModal }) => {
   return (
     <div className='d-flex justify-content-end m-2'>
       <img
         src={icon.log}
-        className='me-3'
+        className='me-3 icon'
         alt='log'
         data-bs-toggle='tooltip'
         data-bs-placement='bottom'
@@ -13,7 +13,7 @@ const IconList = () => {
       />
       <img
         src={icon.settings}
-        className='me-3'
+        className='me-3 icon'
         alt='settings'
         data-bs-toggle='tooltip'
         data-bs-placement='bottom'
@@ -21,10 +21,12 @@ const IconList = () => {
       />
       <img
         src={icon.help}
+        className='icon'
         alt='help'
         data-bs-toggle='tooltip'
         data-bs-placement='bottom'
         data-bs-title='Help'
+        onClick={() => setShowHelpModal(true)}
       />
     </div>
   );

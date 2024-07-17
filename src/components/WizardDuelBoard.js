@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import './styles/styles.css';
 
 import useAudioPlayer from './hooks/useAudioPlayer';
 import useBsTooltip from './hooks/useBsTooltip';
@@ -19,6 +18,7 @@ import CardPile from './CardPile';
 import CardPreview from './CardPreview';
 import EndTurnButton from './EndTurnButton';
 import GameoverModal from './GameoverModal';
+import HelpModal from './HelpModal';
 import IconList from './IconList';
 import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
@@ -35,6 +35,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const [gameState, setGameState] = useState(GameState.endTurnDisabled);
   const [showGameoverModal, setShowGameoverModal] = useState(false);
   const [winner, setWinner] = useState(null);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   const { play } = useAudioPlayer();
 
@@ -136,7 +137,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   };
 
   return (
-    <div className='container-fluid vh-100 d-flex flex-column p-2 board-background'>
+    <div className='container-fluid vh-100 d-flex flex-column p-2 bg-board'>
       <div className='row'>
         <div className='col-3'>
           <PlayerStats player={G.players[1]} />
@@ -147,7 +148,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         </div>
 
         <div className='col-3'>
-          <IconList />
+          <IconList setShowHelpModal={setShowHelpModal} />
         </div>
       </div>
 
@@ -180,10 +181,15 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         </div>
       </div>
 
+      {/* Components rendered on demand */}
       <GameoverModal
         showGameoverModal={showGameoverModal}
         winner={winner}
         handleRestart={handleRestart}
+      />
+      <HelpModal
+        showHelpModal={showHelpModal}
+        setShowHelpModal={setShowHelpModal}
       />
     </div>
   );
