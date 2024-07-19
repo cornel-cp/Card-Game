@@ -11,6 +11,7 @@
     rgba(210, 180, 140, 0.7)
   );
 }
+
 .bg-modal {
   background-color: rgba(245, 222, 179, 0.9);
 }
@@ -23,8 +24,4 @@
   font-family: 'Lora', serif;
   font-style: italic;
   font-weight: 700;
-}
-.font-lora-semibold {
-  font-family: 'Lora', serif;
-  font-weight: 400;
 }

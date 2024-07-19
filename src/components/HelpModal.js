@@ -14,10 +14,9 @@ const HelpModal = ({ showHelpModal, setShowHelpModal }) => {
         <div className='modal-dialog modal-dialog-centered'>
           <div className='modal-content bg-modal'>
             <div className='modal-header border-0'>
-              {/* TODO: use a Lora-compatible font for the body */}
-              <h5 className='modal-title w-100 text-center font-lora-italic-bold fs-3'>
+              <h3 className='modal-title w-100 text-center font-lora-italic-bold'>
                 Wizard Duel Instructions
-              </h5>
+              </h3>
               <button
                 type='button'
                 class='btn-close'
@@ -27,24 +26,24 @@ const HelpModal = ({ showHelpModal, setShowHelpModal }) => {
               ></button>
             </div>
             <div className='modal-body'>
-              <ol className='font-lora-semibold'>
-                <li className='mb-1'>
+              <ol>
+                <li className='mb-2'>
                   Two players alternate turns. You go first.
                 </li>
-                <li className='mb-1'>
+                <li className='mb-2'>
                   Both players share a deck and start with <b>5</b> cards.
                 </li>
-                <li className='mb-1'>
+                <li className='mb-2'>
                   Each turn, a player can play <b>only one</b> card from hand.
                 </li>
-                <li className='mb-1'>
+                <li className='mb-2'>
                   Click a card to preview it, then click "End Turn" to play it.
                 </li>
-                <li className='mb-1'>
+                <li className='mb-2'>
                   Game is over if a player's HP drops to <b>0</b> or after{' '}
                   <b>50</b> turns.
                 </li>
-                <li className='mb-1'>
+                <li className='mb-2'>
                   Card effects will last until removed by another card effect.
                 </li>
                 <li>
