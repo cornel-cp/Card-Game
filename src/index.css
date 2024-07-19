@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
 
-/* body {
-    Apply global styles here
-} */
-
 .bg-board {
   background: radial-gradient(
     circle,
@@ -13,7 +9,7 @@
 }
 
 .bg-modal {
-  background-color: rgba(245, 222, 179, 0.9);
+  background-color: #fef3e2;
 }
 
 .icon:hover {

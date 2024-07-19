@@ -25,6 +25,7 @@ const HelpModal = ({ showHelpModal, setShowHelpModal }) => {
                 onClick={() => setShowHelpModal(false)}
               ></button>
             </div>
+
             <div className='modal-body'>
               <ol>
                 <li className='mb-2'>

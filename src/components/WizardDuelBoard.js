@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import useAudioPlayer from './hooks/useAudioPlayer';
 import useBsTooltip from './hooks/useBsTooltip';
+import useLog from './hooks/useLog';
 import usePreloadAssets from './hooks/usePreloadAssets';
 import { sleep } from './utils/utils';
 import { GameState, pauseInterval } from './utils/constants';
@@ -19,6 +20,7 @@ import CardPreview from './CardPreview';
 import EndTurnButton from './EndTurnButton';
 import GameoverModal from './GameoverModal';
 import HelpModal from './HelpModal';
+import LogModal from './LogModal';
 import IconList from './IconList';
 import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
@@ -33,15 +35,13 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [playerSelectedIndex, setPlayerSelectedIndex] = useState(null);
   const [gameState, setGameState] = useState(GameState.endTurnDisabled);
-  const [showGameoverModal, setShowGameoverModal] = useState(false);
   const [winner, setWinner] = useState(null);
+  const [showGameoverModal, setShowGameoverModal] = useState(false);
+  const [showLogModal, setShowLogModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
 
+  const { logEntries, addLogEntry } = useLog();
   const { play } = useAudioPlayer();
-
-  const handlePlaySoundEffect = (src) => {
-    play(src);
-  };
 
   const handleDrawCard = async () => {
     if (ctx.gameover) {
@@ -80,7 +80,13 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
       setSelectedCard(aiSelectedCard);
 
       moves.playCard(aiSelectedIndex);
-      handlePlaySoundEffect(cardAudio(aiSelectedCard.id));
+      play(cardAudio(aiSelectedCard.id));
+      addLogEntry(
+        ctx.turn,
+        G.players[1].name,
+        aiSelectedCard.name,
+        aiSelectedCard.text
+      );
     }
   };
 
@@ -92,7 +98,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         setWinner(ctx.gameover.winner);
       }
       setShowGameoverModal(true);
-      handlePlaySoundEffect(ctx.gameover.winner === '0' ? victory : defeat);
+      play(ctx.gameover.winner === '0' ? victory : defeat);
     }
     // Not needed if game restart is implemented via a full page reload
     // else {
@@ -121,7 +127,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     if (gameState !== GameState.aiTurn) {
       setSelectedCard(G.players[0].hand[index]);
       setPlayerSelectedIndex(index);
-      handlePlaySoundEffect(click);
+      play(click);
 
       setGameState(GameState.endTurnEnabled);
     }
@@ -130,7 +136,13 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const handleEndTurnButtonClick = () => {
     if (gameState === GameState.endTurnEnabled) {
       moves.playCard(playerSelectedIndex);
-      handlePlaySoundEffect(cardAudio(selectedCard.id));
+      play(cardAudio(selectedCard.id));
+      addLogEntry(
+        ctx.turn,
+        G.players[0].name,
+        G.players[0].hand[playerSelectedIndex].name,
+        G.players[0].hand[playerSelectedIndex].text
+      );
 
       setGameState(GameState.aiTurn);
     }
@@ -148,7 +160,10 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         </div>
 
         <div className='col-3'>
-          <IconList setShowHelpModal={setShowHelpModal} />
+          <IconList
+            setShowLogModal={setShowLogModal}
+            setShowHelpModal={setShowHelpModal}
+          />
         </div>
       </div>
 
@@ -186,6 +201,11 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         showGameoverModal={showGameoverModal}
         winner={winner}
         handleRestart={handleRestart}
+      />
+      <LogModal
+        showLogModal={showLogModal}
+        setShowLogModal={setShowLogModal}
+        logEntries={logEntries}
       />
       <HelpModal
         showHelpModal={showHelpModal}
