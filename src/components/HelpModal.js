@@ -11,8 +11,8 @@ const HelpModal = ({ showHelpModal, setShowHelpModal }) => {
         data-bs-keyboard='false'
         tabIndex='-1'
       >
-        <div className='modal-dialog modal-dialog-centered'>
-          <div className='modal-content bg-modal'>
+        <div className='modal-dialog modal-dialog-scrollable modal-dialog-centered'>
+          <div className='modal-content bg-modal h-50'>
             <div className='modal-header border-0'>
               <h3 className='modal-title w-100 text-center font-lora-italic-bold'>
                 Wizard Duel Instructions
