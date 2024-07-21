@@ -3,17 +3,9 @@ import { useEffect, useState } from 'react';
 import useAudioPlayer from './hooks/useAudioPlayer';
 import useBsTooltip from './hooks/useBsTooltip';
 import useLog from './hooks/useLog';
-import usePreloadAssets from './hooks/usePreloadAssets';
 import { sleep } from './utils/utils';
 import { GameState, pauseInterval } from './utils/constants';
-import {
-  images,
-  cardAudio,
-  click,
-  victory,
-  defeat,
-  audio,
-} from './utils/assetPaths';
+import { cardAudio, click, victory, defeat } from './utils/assetPaths';
 
 import CardPile from './CardPile';
 import CardPreview from './CardPreview';
@@ -26,9 +18,6 @@ import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
 
 const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
-  // // Preload to use cache and reduce latency
-  // usePreloadAssets(images, audio);
-
   // Initialize Bootstrap tooltips
   useBsTooltip();
 

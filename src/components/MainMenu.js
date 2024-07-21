@@ -1,18 +1,29 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useAudioPlayer from './hooks/useAudioPlayer';
 import usePreloadAssets from './hooks/usePreloadAssets';
-import { images, audio } from './utils/assetPaths';
+import { images, audio, click } from './utils/assetPaths';
+import HelpModal from './HelpModal';
 
 const MainMenu = () => {
   // Preload to use cache and reduce latency
   usePreloadAssets(images, audio);
 
+  const [showHelpModal, setShowHelpModal] = useState(false);
+
   const navigate = useNavigate();
+  const { play } = useAudioPlayer();
 
   const navigateToGame = () => {
     navigate('/game');
   };
 
-  const onAboutClick = () => {
+  const handleHelpClick = () => {
+    setShowHelpModal(true);
+    play(click);
+  };
+
+  const handleAboutClick = () => {
     window.open('https://github.com/ruichen199801/wizard-duel', '_blank');
   };
 
@@ -26,7 +37,10 @@ const MainMenu = () => {
         >
           Play
         </button>
-        <button className='btn btn-dark btn-lg menu-btn-width mb-3'>
+        <button
+          className='btn btn-dark btn-lg menu-btn-width mb-3'
+          onClick={handleHelpClick}
+        >
           Instructions
         </button>
         <button className='btn btn-dark btn-lg menu-btn-width mb-3'>
@@ -34,11 +48,17 @@ const MainMenu = () => {
         </button>
         <button
           className='btn btn-dark btn-lg menu-btn-width'
-          onClick={onAboutClick}
+          onClick={handleAboutClick}
         >
           About
         </button>
       </div>
+
+      {/* Components rendered on demand */}
+      <HelpModal
+        showHelpModal={showHelpModal}
+        setShowHelpModal={setShowHelpModal}
+      />
     </div>
   );
 };
