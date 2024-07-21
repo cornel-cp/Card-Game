@@ -21,6 +21,7 @@ const GameoverModal = ({ showGameoverModal, winner, handleRestart }) => {
 
             <div className='modal-body'>
               <p className='fs-5 ms-2 mb-4'>
+                {/* Show defeat message when player lost the game or when there is a draw */}
                 {winner === '0'
                   ? 'You have bested your opponent!'
                   : 'Defeated... better luck next time!'}
