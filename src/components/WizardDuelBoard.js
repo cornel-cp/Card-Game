@@ -107,11 +107,6 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     handleShowGameoverModal();
   }, [ctx.gameover]);
 
-  const handleRestart = () => {
-    window.location.reload();
-    // The alternative is to call reset() and clean up manual states on the client side
-  };
-
   const handleCardClick = async (index) => {
     if (gameState !== GameState.aiTurn) {
       setSelectedCard(G.players[0].hand[index]);
@@ -189,7 +184,6 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
       <GameoverModal
         showGameoverModal={showGameoverModal}
         winner={winner}
-        handleRestart={handleRestart}
       />
       <LogModal
         showLogModal={showLogModal}

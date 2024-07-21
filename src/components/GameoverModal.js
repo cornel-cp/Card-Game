@@ -1,7 +1,17 @@
-const GameoverModal = ({ showGameoverModal, winner, handleRestart }) => {
+const GameoverModal = ({ showGameoverModal, winner }) => {
   if (!showGameoverModal) {
     return null;
   }
+
+  const reloadMenu = () => {
+    // Use full page reload to keep the game state clean
+    window.location.href = '/';
+  };
+
+  const handleRestart = () => {
+    window.location.reload();
+    // The alternative is to call reset() and clean up manual states on the client side
+  };
 
   return (
     <>
@@ -29,7 +39,11 @@ const GameoverModal = ({ showGameoverModal, winner, handleRestart }) => {
             </div>
 
             <div className='modal-footer border-0 justify-content-end'>
-              <button type='button' className='btn btn-secondary me-2'>
+              <button
+                type='button'
+                className='btn btn-secondary me-2'
+                onClick={reloadMenu}
+              >
                 Menu
               </button>
 
