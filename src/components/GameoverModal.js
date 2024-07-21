@@ -13,6 +13,11 @@ const GameoverModal = ({ showGameoverModal, winner }) => {
     // The alternative is to call reset() and clean up manual states on the client side
   };
 
+  const gameoverMessage = {
+    0: 'You have bested your opponent!',
+    1: 'Defeated... better luck next time!',
+  };
+
   return (
     <>
       <div
@@ -31,10 +36,8 @@ const GameoverModal = ({ showGameoverModal, winner }) => {
 
             <div className='modal-body'>
               <p className='fs-5 ms-2 mb-4'>
-                {/* Show defeat message when player lost the game or when there is a draw */}
-                {winner === '0'
-                  ? 'You have bested your opponent!'
-                  : 'Defeated... better luck next time!'}
+                {gameoverMessage[winner] ||
+                  'Time runs out, the duel ends in a draw.'}
               </p>
             </div>
 
