@@ -29,7 +29,14 @@ const MainMenu = () => {
 
   return (
     <div className='d-flex flex-column bg-menu vh-100 justify-content-center align-items-center'>
-      <p className='font-cinzel-semibold menu-title-fs mb-5'>Wizard Duel</p>
+      <div className='d-flex align-items-baseline mb-5'>
+        <p className='font-cinzel-semibold menu-title-fs m-0'>Wizard Duel</p>
+        <span className='badge bg-secondary ms-2'>Beta</span>
+      </div>
+
+      {/* Without the beta tag
+      <p className='font-cinzel-semibold menu-title-fs mb-5'>Wizard Duel</p> */}
+
       <div className='d-flex flex-column mt-5'>
         <button
           className='btn btn-dark btn-lg menu-btn-width mb-3'
