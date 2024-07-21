@@ -1,6 +1,19 @@
-import { icon } from './utils/assetPaths';
+import useAudioPlayer from './hooks/useAudioPlayer';
+import { icon, click } from './utils/assetPaths';
 
 const IconList = ({ setShowLogModal, setShowHelpModal }) => {
+  const { play } = useAudioPlayer();
+
+  const handleLogClick = () => {
+    setShowLogModal(true);
+    play(click);
+  };
+
+  const handleHelpClick = () => {
+    setShowHelpModal(true);
+    play(click);
+  };
+
   return (
     <div className='d-flex justify-content-end m-2'>
       <img
@@ -10,7 +23,7 @@ const IconList = ({ setShowLogModal, setShowHelpModal }) => {
         data-bs-toggle='tooltip'
         data-bs-placement='bottom'
         data-bs-title='Battle log'
-        onClick={() => setShowLogModal(true)}
+        onClick={handleLogClick}
       />
       {/* <img
         src={icon.settings}
@@ -27,7 +40,7 @@ const IconList = ({ setShowLogModal, setShowHelpModal }) => {
         data-bs-toggle='tooltip'
         data-bs-placement='bottom'
         data-bs-title='Help'
-        onClick={() => setShowHelpModal(true)}
+        onClick={handleHelpClick}
       />
     </div>
   );

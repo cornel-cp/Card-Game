@@ -1,7 +1,17 @@
+import useAudioPlayer from './hooks/useAudioPlayer';
+import { click } from './utils/assetPaths';
+
 const LogModal = ({ showLogModal, setShowLogModal, logEntries }) => {
+  const { play } = useAudioPlayer();
+
   if (!showLogModal) {
     return null;
   }
+
+  const handleLogClose = () => {
+    setShowLogModal(false);
+    play(click);
+  };
 
   return (
     <>
@@ -22,7 +32,7 @@ const LogModal = ({ showLogModal, setShowLogModal, logEntries }) => {
                 class='btn-close'
                 data-bs-dismiss='modal'
                 aria-label='Close'
-                onClick={() => setShowLogModal(false)}
+                onClick={handleLogClose}
               ></button>
             </div>
 

@@ -1,7 +1,17 @@
+import useAudioPlayer from './hooks/useAudioPlayer';
+import { click } from './utils/assetPaths';
+
 const HelpModal = ({ showHelpModal, setShowHelpModal }) => {
+  const { play } = useAudioPlayer();
+
   if (!showHelpModal) {
     return null;
   }
+
+  const handleHelpClose = () => {
+    setShowHelpModal(false);
+    play(click);
+  };
 
   return (
     <>
@@ -22,7 +32,7 @@ const HelpModal = ({ showHelpModal, setShowHelpModal }) => {
                 class='btn-close'
                 data-bs-dismiss='modal'
                 aria-label='Close'
-                onClick={() => setShowHelpModal(false)}
+                onClick={handleHelpClose}
               ></button>
             </div>
 

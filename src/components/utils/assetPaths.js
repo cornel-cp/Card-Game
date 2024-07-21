@@ -17,12 +17,15 @@ const cardBack = (playerId) => `${cardPrefix}/back/${playerId}.svg`;
 const cardPlaceholder = (playerId) =>
   `${cardPrefix}/placeholder/${playerId}.svg`;
 const cardPile = `${cardPrefix}/pile.svg`;
+
+const cardCount = 20;
 const cardFronts = Array.from(
-  { length: 20 },
+  { length: cardCount },
   (_, cardId) => `${cardPrefix}/front/${cardId}.svg`
 );
 const images = [
   ...cardFronts,
+
   `${cardPrefix}/back/0.svg`,
   `${cardPrefix}/back/1.svg`,
   `${cardPrefix}/placeholder/0.svg`,
@@ -57,6 +60,10 @@ const click = `${audioPrefix}/click.ogg`;
 const victory = `${audioPrefix}/victory.ogg`;
 const defeat = `${audioPrefix}/defeat.ogg`;
 const audio = [
+  click,
+  victory,
+  defeat,
+
   `${audioPrefix}/fireball.ogg`,
   `${audioPrefix}/freeze.ogg`,
   `${audioPrefix}/thunder.ogg`,
@@ -65,9 +72,6 @@ const audio = [
   `${audioPrefix}/shield.ogg`,
   `${audioPrefix}/weaken.ogg`,
   `${audioPrefix}/magic.ogg`,
-  `${audioPrefix}/click.ogg`,
-  `${audioPrefix}/victory.ogg`,
-  `${audioPrefix}/defeat.ogg`,
 ];
 
 export {
