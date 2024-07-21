@@ -16,8 +16,7 @@
   cursor: pointer;
 }
 
-.font-lora-italic-bold {
+.font-lora-bold {
   font-family: 'Lora', serif;
-  font-style: italic;
   font-weight: 700;
 }
