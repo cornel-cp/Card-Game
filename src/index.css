@@ -1,10 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
+.font-lora-bold {
+  font-family: 'Lora', serif;
+  font-weight: 700;
+}
+
+.font-cinzel-semibold {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+}
 
 .bg-board {
   background: radial-gradient(
     circle,
     rgba(245, 222, 179, 0.7),
     rgba(210, 180, 140, 0.7)
+  );
+}
+
+.bg-menu {
+  background: radial-gradient(
+    circle,
+    rgba(235, 205, 160, 0.8),
+    rgba(100, 70, 35, 0.8)
   );
 }
 
@@ -16,7 +35,10 @@
   cursor: pointer;
 }
 
-.font-lora-bold {
-  font-family: 'Lora', serif;
-  font-weight: 700;
+.menu-btn-width {
+  width: 200px;
+}
+
+.menu-title-fs {
+  font-size: 4rem;
 }
