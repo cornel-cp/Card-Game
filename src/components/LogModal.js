@@ -40,7 +40,8 @@ const LogModal = ({ showLogModal, setShowLogModal, logEntries }) => {
               <ul className='list-group list-group-flush'>
                 {logEntries.map((entry, index) => (
                   <li key={index} className='list-group-item bg-modal'>
-                    {entry}
+                    Turn {entry.turn}: <b>{entry.playerName}</b> played{' '}
+                    <b>{entry.cardName}</b>: {entry.cardText}
                   </li>
                 ))}
               </ul>

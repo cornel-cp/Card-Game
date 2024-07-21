@@ -4,7 +4,7 @@ const useLog = () => {
   const [logEntries, setLogEntries] = useState([]);
 
   const addLogEntry = (turn, playerName, cardName, cardText) => {
-    const entry = `Turn ${turn}: ${playerName} played ${cardName}: ${cardText}`;
+    const entry = { turn, playerName, cardName, cardText };
     setLogEntries((prevEntries) => [...prevEntries, entry]);
   };
 

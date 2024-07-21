@@ -12,7 +12,7 @@ export const p0 = {
 };
 
 export const p1 = {
-  name: `AI`,
+  name: `Opponent`,
   id: '1',
   maxHp: 30,
   baseAtk: 3,
