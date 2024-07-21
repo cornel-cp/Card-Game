@@ -26,8 +26,8 @@ import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
 
 const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
-  // Preload to use cache and reduce latency
-  usePreloadAssets(images, audio);
+  // // Preload to use cache and reduce latency
+  // usePreloadAssets(images, audio);
 
   // Initialize Bootstrap tooltips
   useBsTooltip();
