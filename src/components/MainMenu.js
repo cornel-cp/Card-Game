@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import useAudioPlayer from './hooks/useAudioPlayer';
 import usePreloadAssets from './hooks/usePreloadAssets';
-import { images, audio, click } from './utils/assetPaths';
+import { cardFronts, images, audio, click } from './utils/assetPaths';
+import CardGalleryModal from './CardGalleryModal';
 import HelpModal from './HelpModal';
 
 const MainMenu = () => {
@@ -9,6 +10,7 @@ const MainMenu = () => {
   usePreloadAssets(images, audio);
 
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [showCardGallery, setShowCardGallery] = useState(false);
 
   const { play } = useAudioPlayer();
 
@@ -19,6 +21,11 @@ const MainMenu = () => {
 
   const handleHelpClick = () => {
     setShowHelpModal(true);
+    play(click);
+  };
+
+  const handleCardsClick = () => {
+    setShowCardGallery(true);
     play(click);
   };
 
@@ -49,7 +56,10 @@ const MainMenu = () => {
         >
           Instructions
         </button>
-        <button className='btn btn-dark btn-lg menu-btn-width mb-3'>
+        <button
+          className='btn btn-dark btn-lg menu-btn-width mb-3'
+          onClick={handleCardsClick}
+        >
           Cards
         </button>
         <button
@@ -64,6 +74,11 @@ const MainMenu = () => {
       <HelpModal
         showHelpModal={showHelpModal}
         setShowHelpModal={setShowHelpModal}
+      />
+      <CardGalleryModal
+        showCardGallery={showCardGallery}
+        setShowCardGallery={setShowCardGallery}
+        cardImages={cardFronts}
       />
     </div>
   );

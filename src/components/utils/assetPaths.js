@@ -82,6 +82,7 @@ export {
   cardBack,
   cardPlaceholder,
   cardPile,
+  cardFronts,
   images,
 
   // AUDIO
