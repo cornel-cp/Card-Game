@@ -25,7 +25,7 @@ const HelpModal = ({ showHelpModal, setShowHelpModal }) => {
           <div className='modal-content bg-modal h-50'>
             <div className='modal-header border-0'>
               <h4 className='modal-title w-100 text-center font-lora-bold'>
-                Wizard Duel Instructions
+                Game Instructions
               </h4>
               <button
                 type='button'
