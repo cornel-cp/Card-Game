@@ -17,7 +17,7 @@ Try it out yourself at [Wizard Duel](https://wizard-duel-ten.vercel.app).
 ## Notes
 
 1. The game is **web only** and not mobile-responsive. Please use **Chrome** for the best experience, as other browsers might have issues with audio playback that can prevent the game from running.
-2. Vercel's cold start can cause initial delays or unexpected bugs. If you experience this, just wait a few seconds and reload the page, the issue should typically resolve itself.
+2. Vercel's cold start can cause initial delays or unexpected bugs that are not reproducible locally. If you experience this, just wait a few seconds and reload the page, the issue should typically resolve itself.
 
 ## Credits
 
