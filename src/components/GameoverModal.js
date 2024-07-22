@@ -3,8 +3,8 @@ const GameoverModal = ({ showGameoverModal, winner }) => {
     return null;
   }
 
-  const reloadMenu = () => {
-    // Use full page reload to keep the game state clean
+  const loadMenu = () => {
+    // Use full page rerender to keep the game state clean
     window.location.href = '/';
   };
 
@@ -45,7 +45,7 @@ const GameoverModal = ({ showGameoverModal, winner }) => {
               <button
                 type='button'
                 className='btn btn-secondary me-2'
-                onClick={reloadMenu}
+                onClick={loadMenu}
               >
                 Menu
               </button>

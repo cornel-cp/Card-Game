@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useAudioPlayer from './hooks/useAudioPlayer';
 import usePreloadAssets from './hooks/usePreloadAssets';
 import { images, audio, click } from './utils/assetPaths';
@@ -11,11 +10,11 @@ const MainMenu = () => {
 
   const [showHelpModal, setShowHelpModal] = useState(false);
 
-  const navigate = useNavigate();
   const { play } = useAudioPlayer();
 
-  const navigateToGame = () => {
-    navigate('/game');
+  const loadGame = () => {
+    // Use full page rerender to keep the game state clean
+    window.location.href = '/game';
   };
 
   const handleHelpClick = () => {
@@ -40,7 +39,7 @@ const MainMenu = () => {
       <div className='d-flex flex-column mt-5'>
         <button
           className='btn btn-dark btn-lg menu-btn-width mb-3'
-          onClick={navigateToGame}
+          onClick={loadGame}
         >
           Play
         </button>
