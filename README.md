@@ -1,6 +1,6 @@
 # Wizard Duel
 
-<img src="github/game-screenshot.png" alt="game screenshot" width="500">
+<img src=".github/game-screenshot.png" alt="game screenshot" width="500">
 
 ## About the Game
 
