@@ -10,6 +10,7 @@ import {
   EffectType,
   EffectDuration,
   EffectGroupName,
+  EffectGroup,
 } from '../data/cardEffects';
 
 const damage = (G, target, { value = 0 }) => {
@@ -107,6 +108,13 @@ export const applyEffect = (G, ctx, effect) => {
   }
 
   const target = getTarget(ctx.currentPlayer, effect.target);
+
+  if (
+    EffectGroup.unique.some((e) => e === effect.type) &&
+    hasEffect(G, target, effect.type)
+  ) {
+    return;
+  }
 
   handler(G, target, effect);
 

@@ -24,6 +24,7 @@ export const EffectTarget = {
 export const EffectGroupName = {
   buff: 'buff',
   debuff: 'debuff',
+  unique: 'unique',
 };
 
 export const EffectGroup = {
@@ -35,6 +36,8 @@ export const EffectGroup = {
   ],
 
   debuff: [EffectType.debuffAtk, EffectType.debuffDef],
+
+  unique: [EffectType.doubleDmg, EffectType.preventDmg],
 };
 
 export const damage = (value) => {
