@@ -10,11 +10,11 @@ const EndTurnButton = ({ gameState, handleEndTurnButtonClick }) => {
   return (
     <div className='d-flex justify-content-end m-2'>
       <button
-        className={`btn btn-lg ${buttonStyles[gameState]}`}
+        className={`btn btn-lg endturn-btn-width ${buttonStyles[gameState]}`}
         onClick={handleEndTurnButtonClick}
         disabled={gameState !== GameState.endTurnEnabled}
       >
-        {gameState === GameState.aiTurn ? 'AI Turn' : 'End Turn'}
+        {gameState === GameState.aiTurn ? 'Enemy Turn' : 'End Turn'}
       </button>
     </div>
   );
