@@ -10,7 +10,7 @@ const EndTurnButton = ({ gameState, handleEndTurnButtonClick }) => {
   return (
     <div className='d-flex justify-content-end m-2'>
       <button
-        className={`btn btn-lg endturn-btn-width ${buttonStyles[gameState]}`}
+        className={`btn btn-lg ${buttonStyles[gameState]}`}
         onClick={handleEndTurnButtonClick}
         disabled={gameState !== GameState.endTurnEnabled}
       >

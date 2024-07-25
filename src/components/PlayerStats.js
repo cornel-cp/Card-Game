@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { avatarHeight, avatarWidth } from './utils/constants';
+import { smallScale, avatarHeight, avatarWidth } from './utils/constants';
 import { avatar, icon } from './utils/assetPaths';
 
-const PlayerStats = ({ player }) => {
+const PlayerStats = ({ player, scale = smallScale }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const height = avatarHeight * scale;
+  const width = avatarWidth * scale;
 
   const formatValueDisplay = (currentValue, maxValue) => {
     if (currentValue >= maxValue) {
@@ -19,8 +22,8 @@ const PlayerStats = ({ player }) => {
         <img
           src={avatar(player.id)}
           alt='avatar'
-          height={avatarHeight}
-          width={avatarWidth}
+          height={height}
+          width={width}
           data-bs-toggle='tooltip'
           data-bs-placement={player.id === '0' ? 'top' : 'bottom'}
           data-bs-title={player.id === '0' ? 'Player' : 'Opponent'}

@@ -1,4 +1,4 @@
-import { CardType, baseScale, cardHeight, cardWidth } from './utils/constants';
+import { CardType, smallScale, cardHeight, cardWidth } from './utils/constants';
 import { cardFront, cardBack, cardPlaceholder } from './utils/assetPaths';
 
 const Card = ({
@@ -7,7 +7,7 @@ const Card = ({
   cardIndex,
   playerId = '0',
   handleCardClick = () => {},
-  scale = baseScale,
+  scale = smallScale,
 }) => {
   const frontImg = cardFront(cardId);
   const backImg = cardBack(playerId);

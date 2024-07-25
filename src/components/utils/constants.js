@@ -29,7 +29,7 @@ export const CardType = {
 
 export const pauseInterval = 1200;
 
-export const baseScale = 1;
+export const smallScale = 0.9;
 export const mediumScale = 1.25;
 
 export const cardHeight = 210;

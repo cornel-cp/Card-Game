@@ -1,7 +1,7 @@
-import { baseScale, cardHeight, cardWidth } from './utils/constants';
+import { smallScale, cardHeight, cardWidth } from './utils/constants';
 import { cardPile } from './utils/assetPaths';
 
-const CardPile = ({ scale = baseScale }) => {
+const CardPile = ({ scale = smallScale }) => {
   const height = cardHeight * scale;
   const width = cardWidth * scale;
 
