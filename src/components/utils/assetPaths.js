@@ -1,6 +1,7 @@
 const imgPrefix = 'images';
 const cardPrefix = `${imgPrefix}/cards`;
 const audioPrefix = 'audio';
+const musicPrefix = 'music';
 
 const avatar = (playerId) => `${imgPrefix}/avatars/${playerId}.svg`;
 const icon = {
@@ -74,6 +75,9 @@ const audio = [
   `${audioPrefix}/magic.ogg`,
 ];
 
+const classic = `${musicPrefix}/classic.mp3`;
+const music = [classic];
+
 export {
   // IMAGES
   avatar,
@@ -91,4 +95,8 @@ export {
   victory,
   defeat,
   audio,
+
+  // MUSIC
+  classic,
+  music,
 };

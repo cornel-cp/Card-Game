@@ -6,6 +6,7 @@ const SettingsModal = ({
   setShowSettingsModal,
   playAudio,
   toggleAudioMute,
+  toggleMusic,
 }) => {
   if (!showSettingsModal) {
     return null;
@@ -41,7 +42,8 @@ const SettingsModal = ({
 
             <div className='modal-body'>
               <div className='d-flex flex-column align-items-center'>
-                {/* Sound setting is effective for current game only and is not persistent */}
+                {/* Sound and music settings are effective for current game only and is not persistent */}
+
                 <button
                   type='button'
                   className='btn btn-dark btn-width mb-3'
@@ -50,7 +52,11 @@ const SettingsModal = ({
                   Toggle Sound
                 </button>
 
-                {/* <button type='button' className='btn btn-dark btn-width mb-3'>
+                {/* <button
+                  type='button'
+                  className='btn btn-dark btn-width mb-3'
+                  onClick={toggleMusic}
+                >
                   Toggle Music
                 </button> */}
 
@@ -64,7 +70,7 @@ const SettingsModal = ({
 
                 <button
                   type='button'
-                  className='btn btn-dark btn-width mb-1'
+                  className='btn btn-dark btn-width mb-2'
                   onClick={exitToMenu}
                 >
                   Exit to Title

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import useAudioPlayer from './hooks/useAudioPlayer';
+import useMusicPlayer from './hooks/useMusicPlayer';
 import useBsTooltip from './hooks/useBsTooltip';
 import useLog from './hooks/useLog';
 import { sleep } from './utils/utils';
 import { GameState, pauseInterval } from './utils/constants';
-import { cardAudio, click, victory, defeat } from './utils/assetPaths';
+import { cardAudio, click, victory, defeat, classic } from './utils/assetPaths';
 
 import CardPile from './CardPile';
 import CardPreview from './CardPreview';
@@ -33,6 +34,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
   const { logEntries, addLogEntry } = useLog();
   const { playAudio, toggleAudioMute } = useAudioPlayer();
+  const { playMusic, pauseMusic, toggleMusic } = useMusicPlayer(classic);
 
   const handleDrawCard = async () => {
     if (ctx.gameover) {
@@ -89,6 +91,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         setWinner(ctx.gameover.winner);
       }
       setShowGameoverModal(true);
+      // pauseMusic();
       playAudio(ctx.gameover.winner === '0' ? victory : defeat);
     }
     // Not needed if game restart is implemented via a full page reload
@@ -197,6 +200,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         setShowSettingsModal={setShowSettingsModal}
         playAudio={playAudio}
         toggleAudioMute={toggleAudioMute}
+        toggleMusic={toggleMusic}
       />
       <HelpModal
         showHelpModal={showHelpModal}

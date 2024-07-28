@@ -15,7 +15,9 @@ const useAudioPlayer = () => {
     }
 
     audioInstance.muted = isMuted;
-    audioInstance.play();
+    audioInstance.play().catch((err) => {
+      console.error('Playback error: ', err);
+    });
   };
 
   const toggleAudioMute = () => {
