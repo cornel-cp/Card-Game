@@ -1,16 +1,13 @@
-import useAudioPlayer from './hooks/useAudioPlayer';
-import { click } from './utils/assetPaths';
+import { click } from '../utils/assetPaths';
 
-const LogModal = ({ showLogModal, setShowLogModal, logEntries }) => {
-  const { play } = useAudioPlayer();
-
+const LogModal = ({ showLogModal, setShowLogModal, logEntries, playAudio }) => {
   if (!showLogModal) {
     return null;
   }
 
   const handleLogClose = () => {
     setShowLogModal(false);
-    play(click);
+    playAudio(click);
   };
 
   return (

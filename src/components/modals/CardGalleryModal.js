@@ -1,20 +1,18 @@
-import useAudioPlayer from './hooks/useAudioPlayer';
-import { click } from './utils/assetPaths';
+import { click } from '../utils/assetPaths';
 
 const CardGalleryModal = ({
   showCardGallery,
   setShowCardGallery,
   cardImages,
+  playAudio,
 }) => {
-  const { play } = useAudioPlayer();
-
   if (!showCardGallery) {
     return null;
   }
 
   const handleCardGalleryClose = () => {
     setShowCardGallery(false);
-    play(click);
+    playAudio(click);
   };
 
   return (

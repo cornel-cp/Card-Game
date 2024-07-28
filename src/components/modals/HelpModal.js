@@ -1,16 +1,13 @@
-import useAudioPlayer from './hooks/useAudioPlayer';
-import { click } from './utils/assetPaths';
+import { click } from '../utils/assetPaths';
 
-const HelpModal = ({ showHelpModal, setShowHelpModal }) => {
-  const { play } = useAudioPlayer();
-
+const HelpModal = ({ showHelpModal, setShowHelpModal, playAudio }) => {
   if (!showHelpModal) {
     return null;
   }
 
   const handleHelpClose = () => {
     setShowHelpModal(false);
-    play(click);
+    playAudio(click);
   };
 
   return (

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import useAudioPlayer from './hooks/useAudioPlayer';
 import usePreloadAssets from './hooks/usePreloadAssets';
 import { cardFronts, images, audio, click } from './utils/assetPaths';
-import CardGalleryModal from './CardGalleryModal';
-import HelpModal from './HelpModal';
+import CardGalleryModal from './modals/CardGalleryModal';
+import HelpModal from './modals/HelpModal';
 
 const MainMenu = () => {
   // Preload to use cache and reduce latency
@@ -12,7 +12,7 @@ const MainMenu = () => {
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showCardGallery, setShowCardGallery] = useState(false);
 
-  const { play } = useAudioPlayer();
+  const { playAudio } = useAudioPlayer();
 
   const loadGame = () => {
     // Use full page rerender to keep the game state clean
@@ -21,12 +21,12 @@ const MainMenu = () => {
 
   const handleHelpClick = () => {
     setShowHelpModal(true);
-    play(click);
+    playAudio(click);
   };
 
   const handleCardsClick = () => {
     setShowCardGallery(true);
-    play(click);
+    playAudio(click);
   };
 
   const handleAboutClick = () => {
@@ -45,25 +45,25 @@ const MainMenu = () => {
 
       <div className='d-flex flex-column mt-5'>
         <button
-          className='btn btn-dark btn-lg menu-btn-width mb-3'
+          className='btn btn-dark btn-lg btn-width mb-3'
           onClick={loadGame}
         >
           Play
         </button>
         <button
-          className='btn btn-dark btn-lg menu-btn-width mb-3'
+          className='btn btn-dark btn-lg btn-width mb-3'
           onClick={handleHelpClick}
         >
           Instructions
         </button>
         <button
-          className='btn btn-dark btn-lg menu-btn-width mb-3'
+          className='btn btn-dark btn-lg btn-width mb-3'
           onClick={handleCardsClick}
         >
           Cards
         </button>
         <button
-          className='btn btn-dark btn-lg menu-btn-width'
+          className='btn btn-dark btn-lg btn-width'
           onClick={handleAboutClick}
         >
           About
@@ -74,11 +74,13 @@ const MainMenu = () => {
       <HelpModal
         showHelpModal={showHelpModal}
         setShowHelpModal={setShowHelpModal}
+        playAudio={playAudio}
       />
       <CardGalleryModal
         showCardGallery={showCardGallery}
         setShowCardGallery={setShowCardGallery}
         cardImages={cardFronts}
+        playAudio={playAudio}
       />
     </div>
   );

@@ -1,17 +1,24 @@
-import useAudioPlayer from './hooks/useAudioPlayer';
 import { icon, click } from './utils/assetPaths';
 
-const IconList = ({ setShowLogModal, setShowHelpModal }) => {
-  const { play } = useAudioPlayer();
-
+const IconList = ({
+  setShowLogModal,
+  setShowSettingsModal,
+  setShowHelpModal,
+  playAudio,
+}) => {
   const handleLogClick = () => {
     setShowLogModal(true);
-    play(click);
+    playAudio(click);
+  };
+
+  const handleSettingsClick = () => {
+    setShowSettingsModal(true);
+    playAudio(click);
   };
 
   const handleHelpClick = () => {
     setShowHelpModal(true);
-    play(click);
+    playAudio(click);
   };
 
   return (
@@ -25,14 +32,17 @@ const IconList = ({ setShowLogModal, setShowHelpModal }) => {
         data-bs-title='Battle log'
         onClick={handleLogClick}
       />
-      {/* <img
+
+      <img
         src={icon.settings}
         className='me-3 icon'
         alt='settings'
         data-bs-toggle='tooltip'
         data-bs-placement='bottom'
         data-bs-title='Settings'
-      /> */}
+        onClick={handleSettingsClick}
+      />
+
       <img
         src={icon.help}
         className='icon'

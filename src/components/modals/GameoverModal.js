@@ -1,17 +1,9 @@
+import { exitToMenu, restartGame } from '../utils/utils';
+
 const GameoverModal = ({ showGameoverModal, winner }) => {
   if (!showGameoverModal) {
     return null;
   }
-
-  const loadMenu = () => {
-    // Use full page rerender to keep the game state clean
-    window.location.href = '/';
-  };
-
-  const handleRestart = () => {
-    window.location.reload();
-    // The alternative is to call reset() and clean up manual states on the client side
-  };
 
   const gameoverMessage = {
     0: 'You have bested your opponent!',
@@ -45,7 +37,7 @@ const GameoverModal = ({ showGameoverModal, winner }) => {
               <button
                 type='button'
                 className='btn btn-secondary me-2'
-                onClick={loadMenu}
+                onClick={exitToMenu}
               >
                 Menu
               </button>
@@ -53,7 +45,7 @@ const GameoverModal = ({ showGameoverModal, winner }) => {
               <button
                 type='button'
                 className='btn btn-dark'
-                onClick={handleRestart}
+                onClick={restartGame}
               >
                 Restart
               </button>

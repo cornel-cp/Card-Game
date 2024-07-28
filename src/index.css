@@ -35,10 +35,10 @@
   cursor: pointer;
 }
 
-.menu-btn-width {
-  width: 200px;
-}
-
 .menu-title-fs {
   font-size: 4rem;
+}
+
+.btn-width {
+  width: 200px;
 }
