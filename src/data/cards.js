@@ -139,9 +139,9 @@ export const Dispel = {
   effects: [removeBuff],
 };
 
-export const Berserker = {
+export const Enrage = {
   id: '18',
-  name: 'Berserker',
+  name: 'Enrage',
   text: 'Next Damage x2',
   effects: [doubleDmg],
 };

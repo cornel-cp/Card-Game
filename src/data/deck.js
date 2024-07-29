@@ -17,7 +17,7 @@ import {
   Curse,
   Purify,
   Dispel,
-  Berserker,
+  Enrage,
   Block,
 } from './cards';
 
@@ -76,8 +76,8 @@ const deck = [
   Dispel,
   Dispel,
 
-  Berserker,
-  Berserker,
+  Enrage,
+  Enrage,
 
   Block,
   Block,
