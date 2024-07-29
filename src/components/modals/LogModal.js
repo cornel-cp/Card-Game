@@ -26,7 +26,7 @@ const LogModal = ({ showLogModal, setShowLogModal, logEntries, playAudio }) => {
               </h4>
               <button
                 type='button'
-                class='btn-close'
+                className='btn-close'
                 data-bs-dismiss='modal'
                 aria-label='Close'
                 onClick={handleLogClose}

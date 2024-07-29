@@ -33,7 +33,7 @@ const SettingsModal = ({
               </h4>
               <button
                 type='button'
-                class='btn-close'
+                className='btn-close'
                 data-bs-dismiss='modal'
                 aria-label='Close'
                 onClick={handleSettingsClose}
@@ -52,13 +52,13 @@ const SettingsModal = ({
                   Toggle Sound
                 </button>
 
-                {/* <button
+                <button
                   type='button'
                   className='btn btn-dark btn-width mb-3'
                   onClick={toggleMusic}
                 >
                   Toggle Music
-                </button> */}
+                </button>
 
                 <button
                   type='button'

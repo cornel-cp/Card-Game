@@ -15,6 +15,7 @@ import GameoverModal from './modals/GameoverModal';
 import HelpModal from './modals/HelpModal';
 import LogModal from './modals/LogModal';
 import IconList from './IconList';
+import MatchupModal from './modals/MatchupModal';
 import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
 import SettingsModal from './modals/SettingsModal';
@@ -31,6 +32,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const [showLogModal, setShowLogModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [showMatchupModal, setShowMatchupModal] = useState(true);
 
   const { logEntries, addLogEntry } = useLog();
   const { playAudio, toggleAudioMute } = useAudioPlayer();
@@ -91,7 +93,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         setWinner(ctx.gameover.winner);
       }
       setShowGameoverModal(true);
-      // pauseMusic();
+      pauseMusic();
       playAudio(ctx.gameover.winner === '0' ? victory : defeat);
     }
     // Not needed if game restart is implemented via a full page reload
@@ -186,6 +188,13 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
           />
         </div>
       </div>
+
+      {/* Components rendered when the game starts */}
+      <MatchupModal
+        showMatchupModal={showMatchupModal}
+        setShowMatchupModal={setShowMatchupModal}
+        playMusic={playMusic}
+      />
 
       {/* Components rendered on demand */}
       <GameoverModal showGameoverModal={showGameoverModal} winner={winner} />

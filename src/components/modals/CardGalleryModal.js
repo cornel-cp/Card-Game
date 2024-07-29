@@ -31,7 +31,7 @@ const CardGalleryModal = ({
               </h4>
               <button
                 type='button'
-                class='btn-close'
+                className='btn-close'
                 data-bs-dismiss='modal'
                 aria-label='Close'
                 onClick={handleCardGalleryClose}
