@@ -56,23 +56,23 @@ const cardAudioType = {
   18: 'sword',
   19: 'shield',
 };
-const cardAudio = (cardId) => `${audioPrefix}/${cardAudioType[cardId]}.ogg`;
-const click = `${audioPrefix}/click.ogg`;
-const victory = `${audioPrefix}/victory.ogg`;
-const defeat = `${audioPrefix}/defeat.ogg`;
+const cardAudio = (cardId) => `${audioPrefix}/${cardAudioType[cardId]}.mp3`;
+const click = `${audioPrefix}/click.mp3`;
+const victory = `${audioPrefix}/victory.mp3`;
+const defeat = `${audioPrefix}/defeat.mp3`;
 const audio = [
   click,
   victory,
   defeat,
 
-  `${audioPrefix}/fireball.ogg`,
-  `${audioPrefix}/freeze.ogg`,
-  `${audioPrefix}/thunder.ogg`,
-  `${audioPrefix}/heal.ogg`,
-  `${audioPrefix}/sword.ogg`,
-  `${audioPrefix}/shield.ogg`,
-  `${audioPrefix}/weaken.ogg`,
-  `${audioPrefix}/magic.ogg`,
+  `${audioPrefix}/fireball.mp3`,
+  `${audioPrefix}/freeze.mp3`,
+  `${audioPrefix}/thunder.mp3`,
+  `${audioPrefix}/heal.mp3`,
+  `${audioPrefix}/sword.mp3`,
+  `${audioPrefix}/shield.mp3`,
+  `${audioPrefix}/weaken.mp3`,
+  `${audioPrefix}/magic.mp3`,
 ];
 
 const classic = `${musicPrefix}/classic.mp3`;
