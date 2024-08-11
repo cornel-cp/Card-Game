@@ -42,3 +42,13 @@
 .btn-width {
   width: 200px;
 }
+
+.fxstack-mb {
+  position: relative;
+  bottom: 60px;
+}
+
+.fxstack-mt {
+  position: relative;
+  top: 60px;
+}

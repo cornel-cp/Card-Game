@@ -40,6 +40,9 @@ export const EffectGroup = {
   unique: [EffectType.doubleDmg, EffectType.preventDmg],
 };
 
+// ADD EFFECTS HERE
+// Only enduring effects have text and group (buff/debuff) field for logging purpose
+
 export const damage = (value) => {
   return {
     type: EffectType.damage,
@@ -64,6 +67,8 @@ export const buffAtk = (value) => {
     duration: EffectDuration.enduring,
     target: EffectTarget.self,
     value,
+    group: EffectGroupName.buff,
+    text: `+${value} Attack`,
   };
 };
 
@@ -73,6 +78,8 @@ export const buffDef = (value) => {
     duration: EffectDuration.enduring,
     target: EffectTarget.self,
     value,
+    group: EffectGroupName.buff,
+    text: `+${value} Shield`,
   };
 };
 
@@ -82,6 +89,8 @@ export const debuffAtk = (value) => {
     duration: EffectDuration.enduring,
     target: EffectTarget.opponent,
     value,
+    group: EffectGroupName.debuff,
+    text: `-${value} Attack`,
   };
 };
 
@@ -91,6 +100,8 @@ export const debuffDef = (value) => {
     duration: EffectDuration.enduring,
     target: EffectTarget.opponent,
     value,
+    group: EffectGroupName.debuff,
+    text: `-${value} Shield`,
   };
 };
 
@@ -110,10 +121,14 @@ export const doubleDmg = {
   type: EffectType.doubleDmg,
   duration: EffectDuration.enduring,
   target: EffectTarget.self,
+  group: EffectGroupName.buff,
+  text: 'Next Damage x2',
 };
 
 export const preventDmg = {
   type: EffectType.preventDmg,
   duration: EffectDuration.enduring,
   target: EffectTarget.self,
+  group: EffectGroupName.buff,
+  text: 'Prevent Next Damage',
 };

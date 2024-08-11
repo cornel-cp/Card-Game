@@ -10,6 +10,7 @@ import { cardAudio, click, victory, defeat, classic } from './utils/assetPaths';
 
 import CardPile from './CardPile';
 import CardPreview from './CardPreview';
+import EffectStack from './EffectStack';
 import EndTurnButton from './EndTurnButton';
 import GameoverModal from './modals/GameoverModal';
 import HelpModal from './modals/HelpModal';
@@ -37,6 +38,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const { logEntries, addLogEntry } = useLog();
   const { playAudio, toggleAudioMute } = useAudioPlayer();
   const { playMusic, pauseMusic, toggleMusic } = useMusicPlayer(classic);
+  const [hoveredAvatar, setHoveredAvatar] = useState(null);
 
   const handleDrawCard = async () => {
     if (ctx.gameover) {
@@ -143,7 +145,10 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     <div className='container-fluid vh-100 d-flex flex-column p-2 bg-board'>
       <div className='row'>
         <div className='col-3'>
-          <PlayerStats player={G.players[1]} />
+          <PlayerStats
+            player={G.players[1]}
+            setHoveredAvatar={setHoveredAvatar}
+          />
         </div>
 
         <div className='col-6'>
@@ -161,7 +166,13 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
       </div>
 
       <div className='row flex-grow-1'>
-        <div className='col-3'></div>
+        <div className='col-3'>
+          <EffectStack
+            opponentEffects={G.players[1].effects}
+            playerEffects={G.players[0].effects}
+            hoveredAvatar={hoveredAvatar}
+          />
+        </div>
 
         <div className='col-6'>
           <CardPreview selectedCard={selectedCard} />
@@ -174,7 +185,10 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
       <div className='row align-items-end'>
         <div className='col-3'>
-          <PlayerStats player={G.players[0]} />
+          <PlayerStats
+            player={G.players[0]}
+            setHoveredAvatar={setHoveredAvatar}
+          />
         </div>
 
         <div className='col-6'>

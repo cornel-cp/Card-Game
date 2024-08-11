@@ -11,6 +11,8 @@ const icon = {
   log: `${imgPrefix}/icons/log.svg`,
   settings: `${imgPrefix}/icons/settings.svg`,
   help: `${imgPrefix}/icons/help.svg`,
+  buff: `${imgPrefix}/icons/buff.svg`,
+  debuff: `${imgPrefix}/icons/debuff.svg`,
 };
 
 const cardFront = (cardId) => `${cardPrefix}/front/${cardId}.svg`;
@@ -19,7 +21,7 @@ const cardPlaceholder = (playerId) =>
   `${cardPrefix}/placeholder/${playerId}.svg`;
 const cardPile = `${cardPrefix}/pile.svg`;
 
-const cardCount = 20;
+const cardCount = 20; // TODO: DO NOT HARDCODE
 const cardFronts = Array.from(
   { length: cardCount },
   (_, cardId) => `${cardPrefix}/front/${cardId}.svg`
