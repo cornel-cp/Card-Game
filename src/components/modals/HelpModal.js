@@ -53,6 +53,7 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, playAudio }) => {
                 </li>
                 <li className='mb-2'>
                   Card effects will last until removed by another card effect.
+                  Hover over avatar to view active effects.
                 </li>
                 <li>
                   Damage = (card damage + player attack - opponent defense),
