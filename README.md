@@ -32,3 +32,7 @@ You are more than welcome to submit issues for bugs, feature requests or any fee
 ## Credits
 
 See [CREDITS.md](./CREDITS.md)
+
+## Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md)
