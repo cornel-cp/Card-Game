@@ -3,6 +3,8 @@ const cardPrefix = `${imgPrefix}/cards`;
 const audioPrefix = 'audio';
 const musicPrefix = 'music';
 
+// IMAGES FILES
+
 const avatar = (playerId) => `${imgPrefix}/avatars/${playerId}.svg`;
 const icon = {
   hp: `${imgPrefix}/icons/hp.svg`,
@@ -26,15 +28,8 @@ const cardFronts = Array.from(
   { length: cardCount },
   (_, cardId) => `${cardPrefix}/front/${cardId}.svg`
 );
-const images = [
-  ...cardFronts,
 
-  `${cardPrefix}/back/0.svg`,
-  `${cardPrefix}/back/1.svg`,
-  `${cardPrefix}/placeholder/0.svg`,
-  `${cardPrefix}/placeholder/1.svg`,
-  cardPile,
-];
+// AUDIO FILES
 
 const cardAudioType = {
   0: 'fireball',
@@ -62,11 +57,28 @@ const cardAudio = (cardId) => `${audioPrefix}/${cardAudioType[cardId]}.mp3`;
 const click = `${audioPrefix}/click.mp3`;
 const victory = `${audioPrefix}/victory.mp3`;
 const defeat = `${audioPrefix}/defeat.mp3`;
-const audio = [
+
+// MUSIC FILES
+
+const classic = `${musicPrefix}/classic.mp3`;
+
+// ALL FILES FOR PRELOAD
+
+const IMAGES = [
+  `${imgPrefix}/avatars/0.svg`,
+  `${imgPrefix}/avatars/1.svg`,
+  ...Object.values(icon), 
+  ...cardFronts,
+  `${cardPrefix}/back/0.svg`,
+  `${cardPrefix}/back/1.svg`,
+  `${cardPrefix}/placeholder/0.svg`,
+  `${cardPrefix}/placeholder/1.svg`,
+  cardPile,
+];
+const AUDIO = [
   click,
   victory,
   defeat,
-
   `${audioPrefix}/fireball.mp3`,
   `${audioPrefix}/freeze.mp3`,
   `${audioPrefix}/thunder.mp3`,
@@ -76,12 +88,10 @@ const audio = [
   `${audioPrefix}/weaken.mp3`,
   `${audioPrefix}/magic.mp3`,
 ];
-
-const classic = `${musicPrefix}/classic.mp3`;
-const music = [classic];
+const MUSIC = [classic];
 
 export {
-  // IMAGES
+  // IMAGES FILES
   avatar,
   icon,
   cardFront,
@@ -89,16 +99,18 @@ export {
   cardPlaceholder,
   cardPile,
   cardFronts,
-  images,
 
-  // AUDIO
+  // AUDIO FILES
   cardAudio,
   click,
   victory,
   defeat,
-  audio,
 
-  // MUSIC
+  // MUSIC FILES
   classic,
-  music,
+
+  // ALL FILES FOR PRELOAD
+  IMAGES,
+  AUDIO,
+  MUSIC,
 };
