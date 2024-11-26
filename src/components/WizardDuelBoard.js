@@ -6,7 +6,14 @@ import useBsTooltip from './hooks/useBsTooltip';
 import useLog from './hooks/useLog';
 import { sleep } from './utils/utils';
 import { GameState, pauseInterval } from './utils/constants';
-import { cardAudio, click, victory, defeat, classic } from './utils/assetPaths';
+import {
+  cardAudio,
+  click,
+  victory,
+  defeat,
+  getLocationForLevel,
+  getMusicForLevel,
+} from './utils/assetPaths';
 
 import CardPile from './CardPile';
 import CardPreview from './CardPreview';
@@ -14,9 +21,11 @@ import EffectStack from './EffectStack';
 import EndTurnButton from './EndTurnButton';
 import GameoverModal from './modals/GameoverModal';
 import HelpModal from './modals/HelpModal';
+import LevelEffectModal from './modals/LevelEffectModal';
 import LogModal from './modals/LogModal';
 import IconList from './IconList';
 import MatchupModal from './modals/MatchupModal';
+import NextLevelModal from './modals/NextLevelModal';
 import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
 import SettingsModal from './modals/SettingsModal';
@@ -30,6 +39,8 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const [gameState, setGameState] = useState(GameState.endTurnDisabled);
   const [winner, setWinner] = useState(null);
   const [showGameoverModal, setShowGameoverModal] = useState(false);
+  const [showNextLevelModal, setShowNextLevelModal] = useState(false);
+  const [showLevelEffectModal, setShowLevelEffectModal] = useState(false);
   const [showLogModal, setShowLogModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
@@ -37,7 +48,9 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
   const { logEntries, addLogEntry } = useLog();
   const { playAudio, toggleAudioMute } = useAudioPlayer();
-  const { playMusic, pauseMusic, toggleMusic } = useMusicPlayer(classic);
+  const { playMusic, pauseMusic, toggleMusic } = useMusicPlayer(
+    getMusicForLevel(G.level)
+  );
   const [hoveredAvatar, setHoveredAvatar] = useState(null);
 
   const handleDrawCard = async () => {
@@ -142,11 +155,15 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   };
 
   return (
-    <div className='container-fluid vh-100 d-flex flex-column p-2 bg-board'>
+    <div
+      className='container-fluid vh-100 d-flex flex-column p-2 bg-board'
+      style={{ '--bg-image': `url(/${getLocationForLevel(G.level)})` }}
+    >
       <div className='row'>
         <div className='col-3'>
           <PlayerStats
             player={G.players[1]}
+            level={G.level}
             setHoveredAvatar={setHoveredAvatar}
           />
         </div>
@@ -157,6 +174,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
         <div className='col-3'>
           <IconList
+            setShowLevelEffectModal={setShowLevelEffectModal}
             setShowLogModal={setShowLogModal}
             setShowSettingsModal={setShowSettingsModal}
             setShowHelpModal={setShowHelpModal}
@@ -208,10 +226,25 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         showMatchupModal={showMatchupModal}
         setShowMatchupModal={setShowMatchupModal}
         playMusic={playMusic}
+        level={G.level}
       />
 
       {/* Components rendered on demand */}
-      <GameoverModal showGameoverModal={showGameoverModal} winner={winner} />
+      <GameoverModal
+        showGameoverModal={showGameoverModal}
+        setShowGameoverModal={setShowGameoverModal}
+        setShowNextLevelModal={setShowNextLevelModal}
+        winner={winner}
+        playAudio={playAudio}
+        level={G.level}
+      />
+      <NextLevelModal showNextLevelModal={showNextLevelModal} level={G.level} />
+      <LevelEffectModal
+        showLevelEffectModal={showLevelEffectModal}
+        setShowLevelEffectModal={setShowLevelEffectModal}
+        playAudio={playAudio}
+        level={G.level}
+      />
       <LogModal
         showLogModal={showLogModal}
         setShowLogModal={setShowLogModal}

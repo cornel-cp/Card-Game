@@ -52,6 +52,8 @@ export const undoEffect = (G, target, { type, value = 0 }) => {
       break;
     case EffectType.preventDmg:
       break;  
+    case EffectType.resurrect:
+      break;  
     default:
       console.error(`Invalid effect type: ${type}`);
       return;

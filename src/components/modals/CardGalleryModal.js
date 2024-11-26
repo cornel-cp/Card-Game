@@ -1,4 +1,5 @@
 import { click } from '../utils/assetPaths';
+import useImageLoader from '../hooks/useImageLoader';
 
 const CardGalleryModal = ({
   showCardGallery,
@@ -6,6 +7,8 @@ const CardGalleryModal = ({
   cardImages,
   playAudio,
 }) => {
+  const { isLoading } = useImageLoader(cardImages, 1000);
+
   if (!showCardGallery) {
     return null;
   }
@@ -39,15 +42,27 @@ const CardGalleryModal = ({
             </div>
 
             <div className='modal-body'>
-              <div className='container'>
-                <div className='row row-cols-5 g-3'>
-                  {cardImages.map((image, index) => (
-                    <div className='col' key={index}>
-                      <img src={image} alt='card front' className='img-fluid' />
-                    </div>
-                  ))}
+              {isLoading ? (
+                <div className='d-flex justify-content-center align-items-center h-75'>
+                  <div className='spinner-border' role='status'>
+                    <span className='visually-hidden'>Loading...</span>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className='container'>
+                  <div className='row row-cols-5 g-3'>
+                    {cardImages.map((image, index) => (
+                      <div className='col' key={index}>
+                        <img
+                          src={image}
+                          alt='card front'
+                          className='img-fluid'
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

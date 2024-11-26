@@ -1,3 +1,5 @@
+import { levelConfigs, finalLevel } from '../data/levelConfigs';
+
 export const shuffle = (deck) => {
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -40,11 +42,21 @@ export const isVictory = ({ G, ctx }) => {
   }
 };
 
-export const logGameResult = ({ G, ctx }) => {
+export const onGameEnd = ({ G, ctx }) => {
+  // Print game result in the console
   if (!ctx.gameover.winner) {
     console.log('Draw!');
   } else {
     console.log(`${G.players[ctx.gameover.winner].name} wins!`);
+  }
+
+  // Enter next level when player wins, otherwise restarts from the last level.
+  //  - If current level is the first level of the game, do nothing.
+  //  - If current level is the final level of the game, do nothing.
+  if (ctx.gameover.winner && ctx.gameover.winner === '0') {
+    setNextLevel();
+  } else {
+    setPrevLevel();
   }
 };
 
@@ -54,4 +66,72 @@ export const generateAIMoves = (G, ctx) => {
     moves.push({ move: 'playCard', args: [card] });
   });
   return moves;
+};
+
+export const getCurrentLevel = () => {
+  try {
+    return sessionStorage.getItem('level') || '1';
+  } catch (e) {
+    console.error('Error parsing sessionStorage data:', e);
+  }
+};
+
+export const setPrevLevel = () => {
+  try {
+    const currentLevel = getCurrentLevel();
+    if (currentLevel === '1') {
+      return;
+    }
+    const prevLevel = parseInt(currentLevel, 10) - 1;
+    sessionStorage.setItem('level', prevLevel);
+  } catch (e) {
+    console.error('Error saving to sessionStorage:', e);
+  }
+};
+
+export const setNextLevel = () => {
+  try {
+    const currentLevel = getCurrentLevel();
+    if (currentLevel === finalLevel) {
+      return;
+    }
+    const nextLevel = parseInt(currentLevel, 10) + 1;
+    sessionStorage.setItem('level', nextLevel);
+  } catch (e) {
+    console.error('Error saving to sessionStorage:', e);
+  }
+};
+
+export const applyLevelOverride = (G) => {
+  const {
+    playerStatsOverride,
+    enemyStatsOverride,
+
+    playerHandOverride,
+    enemyHandOverride,
+
+    playerEffectsOverride,
+    enemyEffectsOverride,
+  } = levelConfigs[G.level];
+
+  for (let key in playerStatsOverride) {
+    if (playerStatsOverride.hasOwnProperty(key)) {
+      if (key in G.players[0]) {
+        G.players[0][key] = playerStatsOverride[key];
+      }
+    }
+  }
+  for (let key in enemyStatsOverride) {
+    if (enemyStatsOverride.hasOwnProperty(key)) {
+      if (key in G.players[1]) {
+        G.players[1][key] = enemyStatsOverride[key];
+      }
+    }
+  }
+
+  G.players[0].hand.push(...playerHandOverride);
+  G.players[1].hand.push(...enemyHandOverride);
+
+  G.players[0].effects.push(...playerEffectsOverride);
+  G.players[1].effects.push(...enemyEffectsOverride);
 };

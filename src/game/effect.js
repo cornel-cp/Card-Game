@@ -30,6 +30,15 @@ const damage = (G, target, { value = 0 }) => {
 
   value = Math.max(value, 0);
 
+  if (
+    G.players[target].hp <= value &&
+    hasEffect(G, target, EffectType.resurrect)
+  ) {
+    G.players[target].hp = 15;
+    removeEffects(G, target, EffectType.resurrect);
+    return;
+  }
+
   G.players[target].hp -= value;
 };
 
@@ -86,6 +95,8 @@ const doubleDmg = () => {};
 
 const preventDmg = () => {};
 
+const resurrect = () => {};
+
 const effectHandlers = {
   [EffectType.damage]: damage,
   [EffectType.heal]: heal,
@@ -97,6 +108,7 @@ const effectHandlers = {
   [EffectType.removeBuff]: removeBuff,
   [EffectType.doubleDmg]: doubleDmg,
   [EffectType.preventDmg]: preventDmg,
+  [EffectType.resurrect]: resurrect,
 };
 
 export const applyEffect = (G, ctx, effect) => {

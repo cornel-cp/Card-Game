@@ -9,9 +9,10 @@ import {
   removeBuff,
   doubleDmg,
   preventDmg,
+  resurrect,
 } from './cardEffects';
 
-// ADD CARDS HERE
+// READ-ONLY CARDS
 // Card name and text added here only for logging purpose
 
 export const Fireball1 = {
@@ -152,4 +153,18 @@ export const Block = {
   name: 'Block',
   text: 'Prevent Next Damage',
   effects: [preventDmg],
+};
+
+export const Flame = {
+  id: '20',
+  name: 'Flame',
+  text: 'Damage 9 and +5 Attack',
+  effects: [damage(9), buffAtk(5)],
+};
+
+export const Resurrect = {
+  id: '21',
+  name: 'Resurrect',
+  text: '+15 HP on Death',
+  effects: [resurrect(15)],
 };

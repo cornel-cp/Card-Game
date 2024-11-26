@@ -4,12 +4,25 @@ export const sleep = (ms) => {
 
 export const exitToMenu = () => {
   // Use full page rerender to keep the game state clean
+  clearLevel();
   window.location.href = '/';
 };
 
-export const restartGame = () => {
+/**
+ * Restarts the whole game from level 1. 
+ */
+export const resetGame = () => {
+  clearLevel();
   window.location.reload();
   // The alternative is to call reset() and clean up manual states on the client side
+};
+
+/**
+ * Triggers a reload to start a particular level.
+ * The level number is set on game end in `gameUtils.js`.
+ */
+export const startLevel = () => {
+  window.location.reload();
 };
 
 export const sortEffects = (effects) => {
@@ -31,4 +44,8 @@ export const sortEffects = (effects) => {
       return 0; // Keep the original order if groups are the same but texts are different
     }
   });
+};
+
+const clearLevel = () => {
+  sessionStorage.removeItem('level');
 };

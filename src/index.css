@@ -11,12 +11,18 @@
   font-weight: 600;
 }
 
-.bg-board {
-  background: radial-gradient(
-    circle,
-    rgba(245, 222, 179, 0.7),
-    rgba(210, 180, 140, 0.7)
-  );
+.bg-board::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+  z-index: -1;
 }
 
 .bg-menu {
@@ -51,4 +57,13 @@
 .fxstack-mt {
   position: relative;
   top: 60px;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.level-effect-img {
+  height: 150px;
+  object-fit: cover;
 }

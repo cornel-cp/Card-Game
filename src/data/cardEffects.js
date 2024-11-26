@@ -9,6 +9,7 @@ export const EffectType = {
   removeDebuff: 'removeDebuff',
   doubleDmg: 'doubleDmg',
   preventDmg: 'preventDmg',
+  resurrect: 'resurrect',
 };
 
 export const EffectDuration = {
@@ -28,21 +29,28 @@ export const EffectGroupName = {
 };
 
 export const EffectGroup = {
+  // Stackable positive effects applied to the player.
   buff: [
     EffectType.buffAtk,
     EffectType.buffDef,
     EffectType.doubleDmg,
     EffectType.preventDmg,
+    EffectType.resurrect,
   ],
 
+  // Stackable negative effects applied to the opponent.
   debuff: [EffectType.debuffAtk, EffectType.debuffDef],
 
-  unique: [EffectType.doubleDmg, EffectType.preventDmg],
+  // Only one effect of the same type can exist at a time. Can be either buff or debuff.
+  unique: [EffectType.doubleDmg, EffectType.preventDmg, EffectType.resurrect],
 };
 
-// ADD EFFECTS HERE
 // Only enduring effects have text and group (buff/debuff) field for logging purpose
 
+/**
+ * Deal damage to the opponent by value.
+ * Damage = (card damage + player attack - opponent defense), modifiers applied afterward.
+ */
 export const damage = (value) => {
   return {
     type: EffectType.damage,
@@ -52,6 +60,9 @@ export const damage = (value) => {
   };
 };
 
+/**
+ * Increase your HP by value.
+ */
 export const heal = (value) => {
   return {
     type: EffectType.heal,
@@ -61,6 +72,9 @@ export const heal = (value) => {
   };
 };
 
+/**
+ * Increase your attack by value.
+ */
 export const buffAtk = (value) => {
   return {
     type: EffectType.buffAtk,
@@ -72,6 +86,9 @@ export const buffAtk = (value) => {
   };
 };
 
+/**
+ * Increase your defense by value.
+ */
 export const buffDef = (value) => {
   return {
     type: EffectType.buffDef,
@@ -83,6 +100,9 @@ export const buffDef = (value) => {
   };
 };
 
+/**
+ * Decrease the opponent's attack by value.
+ */
 export const debuffAtk = (value) => {
   return {
     type: EffectType.debuffAtk,
@@ -94,6 +114,9 @@ export const debuffAtk = (value) => {
   };
 };
 
+/**
+ * Decrease the opponent's defense by value.
+ */
 export const debuffDef = (value) => {
   return {
     type: EffectType.debuffDef,
@@ -105,18 +128,27 @@ export const debuffDef = (value) => {
   };
 };
 
+/**
+ * Remove all your debuffs.
+ */
 export const removeDebuff = {
   type: EffectType.removeDebuff,
   duration: EffectDuration.instant,
   target: EffectTarget.self,
 };
 
+/**
+ * Remove all the opponent's buffs.
+ */
 export const removeBuff = {
   type: EffectType.removeBuff,
   duration: EffectDuration.instant,
   target: EffectTarget.opponent,
 };
 
+/**
+ * Double your next card damage.
+ */
 export const doubleDmg = {
   type: EffectType.doubleDmg,
   duration: EffectDuration.enduring,
@@ -125,10 +157,27 @@ export const doubleDmg = {
   text: 'Next Damage x2',
 };
 
+/**
+ * Prevent next card damage from the opponent.
+ */
 export const preventDmg = {
   type: EffectType.preventDmg,
   duration: EffectDuration.enduring,
   target: EffectTarget.self,
   group: EffectGroupName.buff,
   text: 'Prevent Next Damage',
+};
+
+/**
+ * Before receiving fatal card damage from the opponent, prevent it and set your HP to 15.
+ */
+export const resurrect = (value) => {
+  return {
+    type: EffectType.resurrect,
+    duration: EffectDuration.enduring,
+    target: EffectTarget.self,
+    value,
+    group: EffectGroupName.buff,
+    text: `+${value} HP on Death`,
+  };
 };

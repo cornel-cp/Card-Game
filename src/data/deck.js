@@ -19,9 +19,11 @@ import {
   Dispel,
   Enrage,
   Block,
+  Flame,
+  Resurrect,
 } from './cards';
 
-const deck = [
+const baseDeck = [
   Fireball1,
   Fireball1,
 
@@ -83,4 +85,16 @@ const deck = [
   Block,
 ];
 
-export { deck };
+const levelDecks = {
+  1: [...baseDeck],
+
+  2: [...baseDeck, Flame, Flame, Resurrect, Resurrect],
+};
+
+export const getDeckForLevel = (level = '1') => {
+  const levelDeck = levelDecks[level] || [];
+  if (levelDeck.length < 10) {
+    throw new Error("Deck array length is less than 10.");
+  }
+  return [...levelDeck];
+};

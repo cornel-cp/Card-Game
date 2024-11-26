@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { smallScale, avatarHeight, avatarWidth } from './utils/constants';
-import { avatar, icon } from './utils/assetPaths';
-
-const PlayerStats = ({ player, setHoveredAvatar, scale = smallScale }) => {
+import { getAvatarForLevel, icon } from './utils/assetPaths';
+ 
+const PlayerStats = ({ player, level, setHoveredAvatar, scale = smallScale }) => {
   const [isStatsIconsHovered, setIsStatsIconsHovered] = useState(false);
 
   const height = avatarHeight * scale;
@@ -20,7 +20,7 @@ const PlayerStats = ({ player, setHoveredAvatar, scale = smallScale }) => {
     <div className='d-flex align-items-center'>
       <div className='me-2'>
         <img
-          src={avatar(player.id)}
+          src={getAvatarForLevel(player.id, level)}
           alt='avatar'
           height={height}
           width={width}
