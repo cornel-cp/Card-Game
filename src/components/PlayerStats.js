@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import { smallScale, avatarHeight, avatarWidth } from './utils/constants';
 import { getAvatarForLevel, icon } from './utils/assetPaths';
- 
-const PlayerStats = ({ player, level, setHoveredAvatar, scale = smallScale }) => {
+import { EffectType } from '../data/cardEffects';
+
+const PlayerStats = ({
+  player,
+  level,
+  setHoveredAvatar,
+  scale = smallScale,
+}) => {
   const [isStatsIconsHovered, setIsStatsIconsHovered] = useState(false);
 
   const height = avatarHeight * scale;
@@ -18,18 +24,24 @@ const PlayerStats = ({ player, level, setHoveredAvatar, scale = smallScale }) =>
 
   return (
     <div className='d-flex align-items-center'>
-      <div className='me-2'>
+      <div
+        className='me-2 position-relative'
+        onMouseEnter={() => setHoveredAvatar(player.id)}
+        onMouseLeave={() => setHoveredAvatar(null)}
+        // data-bs-toggle='tooltip'
+        // data-bs-placement={player.id === '0' ? 'top' : 'bottom'}
+        // data-bs-title={player.id === '0' ? 'Player' : 'Opponent'}
+      >
         <img
           src={getAvatarForLevel(player.id, level)}
           alt='avatar'
           height={height}
           width={width}
-          onMouseEnter={() => setHoveredAvatar(player.id)}
-          onMouseLeave={() => setHoveredAvatar(null)}
-          // data-bs-toggle='tooltip'
-          // data-bs-placement={player.id === '0' ? 'top' : 'bottom'}
-          // data-bs-title={player.id === '0' ? 'Player' : 'Opponent'}
         />
+
+        {player.effects.some((e) => e.type === EffectType.freeze) && (
+          <img src={icon.ice} alt='ice' className='ice-overlay' />
+        )}
       </div>
 
       <div

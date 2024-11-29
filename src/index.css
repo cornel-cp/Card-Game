@@ -67,3 +67,11 @@
   height: 150px;
   object-fit: cover;
 }
+
+.ice-overlay {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 80%;
+  opacity: 0.7;
+}

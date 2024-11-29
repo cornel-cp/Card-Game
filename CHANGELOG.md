@@ -1,3 +1,10 @@
+# 🚀 Release v0.13 (2024-11-29)
+
+❄️ Level 3: Ice Crown
+
+- Level effect: Every damage has a chance to freeze your enemy.
+- New cards, music and artwork.
+
 # 🚀 Release v0.12 (2024-11-25)
 
 New Feature: Levels

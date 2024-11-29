@@ -36,3 +36,7 @@ See [CREDITS.md](./CREDITS.md)
 ## Changelog
 
 See [CHANGELOG.md](./CHANGELOG.md)
+
+## Licensing
+
+This project is licensed under the MIT License. You may use, modify, or distribute the code as long as you provide attribution to the original author. See [LICENSE](./LICENSE).

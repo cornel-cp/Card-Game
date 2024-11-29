@@ -1,4 +1,4 @@
-import { levelConfigs, finalLevel } from '../data/levelConfigs';
+import { levelConfigs, finalLevel } from './level';
 
 export const shuffle = (deck) => {
   for (let i = deck.length - 1; i > 0; i--) {

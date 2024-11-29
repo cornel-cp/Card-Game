@@ -10,6 +10,8 @@ import {
   doubleDmg,
   preventDmg,
   resurrect,
+  freeze,
+  aura,
 } from './cardEffects';
 
 // READ-ONLY CARDS
@@ -36,23 +38,23 @@ export const Fireball3 = {
   effects: [damage(9)],
 };
 
-export const Freeze1 = {
+export const Frost1 = {
   id: '3',
-  name: 'Freeze',
+  name: 'Frost',
   text: 'Damage 4',
   effects: [damage(4)],
 };
 
-export const Freeze2 = {
+export const Frost2 = {
   id: '4',
-  name: 'Freeze+',
+  name: 'Frost+',
   text: 'Damage 6',
   effects: [damage(6)],
 };
 
-export const Freeze3 = {
+export const Frost3 = {
   id: '5',
-  name: 'Freeze++',
+  name: 'Frost++',
   text: 'Damage 8',
   effects: [damage(8)],
 };
@@ -167,4 +169,18 @@ export const Resurrect = {
   name: 'Resurrect',
   text: '+15 HP on Death',
   effects: [resurrect(15)],
+};
+
+export const Petrify = {
+  id: '22',
+  name: 'Petrify',
+  text: 'Freeze Enemy 1 Turn',
+  effects: [freeze],
+};
+
+export const Aura = {
+  id: '23',
+  name: 'Aura',
+  text: '+3 HP per Turn',
+  effects: [aura([heal(3)], '+3 HP per Turn')],
 };
