@@ -11,7 +11,8 @@ import {
   generateAIMoves,
   dealCards,
   getCurrentLevel,
-  applyLevelOverride
+  applyLevelOverride,
+  applyHandEffects,
 } from './gameUtils';
 
 const setupData = () => {
@@ -24,13 +25,15 @@ const setupData = () => {
       1: { ...p1 },
     },
 
-    deck: shuffle([...getDeckForLevel(level)]), 
+    deck: shuffle([...getDeckForLevel(level)]),
 
     level: level,
+
+    globalEffects: [],
   };
 
   applyLevelOverride(G);
-  
+
   dealCards(G.players[0].hand, G.deck);
   dealCards(G.players[1].hand, G.deck);
 
@@ -49,6 +52,8 @@ const drawCard = ({ G, ctx }) => {
     console.log('Deck is empty, shuffling...');
     G.deck = shuffle([...getDeckForLevel(G.level)]);
   }
+
+  applyHandEffects(G, ctx);
 };
 
 const playCard = ({ G, ctx }, index) => {
@@ -56,11 +61,11 @@ const playCard = ({ G, ctx }, index) => {
   if (index < 0 || index >= hand.length) return INVALID_MOVE;
 
   const card = hand[index];
-  if (!card.effects || card.effects.length === 0) return INVALID_MOVE;
-
-  card.effects.forEach((e) => {
-    applyEffect(G, ctx, e);
-  });
+  if (card.effects) {
+    card.effects.forEach((e) => {
+      applyEffect(G, ctx, e);
+    });
+  }
 
   removeCard(hand, index);
 

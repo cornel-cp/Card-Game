@@ -1,4 +1,4 @@
-import { randomPopulateHand } from './levelUtils';
+import { randomPopulateHand, generateAttackOutcomes } from './levelUtils';
 
 const levelConfigs = {
   1: {
@@ -10,6 +10,8 @@ const levelConfigs = {
 
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
+
+    globalEffectsOverride: [],
   },
 
   2: {
@@ -27,6 +29,8 @@ const levelConfigs = {
 
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
+
+    globalEffectsOverride: [],
   },
 
   3: {
@@ -44,9 +48,34 @@ const levelConfigs = {
 
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
+
+    globalEffectsOverride: [],
+  },
+
+  4: {
+    playerStatsOverride: {
+      maxHp: 55,
+      hp: 55,
+    },
+    enemyStatsOverride: {
+      maxHp: 55,
+      hp: 55,
+    },
+
+    playerHandOverride: [],
+    enemyHandOverride: [],
+
+    playerEffectsOverride: [],
+    enemyEffectsOverride: [],
+
+    globalEffectsOverride: [
+      {
+        shouldMiss: generateAttackOutcomes(),
+      },
+    ],
   },
 };
 
-const finalLevel = '3';
+const finalLevel = '4';
 
 export { levelConfigs, finalLevel };

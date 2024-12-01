@@ -67,8 +67,9 @@ export const removeEffectsByGroup = (G, target, groupType) => {
 
 /**
  * Reverses the specified effect on the target player, such as stats changes.
- * This method is *not* removing the effect names from player arrays, for that use `removeEffects` instead.
- * If there is no applicable effect to reverse (other than removal from the array), this method has no impact.
+ * - This method only applies on enduring effects.
+ * - This method is *not* removing the effect names from player arrays, for that use `removeEffects` instead.
+ * - If there is no applicable effect to reverse (other than removal from the array), this method has no impact.
  */
 export const undoEffect = (G, target, { type, value = 0 }) => {
   switch (type) {

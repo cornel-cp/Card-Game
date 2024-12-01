@@ -11,9 +11,14 @@ import {
   click,
   victory,
   defeat,
+  miss,
+  defrost,
   getLocationForLevel,
   getMusicForLevel,
 } from './utils/assetPaths';
+import { random } from './utils/ai';
+import { CardKeyword } from '../data/cards';
+import { EffectType } from '../data/cardEffects';
 
 import CardPile from './CardPile';
 import CardPreview from './CardPreview';
@@ -53,6 +58,28 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   );
   const [hoveredAvatar, setHoveredAvatar] = useState(null);
 
+  /**
+   * Plays the appropriate audio when a card is played.
+   *  1. If the current player has an active `freeze` effect, play the `defrost` audio.
+   *  2. If the played card contains the `damage` keyword and the current attack is set to miss, play the `miss` audio.
+   *  3. In all other cases, play the default audio associated with the card.
+   */
+  const playCardAudio = (card) => {
+    const hasFreezeEffect = G.players[ctx.currentPlayer].effects.some(
+      (e) => e.type === EffectType.freeze
+    );
+    const hasDamageKeyword = card.keywords.includes(CardKeyword.damage);
+    const shouldMissObj = G.globalEffects.find((e) => e.shouldMiss);
+
+    if (hasFreezeEffect) {
+      playAudio(defrost);
+    } else if (hasDamageKeyword && shouldMissObj?.shouldMiss[ctx.turn - 1]) {
+      playAudio(miss);
+    } else {
+      playAudio(cardAudio(card.id));
+    }
+  };
+
   const handleDrawCard = async () => {
     if (ctx.gameover) {
       return;
@@ -85,12 +112,12 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         await sleep(pauseInterval);
       }
 
-      const aiSelectedIndex = Math.floor(Math.random() * 5);
+      const aiSelectedIndex = random();
       const aiSelectedCard = G.players[1].hand[aiSelectedIndex];
       setSelectedCard(aiSelectedCard);
 
       moves.playCard(aiSelectedIndex);
-      playAudio(cardAudio(aiSelectedCard.id));
+      playCardAudio(aiSelectedCard);
       addLogEntry(
         ctx.turn,
         G.players[1].name,
@@ -142,7 +169,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const handleEndTurnButtonClick = () => {
     if (gameState === GameState.endTurnEnabled) {
       moves.playCard(playerSelectedIndex);
-      playAudio(cardAudio(selectedCard.id));
+      playCardAudio(selectedCard);
       addLogEntry(
         ctx.turn,
         G.players[0].name,

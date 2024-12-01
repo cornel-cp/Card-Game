@@ -6,6 +6,9 @@ import {
   Resurrect,
 } from '../data/cards';
 
+/**
+ * Randomly populate a player's starting hand with cards from a list of options and probabilities.
+ */
 export const randomPopulateHand = (
   options = [Fireball1, Fireball2, Fireball3, Flame, Resurrect],
   probabilities = [0.3, 0.3, 0.3, 0.08, 0.02]
@@ -37,4 +40,19 @@ export const randomPopulateHand = (
   });
 
   return [...hand];
+};
+
+/**
+ * Generate a sequence of attack outcomes based on a given number of turns and miss probability,
+ * where `true` indicates a missed attack.
+ */
+export const generateAttackOutcomes = (
+  numTurns = 50,
+  missProbability = 0.2
+) => {
+  const outcomes = [];
+  for (let i = 0; i < numTurns; i++) {
+    outcomes.push(Math.random() < missProbability);
+  }
+  return outcomes;
 };

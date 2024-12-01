@@ -15,6 +15,7 @@ This project uses audio resources from **Freesound.com**.
 - **[Poison Spell Magic](https://freesound.org/s/219566/)** by qubodup -- License: [Attribution 4.0](https://creativecommons.org/licenses/by/4.0/)
 - **[Jingle_Lose_00.wav](https://freesound.org/s/270467/)** by LittleRobotSoundFactory -- License: [Attribution 4.0](https://creativecommons.org/licenses/by/4.0/)
 - **[VS Button Click 05.mp3](https://freesound.org/s/707042/)** by Vilkas_Sound -- License: [Attribution 4.0](https://creativecommons.org/licenses/by/4.0/)
+- **[Sand Storm](https://freesound.org/s/426560/)** by gallifreyanbuccaneer -- License: [Attribution NonCommercial 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
 
 ## Music Credits
 

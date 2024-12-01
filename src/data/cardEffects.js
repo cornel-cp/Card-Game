@@ -12,6 +12,7 @@ export const EffectType = {
   resurrect: 'resurrect',
   freeze: 'freeze',
   aura: 'aura',
+  replaceHand: 'replaceHand',
 };
 
 export const EffectDuration = {
@@ -213,4 +214,13 @@ export const aura = (effectsToExecute, text) => {
     text,
     effectsToExecute,
   };
+};
+
+/**
+ * Replace your hand with new cards drawn from the deck.
+ */
+export const replaceHand = {
+  type: EffectType.replaceHand,
+  duration: EffectDuration.instant,
+  target: EffectTarget.self,
 };

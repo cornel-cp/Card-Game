@@ -1,3 +1,10 @@
+# 🚀 Release v0.14 (2024-12-1)
+
+🏜️ Level 4: Lost Desert
+
+- Level effect: Every attack has a chance to miss.
+- New cards, music and artwork.
+
 # 🚀 Release v0.13 (2024-11-29)
 
 ❄️ Level 3: Ice Crown

@@ -16,12 +16,17 @@ import {
   EffectGroup,
   freeze as freezeEffect,
 } from '../data/cardEffects';
+import { getDeckForLevel } from '../data/deck';
+import { shuffle } from './gameUtils';
 
-const damage = (G, target, { value = 0 }) => {
+const damage = (G, target, { value = 0 }, ctx) => {
   const player = target === '0' ? '1' : '0';
 
   // Calculate base damage: card damage + player's attack - target's defense.
   value = value + G.players[player].atk - G.players[target].def;
+
+  // Make sure damage value is non-negative.
+  value = Math.max(value, 0);
 
   // Check if the attacking player has double damage effect.
   if (hasEffect(G, player, EffectType.doubleDmg)) {
@@ -29,17 +34,17 @@ const damage = (G, target, { value = 0 }) => {
   }
   removeEffects(G, player, EffectType.doubleDmg);
 
+  // Apply level-specific side effects related to damage calculation.
+  value = applyDamageLevelEffects(G, target, value, ctx);
+  if (value === -1) {
+    return; // Exit early so that prevent damage effect is not exhausted
+  }
+
   // Check if the target has prevent damage effect.
   if (hasEffect(G, target, EffectType.preventDmg)) {
     value = 0;
   }
   removeEffects(G, target, EffectType.preventDmg);
-
-  // Make sure damage value is non-negative.
-  value = Math.max(value, 0);
-
-  // Apply level-specific impact to the damage and side effects if any.
-  value = applyDamageLevelEffects(G, target, value);
 
   // Check if the target has resurrect effect.
   if (
@@ -114,6 +119,26 @@ const freeze = () => {};
 
 const aura = () => {};
 
+const replaceHand = (G, target) => {
+  const hand = G.players[target].hand;
+  let skippedCurrent = false; // Skip the current `Sandstorm` card (once)
+
+  for (let i = 0; i < hand.length; i++) {
+    if (hand[i].id === '24') {
+      if (!skippedCurrent) {
+        skippedCurrent = true;
+        continue;
+      }
+    }
+    if (G.deck.length === 0) {
+      console.log('Deck is empty, shuffling...');
+      G.deck = shuffle([...getDeckForLevel(G.level)]);
+    }
+
+    hand[i] = G.deck.pop();
+  }
+};
+
 const effectHandlers = {
   [EffectType.damage]: damage,
   [EffectType.heal]: heal,
@@ -128,6 +153,7 @@ const effectHandlers = {
   [EffectType.resurrect]: resurrect,
   [EffectType.freeze]: freeze,
   [EffectType.aura]: aura,
+  [EffectType.replaceHand]: replaceHand,
 };
 
 export const applyEffect = (G, ctx, effect, shouldProcessEoT = true) => {
@@ -166,7 +192,7 @@ export const applyEffect = (G, ctx, effect, shouldProcessEoT = true) => {
     return;
   }
 
-  handler(G, target, effect);
+  handler(G, target, effect, ctx);
 
   if (effect.duration === EffectDuration.enduring) {
     G.players[target].effects.push(effect);
@@ -188,13 +214,21 @@ const executeEndOfTurnEffects = (G, ctx, shouldProcessEoT) => {
   // Add more end of turn effect types here
 };
 
-const applyDamageLevelEffects = (G, target, damage) => {
+const applyDamageLevelEffects = (G, target, damage, ctx) => {
   switch (G.level) {
     case '3':
       if (getChanceEffect(0.2)) {
         G.players[target].effects.push(freezeEffect);
       }
       return damage;
+
+    case '4':
+      const shouldMissObj = G.globalEffects.find((e) => e.shouldMiss);
+      if (shouldMissObj?.shouldMiss[ctx.turn - 1]) {
+        return -1;
+      } else {
+        return damage;
+      }
 
     default:
       return damage;
