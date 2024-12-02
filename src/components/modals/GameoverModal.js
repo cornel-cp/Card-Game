@@ -17,7 +17,7 @@ const GameoverModal = ({
   const gameoverMessage = {
     0:
       level === finalLevel
-        ? 'You have defeated all your opponents in Wizard Duel!'
+        ? 'You have defeated all your opponents. Thanks for playing, and stay tuned for more levels!'
         : 'You have advanced to the next level!',
     1: 'Defeated... better luck next time!',
   };
