@@ -13,6 +13,8 @@ import {
   freeze,
   aura,
   replaceHand,
+  swapHp,
+  stealBuff,
 } from './cardEffects';
 
 /**
@@ -243,7 +245,7 @@ export const Wish1 = {
 export const Wish2 = {
   id: '26',
   name: 'Wish',
-  text: 'Remove Buff and Freeze',
+  text: 'Remove Buff and Freeze 1 Turn',
   effects: [removeBuff, freeze],
   keywords: [CardKeyword.effect],
 };
@@ -251,23 +253,39 @@ export const Wish2 = {
 export const Wish3 = {
   id: '27',
   name: 'Wish',
-  text: '+4 Attack and +4 Shield',
-  effects: [buffAtk(4), buffDef(4)],
+  text: '+6 Attack',
+  effects: [buffAtk(6)],
   keywords: [CardKeyword.effect],
 };
 
 export const Wish4 = {
   id: '28',
   name: 'Wish',
-  text: '+16 HP and Remove Debuff',
-  effects: [heal(16), removeDebuff],
-  keywords: [CardKeyword.heal, CardKeyword.effect],
+  text: 'Remove Debuff and +10 HP',
+  effects: [removeDebuff, heal(10)],
+  keywords: [CardKeyword.effect, CardKeyword.heal],
 };
 
 export const Wish5 = {
   id: '29',
   name: 'Wish',
-  text: 'Damage 20',
-  effects: [damage(20)],
+  text: 'Damage 12',
+  effects: [damage(12)],
   keywords: [CardKeyword.damage],
+};
+
+export const Mutate = {
+  id: '30',
+  name: 'Mutate',
+  text: 'Swap HP',
+  effects: [swapHp],
+  keywords: [],
+};
+
+export const Ambush = {
+  id: '31',
+  name: 'Ambush',
+  text: 'Steal 1 Buff',
+  effects: [stealBuff],
+  keywords: [CardKeyword.effect],
 };

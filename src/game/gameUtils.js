@@ -31,6 +31,23 @@ export const removeCard = (hand, index) => {
 };
 
 /**
+ * Get one copy of a card from a deck by id.
+ */
+export const getCardById = (deck, cardId) => {
+  return deck.find(card => card.id === cardId);
+}
+
+/**
+ * Remove one copy of a card from a deck by id.
+ */
+export const removeCardById = (deck, cardId) => {
+  const index = deck.findIndex(card => card.id === cardId);
+  if (index !== -1) {
+    deck.splice(index, 1);
+  }
+}
+
+/**
  * Log the details of the current turn and game state in browser.
  */
 export const logPlay = (G, ctx, card) => {
@@ -148,7 +165,7 @@ export const applyLevelOverride = (G) => {
     playerEffectsOverride,
     enemyEffectsOverride,
 
-    globalEffectsOverride,
+    globalEffects,
   } = levelConfigs[G.level];
 
   for (let key in playerStatsOverride) {
@@ -172,7 +189,7 @@ export const applyLevelOverride = (G) => {
   G.players[0].effects.push(...playerEffectsOverride);
   G.players[1].effects.push(...enemyEffectsOverride);
 
-  G.globalEffects.push(...globalEffectsOverride);
+  G.globalEffects.push(...globalEffects);
 };
 
 /**

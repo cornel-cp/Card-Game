@@ -25,6 +25,8 @@ import {
   Aura,
   Sandstorm,
   Wish1,
+  Mutate,
+  Ambush,
 } from './cards';
 
 const baseDeck = [
@@ -58,6 +60,18 @@ const levelDecks = {
   3: [...baseDeck, Flame, Resurrect, Petrify, Aura],
 
   4: [...baseDeck, Flame, Resurrect, Petrify, Aura, Sandstorm, Wish1],
+
+  5: [
+    ...baseDeck,
+    Flame,
+    Resurrect,
+    Petrify,
+    Aura,
+    Sandstorm,
+    Wish1,
+    Mutate,
+    Ambush,
+  ],
 };
 
 export const getDeckForLevel = (level = '1') => {

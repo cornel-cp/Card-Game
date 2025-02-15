@@ -107,3 +107,10 @@ export const undoEffect = (G, target, { type, value = 0 }) => {
 export const getChanceEffect = (chance) => {
   return Math.random() < chance;
 };
+
+/**
+ * Checks if an effect is unique.
+ */
+export const isUnique = (effect) => {
+  return EffectGroup.unique.some((type) => type === effect.type);
+};

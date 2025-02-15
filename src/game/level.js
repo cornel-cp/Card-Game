@@ -1,6 +1,15 @@
 import { randomPopulateHand, generateAttackOutcomes } from './levelUtils';
 
-const levelConfigs = {
+export const DrawMode = {
+  draw: 'draw',
+  select: 'select',
+};
+
+export const finalLevel = '5';
+
+export const maxTurn = 50;
+
+export const levelConfigs = {
   1: {
     playerStatsOverride: {},
     enemyStatsOverride: {},
@@ -11,17 +20,21 @@ const levelConfigs = {
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
 
-    globalEffectsOverride: [],
+    globalEffects: [
+      {
+        drawMode: DrawMode.draw,
+      },
+    ],
   },
 
   2: {
     playerStatsOverride: {
-      maxHp: 45,
-      hp: 45,
+      maxHp: 35,
+      hp: 35,
     },
     enemyStatsOverride: {
-      maxHp: 45,
-      hp: 45,
+      maxHp: 35,
+      hp: 35,
     },
 
     playerHandOverride: randomPopulateHand(),
@@ -30,17 +43,21 @@ const levelConfigs = {
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
 
-    globalEffectsOverride: [],
+    globalEffects: [
+      {
+        drawMode: DrawMode.draw,
+      },
+    ],
   },
 
   3: {
     playerStatsOverride: {
-      maxHp: 50,
-      hp: 50,
+      maxHp: 40,
+      hp: 40,
     },
     enemyStatsOverride: {
-      maxHp: 50,
-      hp: 50,
+      maxHp: 40,
+      hp: 40,
     },
 
     playerHandOverride: [],
@@ -49,17 +66,21 @@ const levelConfigs = {
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
 
-    globalEffectsOverride: [],
+    globalEffects: [
+      {
+        drawMode: DrawMode.draw,
+      },
+    ],
   },
 
   4: {
     playerStatsOverride: {
-      maxHp: 55,
-      hp: 55,
+      maxHp: 45,
+      hp: 45,
     },
     enemyStatsOverride: {
-      maxHp: 55,
-      hp: 55,
+      maxHp: 45,
+      hp: 45,
     },
 
     playerHandOverride: [],
@@ -68,14 +89,36 @@ const levelConfigs = {
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
 
-    globalEffectsOverride: [
+    globalEffects: [
+      {
+        drawMode: DrawMode.draw,
+      },
       {
         shouldMiss: generateAttackOutcomes(),
       },
     ],
   },
+
+  5: {
+    playerStatsOverride: {
+      maxHp: 50,
+      hp: 50,
+    },
+    enemyStatsOverride: {
+      maxHp: 50,
+      hp: 50,
+    },
+
+    playerHandOverride: [],
+    enemyHandOverride: [],
+
+    playerEffectsOverride: [],
+    enemyEffectsOverride: [],
+
+    globalEffects: [
+      {
+        drawMode: DrawMode.select,
+      },
+    ],
+  },
 };
-
-const finalLevel = '4';
-
-export { levelConfigs, finalLevel };

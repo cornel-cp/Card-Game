@@ -5,6 +5,8 @@ import { applyEffect } from './effect';
 import {
   shuffle,
   removeCard,
+  getCardById,
+  removeCardById,
   logPlay,
   isVictory,
   onGameEnd,
@@ -40,20 +42,32 @@ const setupData = () => {
   return G;
 };
 
-const drawCard = ({ G, ctx }) => {
+const drawCard = ({ G, ctx }, cardId = '') => {
   if (ctx.turn <= 2) return;
+
+  applyHandEffects(G, ctx);
 
   const hand = G.players[ctx.currentPlayer].hand;
   if (hand.length >= 5 || G.deck.length === 0) return INVALID_MOVE;
 
-  hand.push(G.deck.pop());
-
-  if (G.deck.length === 0) {
-    console.log('Deck is empty, shuffling...');
-    G.deck = shuffle([...getDeckForLevel(G.level)]);
+  if (cardId !== '') {
+    // Select mode
+    const card = getCardById(G.deck, cardId);
+    if (!card) {
+      throw new Error(`Card with id ${cardId} not found in the deck.`);
+    }
+    hand.push(card);
+    removeCardById(G.deck, cardId); 
+  } else {
+    // Draw mode
+    hand.push(G.deck.pop());
   }
 
-  applyHandEffects(G, ctx);
+  // Make sure the deck has at least 2 cards for Select mode to work properly
+  if (G.deck.length <= 1) { 
+    console.log('Deck is almost empty, shuffling...');
+    G.deck = shuffle([...getDeckForLevel(G.level)]);
+  }
 };
 
 const playCard = ({ G, ctx }, index) => {

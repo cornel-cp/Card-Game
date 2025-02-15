@@ -19,6 +19,7 @@ import {
 import { random } from './utils/ai';
 import { CardKeyword } from '../data/cards';
 import { EffectType } from '../data/cardEffects';
+import { DrawMode } from '../game/level';
 
 import CardPile from './CardPile';
 import CardPreview from './CardPreview';
@@ -34,13 +35,15 @@ import NextLevelModal from './modals/NextLevelModal';
 import PlayerHand from './PlayerHand';
 import PlayerStats from './PlayerStats';
 import SettingsModal from './modals/SettingsModal';
+import SelectCardModal from './modals/SelectCardModal';
 
 const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   // Initialize Bootstrap tooltips
   useBsTooltip();
 
-  const [selectedCard, setSelectedCard] = useState(null);
-  const [playerSelectedIndex, setPlayerSelectedIndex] = useState(null);
+  const [selectedCardToPlay, setSelectedCardToPlay] = useState(null);
+  const [playerSelectedIndexToPlay, setPlayerSelectedIndexToPlay] =
+    useState(null);
   const [gameState, setGameState] = useState(GameState.endTurnDisabled);
   const [winner, setWinner] = useState(null);
   const [showGameoverModal, setShowGameoverModal] = useState(false);
@@ -50,6 +53,9 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showMatchupModal, setShowMatchupModal] = useState(true);
+
+  const [showSelectCardModal, setShowSelectCardModal] = useState(false);
+  const [selectableCardsToDraw, setSelectableCardsToDraw] = useState([]);
 
   const { logEntries, addLogEntry } = useLog();
   const { playAudio, toggleAudioMute } = useAudioPlayer();
@@ -87,16 +93,45 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
     if (ctx.turn > 1) {
       await sleep(pauseInterval); // Preview card duration
-      setSelectedCard(null);
-      setPlayerSelectedIndex(null);
+      setSelectedCardToPlay(null);
+      setPlayerSelectedIndexToPlay(null);
       await sleep(pauseInterval); // Interval between preview and draw
     }
 
-    moves.drawCard();
+    const drawModeObj = G.globalEffects.find((e) => e.drawMode);
+    if (
+      ctx.turn > 1 &&
+      ctx.currentPlayer === '0' &&
+      drawModeObj?.drawMode === DrawMode.select
+    ) {
+      setSelectableCardsToDraw(getSelectableCardIds());
+      setShowSelectCardModal(true);
+    } else {
+      moves.drawCard();
+    }
 
     if (ctx.turn > 1 && ctx.currentPlayer === '0') {
       setGameState(GameState.endTurnDisabled);
     }
+  };
+
+  const handleSelectCard = (cardId) => {
+    setShowSelectCardModal(false);
+    setSelectableCardsToDraw([]);
+    moves.drawCard(cardId);
+  };
+
+  const getSelectableCardIds = () => {
+    if (G.deck.length < 2) {
+      throw new Error('Deck must have at least two cards.');
+    }
+
+    let firstIndex = Math.floor(Math.random() * G.deck.length);
+    let secondIndex = Math.floor(Math.random() * G.deck.length);
+    while (secondIndex === firstIndex) {
+      secondIndex = Math.floor(Math.random() * G.deck.length);
+    }
+    return [G.deck[firstIndex].id, G.deck[secondIndex].id];
   };
 
   const handleAiPlayCard = async () => {
@@ -114,7 +149,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
       const aiSelectedIndex = random();
       const aiSelectedCard = G.players[1].hand[aiSelectedIndex];
-      setSelectedCard(aiSelectedCard);
+      setSelectedCardToPlay(aiSelectedCard);
 
       moves.playCard(aiSelectedIndex);
       playCardAudio(aiSelectedCard);
@@ -158,8 +193,8 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
   const handleCardClick = async (index) => {
     if (gameState !== GameState.aiTurn) {
-      setSelectedCard(G.players[0].hand[index]);
-      setPlayerSelectedIndex(index);
+      setSelectedCardToPlay(G.players[0].hand[index]);
+      setPlayerSelectedIndexToPlay(index);
       playAudio(click);
 
       setGameState(GameState.endTurnEnabled);
@@ -168,13 +203,13 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
   const handleEndTurnButtonClick = () => {
     if (gameState === GameState.endTurnEnabled) {
-      moves.playCard(playerSelectedIndex);
-      playCardAudio(selectedCard);
+      moves.playCard(playerSelectedIndexToPlay);
+      playCardAudio(selectedCardToPlay);
       addLogEntry(
         ctx.turn,
         G.players[0].name,
-        G.players[0].hand[playerSelectedIndex].name,
-        G.players[0].hand[playerSelectedIndex].text
+        G.players[0].hand[playerSelectedIndexToPlay].name,
+        G.players[0].hand[playerSelectedIndexToPlay].text
       );
 
       setGameState(GameState.aiTurn);
@@ -220,7 +255,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         </div>
 
         <div className='col-6'>
-          <CardPreview selectedCard={selectedCard} />
+          <CardPreview selectedCard={selectedCardToPlay} />
         </div>
 
         <div className='col-3'>
@@ -289,6 +324,11 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         showHelpModal={showHelpModal}
         setShowHelpModal={setShowHelpModal}
         playAudio={playAudio}
+      />
+      <SelectCardModal
+        cardIdList={selectableCardsToDraw}
+        handleSelectCard={handleSelectCard}
+        showSelectCardModal={showSelectCardModal}
       />
     </div>
   );

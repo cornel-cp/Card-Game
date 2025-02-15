@@ -3,6 +3,7 @@ const levelNames = {
   2: 'Lava Plains',
   3: 'Ice Crown',
   4: 'Lost Desert',
+  5: 'Misty Woods',
 };
 const getLevelName = (level = '1') => levelNames[level];
 
@@ -11,6 +12,7 @@ const enemyNames = {
   2: 'Wild Firemancer',
   3: 'Ice Queen',
   4: 'Traveling Merchant',
+  5: 'Forest Ranger',
 };
 const getEnemyName = (level = '1') => enemyNames[level];
 
@@ -19,6 +21,7 @@ const battleStartCaptions = {
   2: 'Level 2: Lava Plains',
   3: 'Level 3: Ice Crown',
   4: 'Level 4: Lost Desert',
+  5: 'Level 5: Misty Woods',
 };
 const getBattleStartCaption = (level = '1') => battleStartCaptions[level];
 
@@ -43,8 +46,14 @@ const battleStartInstrutions = {
   },
 
   4: {
-    intro: `Deep in the Lost Desert, you encounter the crafty Traveling Merchant. `,
+    intro: `In the heart of the Lost Desert, you encounter the cunning Traveling Merchant. `,
     levelRule: `Disrupted by the desert wind, every attack has a chance to miss.`,
+    outro: ``,
+  },
+
+  5: {
+    intro: `Deep in the Misty Woods, the Forest Ranger stalks your every move. `,
+    levelRule: `You’ll pick your card from two options to find your way through the forest.`,
     outro: ``,
   },
 };

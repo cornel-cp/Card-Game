@@ -1,3 +1,10 @@
+# 🚀 Release v0.15 (2025-2-15)
+
+🌳 Level 5: Misty Woods
+
+- Level effect: Player picks card from two options instead of drawing.
+- New cards, music and artwork.
+
 # 🚀 Release v0.14 (2024-12-1)
 
 🏜️ Level 4: Lost Desert

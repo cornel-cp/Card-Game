@@ -13,6 +13,7 @@ const avatarPaths = {
   2: `${avatarPrefix}/wild-firemancer.svg`,
   3: `${avatarPrefix}/ice-queen.svg`,
   4: `${avatarPrefix}/traveling-merchant.svg`,
+  5: `${avatarPrefix}/forest-ranger.svg`,
 };
 const getAvatarForLevel = (playerId, level = '1') => {
   return playerId === '0' ? avatarPaths[0] : avatarPaths[level];
@@ -23,6 +24,7 @@ const locationPaths = {
   2: `${locationPrefix}/volcano.svg`,
   3: `${locationPrefix}/snow-mountain.svg`,
   4: `${locationPrefix}/desert.svg`,
+  5: `${locationPrefix}/forest.svg`,
 };
 const getLocationForLevel = (level = '1') => locationPaths[level];
 
@@ -45,7 +47,7 @@ const cardPlaceholder = (playerId) =>
   `${cardPrefix}/placeholder/${playerId}.svg`;
 const cardPile = `${cardPrefix}/pile.svg`;
 
-const cardCount = 30; // Increment this when new cards are added
+const cardCount = 32; // Increment this when new cards are added
 const cardFronts = Array.from(
   { length: cardCount },
   (_, cardId) => `${cardPrefix}/front/${cardId}.svg`
@@ -55,6 +57,7 @@ const nextLevelCards = {
   1: [cardFront('20'), cardFront('21')],
   2: [cardFront('22'), cardFront('23')],
   3: [cardFront('24'), cardFront('25')],
+  4: [cardFront('30'), cardFront('31')],
 };
 const getNextCardsForLevel = (level = '1') => nextLevelCards[level];
 
@@ -91,6 +94,8 @@ const cardAudioType = {
   27: 'magic',
   28: 'magic',
   29: 'magic',
+  30: 'magic',
+  31: 'arrow',
 };
 const cardAudio = (cardId) => `${audioPrefix}/${cardAudioType[cardId]}.mp3`;
 const click = `${audioPrefix}/click.mp3`;
@@ -106,6 +111,7 @@ const musicPaths = {
   2: `${musicPrefix}/lava-plains.mp3`,
   3: `${musicPrefix}/ice-crown.mp3`,
   4: `${musicPrefix}/lost-desert.mp3`,
+  5: `${musicPrefix}/misty-woods.mp3`,
 };
 const getMusicForLevel = (level = '1') => musicPaths[level];
 
@@ -135,6 +141,7 @@ const AUDIO = [
   `${audioPrefix}/weaken.mp3`,
   `${audioPrefix}/magic.mp3`,
   `${audioPrefix}/wind.mp3`,
+  `${audioPrefix}/arrow.mp3`,
 ];
 const MUSIC = [...Object.values(musicPaths)];
 

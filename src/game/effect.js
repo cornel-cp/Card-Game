@@ -8,12 +8,12 @@ import {
   removeEffectsByGroup,
   undoEffect,
   getChanceEffect,
+  isUnique,
 } from './effectUtils';
 import {
   EffectType,
   EffectDuration,
   EffectGroupName,
-  EffectGroup,
   freeze as freezeEffect,
 } from '../data/cardEffects';
 import { getDeckForLevel } from '../data/deck';
@@ -137,6 +137,49 @@ const replaceHand = (G, target) => {
 
     hand[i] = G.deck.pop();
   }
+
+  // Handle the edge case where deck has less than 2 cards after playing `Sandstorm`
+  if (G.deck.length <= 1) {
+    console.log('Deck is almost empty, shuffling...');
+    G.deck = shuffle([...getDeckForLevel(G.level)]);
+  }
+};
+
+const swapHp = (G, target) => {
+  const opponent = target === '0' ? '1' : '0';
+  const temp = G.players[target].hp;
+  G.players[target].hp = G.players[opponent].hp;
+  G.players[opponent].hp = temp;
+};
+
+const stealBuff = (G, target, ctx) => {
+  const opponentBuffs = selectEffectsByGroup(G, target, EffectGroupName.buff);
+  if (opponentBuffs.length === 0) {
+    return;
+  }
+  const chosenBuff =
+    opponentBuffs[Math.floor(Math.random() * opponentBuffs.length)];
+
+  // Remove the chosen buff from the opponent.
+  const opponentEffects = G.players[target].effects;
+  const index = opponentEffects.findIndex(
+    (effect) => JSON.stringify(effect) === JSON.stringify(chosenBuff)
+  );
+  if (index !== -1) {
+    undoEffect(G, target, opponentEffects[index]);
+    opponentEffects.splice(index, 1);
+  }
+
+  // Apply the chosen buff to the player if not already present.
+  const player = target === '0' ? '1' : '0';
+  const playerEffects = G.players[player].effects;
+  const alreadyExists = playerEffects.some(
+    (effect) => JSON.stringify(effect) === JSON.stringify(chosenBuff)
+  );
+  if (!alreadyExists) {
+    effectHandlers[chosenBuff.type](G, player, { ...chosenBuff }, ctx);
+    playerEffects.push({ ...chosenBuff });
+  }
 };
 
 const effectHandlers = {
@@ -154,6 +197,8 @@ const effectHandlers = {
   [EffectType.freeze]: freeze,
   [EffectType.aura]: aura,
   [EffectType.replaceHand]: replaceHand,
+  [EffectType.swapHp]: swapHp,
+  [EffectType.stealBuff]: stealBuff,
 };
 
 export const applyEffect = (G, ctx, effect, shouldProcessEoT = true) => {
@@ -173,17 +218,13 @@ export const applyEffect = (G, ctx, effect, shouldProcessEoT = true) => {
     return;
   }
 
-  // If you already have an active non-stackable effect, playing the same card will have no effect.
-  if (
-    EffectGroup.unique.some((e) => e === effect.type) &&
-    hasEffect(G, target, effect.type)
-  ) {
+  // If you already have a non-stackable effect, playing the same card will have no effect.
+  if (isUnique(effect) && hasEffect(G, target, effect.type)) {
     executeEndOfTurnEffects(G, ctx, shouldProcessEoT);
     return;
   }
 
-  // If an active aura effect with an exact match is found, playing the same card will have no effect.
-  // It is not put under `unique` group because multiple different `aura` type effects can co-exist.
+  // If you already have an existing aura effect, playing the same card will have no effect.
   if (
     effect.type === EffectType.aura &&
     hasSameEffect(G, ctx.currentPlayer, effect)

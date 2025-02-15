@@ -5,6 +5,7 @@ import {
   Flame,
   Resurrect,
 } from '../data/cards';
+import { maxTurn } from './level';
 
 /**
  * Randomly populate a player's starting hand with cards from a list of options and probabilities.
@@ -47,7 +48,7 @@ export const randomPopulateHand = (
  * where `true` indicates a missed attack.
  */
 export const generateAttackOutcomes = (
-  numTurns = 50,
+  numTurns = maxTurn,
   missProbability = 0.2
 ) => {
   const outcomes = [];
