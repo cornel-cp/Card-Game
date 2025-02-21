@@ -37,7 +37,7 @@ const damage = (G, target, { value = 0 }, ctx) => {
   // Apply level-specific side effects related to damage calculation.
   value = applyDamageLevelEffects(G, target, value, ctx);
   if (value === -1) {
-    return; // Exit early so that prevent damage effect is not exhausted
+    return 0; // Exit early so that prevent damage effect is not exhausted
   }
 
   // Check if the target has prevent damage effect.
@@ -53,11 +53,12 @@ const damage = (G, target, { value = 0 }, ctx) => {
   ) {
     G.players[target].hp = 15;
     removeEffects(G, target, EffectType.resurrect);
-    return;
+    return 0;
   }
 
   // Apply the final damage to the target's HP.
   G.players[target].hp -= value;
+  return value;
 };
 
 const heal = (G, target, { value = 0 }) => {
@@ -138,9 +139,9 @@ const replaceHand = (G, target) => {
     hand[i] = G.deck.pop();
   }
 
-  // Handle the edge case where deck has less than 2 cards after playing `Sandstorm`
-  if (G.deck.length <= 1) {
-    console.log('Deck is almost empty, shuffling...');
+  // Handle the edge case where deck becomes empty after playing `Sandstorm`
+  if (G.deck.length === 0) {
+    console.log('Deck is empty, shuffling...');
     G.deck = shuffle([...getDeckForLevel(G.level)]);
   }
 };
@@ -152,7 +153,7 @@ const swapHp = (G, target) => {
   G.players[opponent].hp = temp;
 };
 
-const stealBuff = (G, target, ctx) => {
+const stealBuff = (G, target, effect, ctx) => {
   const opponentBuffs = selectEffectsByGroup(G, target, EffectGroupName.buff);
   if (opponentBuffs.length === 0) {
     return;
@@ -182,6 +183,20 @@ const stealBuff = (G, target, ctx) => {
   }
 };
 
+const showEnemyHand = (G, target, effect, ctx) => {
+  if (ctx.currentPlayer === '0') {
+    G.globalEffects.showEnemyHand = true;
+  }
+};
+
+const lifesteal = (G, target, effect, ctx) => {
+  const player = target === '0' ? '1' : '0';
+  const value = damage(G, target, effect, ctx);
+  if (value > 0) {
+    heal(G, player, { value });
+  }
+};
+
 const effectHandlers = {
   [EffectType.damage]: damage,
   [EffectType.heal]: heal,
@@ -199,6 +214,8 @@ const effectHandlers = {
   [EffectType.replaceHand]: replaceHand,
   [EffectType.swapHp]: swapHp,
   [EffectType.stealBuff]: stealBuff,
+  [EffectType.showEnemyHand]: showEnemyHand,
+  [EffectType.lifesteal]: lifesteal,
 };
 
 export const applyEffect = (G, ctx, effect, shouldProcessEoT = true) => {
@@ -258,18 +275,13 @@ const executeEndOfTurnEffects = (G, ctx, shouldProcessEoT) => {
 const applyDamageLevelEffects = (G, target, damage, ctx) => {
   switch (G.level) {
     case '3':
-      if (getChanceEffect(0.2)) {
+      if (getChanceEffect(0.25)) {
         G.players[target].effects.push(freezeEffect);
       }
       return damage;
 
     case '4':
-      const shouldMissObj = G.globalEffects.find((e) => e.shouldMiss);
-      if (shouldMissObj?.shouldMiss[ctx.turn - 1]) {
-        return -1;
-      } else {
-        return damage;
-      }
+      return G.globalEffects.shouldMiss?.[ctx.turn - 1] ? -1 : damage;
 
     default:
       return damage;

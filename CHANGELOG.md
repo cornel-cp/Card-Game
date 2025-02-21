@@ -1,3 +1,11 @@
+# 🚀 Release v0.16 (2025-2-20)
+
+🌊 Level 6: Coral Bay
+
+- Level effect: All buffs and debuffs are cleared every few turns.
+- New cards, music and artwork.
+- UX improvements: Player effects shown by default, new game stats panel, and more visibility settings.
+
 # 🚀 Release v0.15 (2025-2-15)
 
 🌳 Level 5: Misty Woods

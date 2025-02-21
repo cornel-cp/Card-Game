@@ -13,6 +13,7 @@ import {
   defeat,
   miss,
   defrost,
+  cleanse,
   getLocationForLevel,
   getMusicForLevel,
 } from './utils/assetPaths';
@@ -21,11 +22,11 @@ import { CardKeyword } from '../data/cards';
 import { EffectType } from '../data/cardEffects';
 import { DrawMode } from '../game/level';
 
-import CardPile from './CardPile';
 import CardPreview from './CardPreview';
 import EffectStack from './EffectStack';
 import EndTurnButton from './EndTurnButton';
 import GameoverModal from './modals/GameoverModal';
+import GameStatsPanel from './GameStatsPanel';
 import HelpModal from './modals/HelpModal';
 import LevelEffectModal from './modals/LevelEffectModal';
 import LogModal from './modals/LogModal';
@@ -33,7 +34,7 @@ import IconList from './IconList';
 import MatchupModal from './modals/MatchupModal';
 import NextLevelModal from './modals/NextLevelModal';
 import PlayerHand from './PlayerHand';
-import PlayerStats from './PlayerStats';
+import PlayerStatsPanel from './PlayerStatsPanel';
 import SettingsModal from './modals/SettingsModal';
 import SelectCardModal from './modals/SelectCardModal';
 
@@ -57,29 +58,38 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const [showSelectCardModal, setShowSelectCardModal] = useState(false);
   const [selectableCardsToDraw, setSelectableCardsToDraw] = useState([]);
 
+  const [showGameStats, setShowGameStats] = useState(true);
+  const [showEffectStack, setShowEffectStack] = useState(true);
+
   const { logEntries, addLogEntry } = useLog();
   const { playAudio, toggleAudioMute } = useAudioPlayer();
   const { playMusic, pauseMusic, toggleMusic } = useMusicPlayer(
     getMusicForLevel(G.level)
   );
-  const [hoveredAvatar, setHoveredAvatar] = useState(null);
+  const [visibleCurrentTurn, setVisibleCurrentTurn] = useState(0);
 
   /**
    * Plays the appropriate audio when a card is played.
-   *  1. If the current player has an active `freeze` effect, play the `defrost` audio.
-   *  2. If the played card contains the `damage` keyword and the current attack is set to miss, play the `miss` audio.
-   *  3. In all other cases, play the default audio associated with the card.
+   *  1. If the played card contains the `effect` keyword and the current turn is set to clear all effects, play the `cleanse` audio.
+   *  2. If the current player has an active `freeze` effect, play the `defrost` audio.
+   *  3. If the played card contains the `damage` keyword and the current attack is set to miss, play the `miss` audio.
+   *  4. In all other cases, play the default audio associated with the card.
    */
   const playCardAudio = (card) => {
     const hasFreezeEffect = G.players[ctx.currentPlayer].effects.some(
       (e) => e.type === EffectType.freeze
     );
     const hasDamageKeyword = card.keywords.includes(CardKeyword.damage);
-    const shouldMissObj = G.globalEffects.find((e) => e.shouldMiss);
+    const hasEffectKeyward = card.keywords.includes(CardKeyword.effect);
+    const shouldMiss = G.globalEffects.shouldMiss?.[ctx.turn - 1];
+    const shouldClearEffects =
+      G.globalEffects.shouldClearEffects?.[ctx.turn - 1];
 
-    if (hasFreezeEffect) {
+    if (hasEffectKeyward && shouldClearEffects) {
+      playAudio(cleanse);
+    } else if (hasFreezeEffect) {
       playAudio(defrost);
-    } else if (hasDamageKeyword && shouldMissObj?.shouldMiss[ctx.turn - 1]) {
+    } else if (hasDamageKeyword && shouldMiss) {
       playAudio(miss);
     } else {
       playAudio(cardAudio(card.id));
@@ -93,16 +103,26 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
     if (ctx.turn > 1) {
       await sleep(pauseInterval); // Preview card duration
+
+      // Turn 2 does not have draw phase, hence displaying updated turn number immediately
+      if (ctx.turn === 2) {
+        setVisibleCurrentTurn((prevTurn) => prevTurn + 1);
+      }
+
       setSelectedCardToPlay(null);
       setPlayerSelectedIndexToPlay(null);
       await sleep(pauseInterval); // Interval between preview and draw
     }
 
-    const drawModeObj = G.globalEffects.find((e) => e.drawMode);
+    // Delay displaying updated turn number until when a card is drawn
+    if (ctx.turn !== 2) {
+      setVisibleCurrentTurn((prevTurn) => prevTurn + 1);
+    }
+
     if (
       ctx.turn > 1 &&
       ctx.currentPlayer === '0' &&
-      drawModeObj?.drawMode === DrawMode.select
+      G.globalEffects.drawMode === DrawMode.select
     ) {
       setSelectableCardsToDraw(getSelectableCardIds());
       setShowSelectCardModal(true);
@@ -122,10 +142,12 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   };
 
   const getSelectableCardIds = () => {
-    if (G.deck.length < 2) {
-      throw new Error('Deck must have at least two cards.');
+    if (G.deck.length === 0) {
+      throw new Error('Deck must have at least one card.');
     }
-
+    if (G.deck.length === 1) {
+      return [G.deck[0].id];
+    }
     let firstIndex = Math.floor(Math.random() * G.deck.length);
     let secondIndex = Math.floor(Math.random() * G.deck.length);
     while (secondIndex === firstIndex) {
@@ -223,15 +245,14 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     >
       <div className='row'>
         <div className='col-3'>
-          <PlayerStats
-            player={G.players[1]}
-            level={G.level}
-            setHoveredAvatar={setHoveredAvatar}
-          />
+          <PlayerStatsPanel player={G.players[1]} level={G.level} />
         </div>
 
         <div className='col-6'>
-          <PlayerHand player={G.players[1]} />
+          <PlayerHand
+            player={G.players[1]}
+            showEnemyHand={G.globalEffects.showEnemyHand}
+          />
         </div>
 
         <div className='col-3'>
@@ -250,7 +271,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
           <EffectStack
             opponentEffects={G.players[1].effects}
             playerEffects={G.players[0].effects}
-            hoveredAvatar={hoveredAvatar}
+            showEffectStack={showEffectStack}
           />
         </div>
 
@@ -258,21 +279,27 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
           <CardPreview selectedCard={selectedCardToPlay} />
         </div>
 
-        <div className='col-3'>
-          <CardPile />
+        <div className='col-3 d-flex flex-column align-items-end justify-content-center'>
+          <GameStatsPanel
+            level={G.level}
+            visibleTurn={visibleCurrentTurn}
+            deckSize={G.deck.length}
+            showGameStats={showGameStats}
+          />
         </div>
       </div>
 
       <div className='row align-items-end'>
         <div className='col-3'>
-          <PlayerStats
-            player={G.players[0]}
-            setHoveredAvatar={setHoveredAvatar}
-          />
+          <PlayerStatsPanel player={G.players[0]} />
         </div>
 
         <div className='col-6'>
-          <PlayerHand player={G.players[0]} handleCardClick={handleCardClick} />
+          <PlayerHand
+            player={G.players[0]}
+            showEnemyHand={G.globalEffects.showEnemyHand}
+            handleCardClick={handleCardClick}
+          />
         </div>
 
         <div className='col-3'>
@@ -319,6 +346,10 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         playAudio={playAudio}
         toggleAudioMute={toggleAudioMute}
         toggleMusic={toggleMusic}
+        showGameStats={showGameStats}
+        setShowGameStats={setShowGameStats}
+        showEffectStack={showEffectStack}
+        setShowEffectStack={setShowEffectStack}
       />
       <HelpModal
         showHelpModal={showHelpModal}

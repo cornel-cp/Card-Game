@@ -17,6 +17,7 @@ This project uses audio resources from **Freesound.com**.
 - **[VS Button Click 05.mp3](https://freesound.org/s/707042/)** by Vilkas_Sound -- License: [Attribution 4.0](https://creativecommons.org/licenses/by/4.0/)
 - **[Sand Storm](https://freesound.org/s/426560/)** by gallifreyanbuccaneer -- License: [Attribution NonCommercial 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
 - **[arrow_damage.wav](https://freesound.org/s/161098/)** by braqoon -- License: [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)
+- **[OceanWaves.wav](https://freesound.org/s/58416/)** by darren1979 -- License: [Sampling+](https://creativecommons.org/licenses/sampling+/1.0/)
 
 ## Music Credits
 

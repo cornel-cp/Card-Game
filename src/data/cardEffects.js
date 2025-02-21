@@ -15,6 +15,8 @@ export const EffectType = {
   replaceHand: 'replaceHand',
   swapHp: 'swapHp',
   stealBuff: 'stealBuff',
+  showEnemyHand: 'showEnemyHand',
+  lifesteal: 'lifesteal',
 };
 
 export const EffectDuration = {
@@ -243,4 +245,25 @@ export const stealBuff = {
   type: EffectType.stealBuff,
   duration: EffectDuration.instant,
   target: EffectTarget.opponent,
+};
+
+/**
+ * Display enemy's hand for the rest of the game.
+ */
+export const showEnemyHand = {
+  type: EffectType.showEnemyHand,
+  duration: EffectDuration.instant,
+  target: EffectTarget.opponent,
+};
+
+/**
+ * Deal damage to the opponent and heal for the same amount.
+ */
+export const lifesteal = (value) => {
+  return {
+    type: EffectType.lifesteal,
+    duration: EffectDuration.instant,
+    target: EffectTarget.opponent,
+    value,
+  };
 };

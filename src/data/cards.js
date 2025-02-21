@@ -15,6 +15,8 @@ import {
   replaceHand,
   swapHp,
   stealBuff,
+  showEnemyHand,
+  lifesteal,
 } from './cardEffects';
 
 /**
@@ -288,4 +290,20 @@ export const Ambush = {
   text: 'Steal 1 Buff',
   effects: [stealBuff],
   keywords: [CardKeyword.effect],
+};
+
+export const Vision = {
+  id: '32',
+  name: 'Vision',
+  text: 'Show Enemy Hand',
+  effects: [showEnemyHand],
+  keywords: [],
+};
+
+export const Tide = {
+  id: '33',
+  name: 'Tide',
+  text: 'Damage 16 and + Same HP',
+  effects: [lifesteal(16)], 
+  keywords: [CardKeyword.damage, CardKeyword.heal],
 };

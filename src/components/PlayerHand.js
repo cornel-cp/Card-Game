@@ -1,20 +1,12 @@
 import Card from './Card';
 import { CardType } from './utils/constants';
 
-const PlayerHand = ({ player, handleCardClick }) => {
+const PlayerHand = ({ player, showEnemyHand, handleCardClick }) => {
   return (
     <div className='d-flex justify-content-center'>
       {player.hand.map((card, index) => (
         <div key={index} className='me-2'>
-          {/* FOR DEBUGGING */}
-          {/* <Card
-            cardType={CardType.front}
-            cardId={card.id}
-            cardIndex={index}
-            handleCardClick={handleCardClick}
-          /> */}
-
-          {player.id === '0' ? (
+          {showEnemyHand || player.id === '0' ? (
             <Card
               cardType={CardType.front}
               cardId={card.id}

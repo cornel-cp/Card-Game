@@ -31,7 +31,7 @@ const setupData = () => {
 
     level: level,
 
-    globalEffects: [],
+    globalEffects: {},
   };
 
   applyLevelOverride(G);
@@ -57,15 +57,14 @@ const drawCard = ({ G, ctx }, cardId = '') => {
       throw new Error(`Card with id ${cardId} not found in the deck.`);
     }
     hand.push(card);
-    removeCardById(G.deck, cardId); 
+    removeCardById(G.deck, cardId);
   } else {
     // Draw mode
     hand.push(G.deck.pop());
   }
 
-  // Make sure the deck has at least 2 cards for Select mode to work properly
-  if (G.deck.length <= 1) { 
-    console.log('Deck is almost empty, shuffling...');
+  if (G.deck.length === 0) {
+    console.log('Deck is empty, shuffling...');
     G.deck = shuffle([...getDeckForLevel(G.level)]);
   }
 };
@@ -79,6 +78,12 @@ const playCard = ({ G, ctx }, index) => {
     card.effects.forEach((e) => {
       applyEffect(G, ctx, e);
     });
+  }
+
+  // Apply global effects that trigger at end of turn here
+  if (G.globalEffects.shouldClearEffects?.[ctx.turn - 1]) {
+    G.players[0].effects = [];
+    G.players[1].effects = [];
   }
 
   removeCard(hand, index);

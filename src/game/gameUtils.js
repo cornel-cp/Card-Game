@@ -1,5 +1,6 @@
 import { levelConfigs, finalLevel } from './level';
 import { Wish2, Wish3, Wish4, Wish5 } from '../data/cards';
+import { maxTurn } from './level';
 
 /**
  * Shuffle a deck of cards using Fisher-Yates algorithm.
@@ -34,18 +35,18 @@ export const removeCard = (hand, index) => {
  * Get one copy of a card from a deck by id.
  */
 export const getCardById = (deck, cardId) => {
-  return deck.find(card => card.id === cardId);
-}
+  return deck.find((card) => card.id === cardId);
+};
 
 /**
  * Remove one copy of a card from a deck by id.
  */
 export const removeCardById = (deck, cardId) => {
-  const index = deck.findIndex(card => card.id === cardId);
+  const index = deck.findIndex((card) => card.id === cardId);
   if (index !== -1) {
     deck.splice(index, 1);
   }
-}
+};
 
 /**
  * Log the details of the current turn and game state in browser.
@@ -66,7 +67,7 @@ export const logPlay = (G, ctx, card) => {
  * Determine if the game has ended and return the result.
  */
 export const isVictory = ({ G, ctx }) => {
-  if ((G.players[0].hp <= 0 && G.players[1].hp <= 0) || ctx.turn >= 50) {
+  if ((G.players[0].hp <= 0 && G.players[1].hp <= 0) || ctx.turn >= maxTurn + 1) {
     return { draw: true };
   } else if (G.players[0].hp <= 0) {
     return { winner: '1' };
@@ -189,7 +190,7 @@ export const applyLevelOverride = (G) => {
   G.players[0].effects.push(...playerEffectsOverride);
   G.players[1].effects.push(...enemyEffectsOverride);
 
-  G.globalEffects.push(...globalEffects);
+  G.globalEffects = { ...globalEffects };
 };
 
 /**

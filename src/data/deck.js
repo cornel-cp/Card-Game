@@ -27,6 +27,8 @@ import {
   Wish1,
   Mutate,
   Ambush,
+  Vision,
+  Tide,
 } from './cards';
 
 const baseDeck = [
@@ -72,12 +74,26 @@ const levelDecks = {
     Mutate,
     Ambush,
   ],
+
+  6: [
+    ...baseDeck,
+    Flame,
+    Resurrect,
+    Petrify,
+    Aura,
+    Sandstorm,
+    Wish1,
+    Mutate,
+    Ambush,
+    Vision,
+    Tide,
+  ],
 };
 
 export const getDeckForLevel = (level = '1') => {
   const levelDeck = levelDecks[level] || [];
   if (levelDeck.length < 10) {
-    throw new Error('Deck array length is less than 10.');
+    throw new Error('Deck array length is less than 10.'); // Dev testing issue only
   }
   return [...levelDeck];
 };

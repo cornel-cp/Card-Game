@@ -37,7 +37,7 @@ const MainMenu = () => {
     <div className='d-flex flex-column bg-menu vh-100 justify-content-center align-items-center'>
       <div className='d-flex align-items-baseline mb-5'>
         <p className='font-cinzel-semibold menu-title-fs m-0'>Wizard Duel</p>
-        <span className='badge bg-secondary ms-2'>v0.15</span>
+        <span className='badge bg-secondary ms-2'>v0.16</span>
       </div>
 
       {/* Without the beta tag
@@ -79,7 +79,7 @@ const MainMenu = () => {
       <CardGalleryModal
         showCardGallery={showCardGallery}
         setShowCardGallery={setShowCardGallery}
-        cardImages={cardFronts}
+        cardImages={cardFronts.filter((_, cardId) => cardId !== 25)} // Exclude the first Wish card
         playAudio={playAudio}
       />
     </div>

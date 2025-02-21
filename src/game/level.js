@@ -1,11 +1,22 @@
-import { randomPopulateHand, generateAttackOutcomes } from './levelUtils';
+import {
+  randomPopulateHand,
+  generateAttackOutcomes,
+  getClearEffectSchedule,
+} from './levelUtils';
+import {
+  Fireball1,
+  Fireball2,
+  Fireball3,
+  Flame,
+  Resurrect,
+} from '../data/cards';
 
 export const DrawMode = {
   draw: 'draw',
   select: 'select',
 };
 
-export const finalLevel = '5';
+export const finalLevel = '6';
 
 export const maxTurn = 50;
 
@@ -20,11 +31,10 @@ export const levelConfigs = {
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
 
-    globalEffects: [
-      {
-        drawMode: DrawMode.draw,
-      },
-    ],
+    globalEffects: {
+      drawMode: DrawMode.draw,
+      showEnemyHand: false,
+    },
   },
 
   2: {
@@ -37,17 +47,22 @@ export const levelConfigs = {
       hp: 35,
     },
 
-    playerHandOverride: randomPopulateHand(),
-    enemyHandOverride: randomPopulateHand(),
+    playerHandOverride: randomPopulateHand(
+      [Fireball1, Fireball2, Fireball3, Flame, Resurrect],
+      [0.3, 0.4, 0.25, 0.04, 0.01]
+    ),
+    enemyHandOverride: randomPopulateHand(
+      [Fireball1, Fireball2, Fireball3, Flame, Resurrect],
+      [0.3, 0.4, 0.25, 0.04, 0.01]
+    ),
 
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
 
-    globalEffects: [
-      {
-        drawMode: DrawMode.draw,
-      },
-    ],
+    globalEffects: {
+      drawMode: DrawMode.draw,
+      showEnemyHand: false,
+    },
   },
 
   3: {
@@ -66,11 +81,10 @@ export const levelConfigs = {
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
 
-    globalEffects: [
-      {
-        drawMode: DrawMode.draw,
-      },
-    ],
+    globalEffects: {
+      drawMode: DrawMode.draw,
+      showEnemyHand: false,
+    },
   },
 
   4: {
@@ -89,14 +103,11 @@ export const levelConfigs = {
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
 
-    globalEffects: [
-      {
-        drawMode: DrawMode.draw,
-      },
-      {
-        shouldMiss: generateAttackOutcomes(),
-      },
-    ],
+    globalEffects: {
+      drawMode: DrawMode.draw,
+      showEnemyHand: false,
+      shouldMiss: generateAttackOutcomes(maxTurn, 0.15),
+    },
   },
 
   5: {
@@ -115,10 +126,32 @@ export const levelConfigs = {
     playerEffectsOverride: [],
     enemyEffectsOverride: [],
 
-    globalEffects: [
-      {
-        drawMode: DrawMode.select,
-      },
-    ],
+    globalEffects: {
+      drawMode: DrawMode.select,
+      showEnemyHand: false,
+    },
+  },
+
+  6: {
+    playerStatsOverride: {
+      maxHp: 55,
+      hp: 55,
+    },
+    enemyStatsOverride: {
+      maxHp: 55,
+      hp: 55,
+    },
+
+    playerHandOverride: [],
+    enemyHandOverride: [],
+
+    playerEffectsOverride: [],
+    enemyEffectsOverride: [],
+
+    globalEffects: {
+      drawMode: DrawMode.draw,
+      showEnemyHand: false,
+      shouldClearEffects: getClearEffectSchedule(maxTurn, 10),
+    },
   },
 };
