@@ -52,17 +52,11 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, playAudio }) => {
                   <b>50</b> turns.
                 </li>
                 <li className='mb-2'>
-                  Card effects will last until removed by another card effect.
-                  Hover over avatar to view active effects.
-                </li>
-                <li className='mb-2'>
-                  Damage = (card damage + player attack - opponent defense),
-                  modifiers applied afterward.
+                  Damage = Card damage + Player attack - Enemy defense.
                 </li>
                 <li>
-                  The game has multiple levels, each with unique effects and
-                  growing stats. Win to unlock new cards and advance to next
-                  level; lose to restart from previous level.
+                  Win the game to unlock new cards and enter next level. If you
+                  lose, you can restart from previous level.
                 </li>
               </ol>
             </div>
