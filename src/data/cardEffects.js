@@ -17,6 +17,8 @@ export const EffectType = {
   stealBuff: 'stealBuff',
   showEnemyHand: 'showEnemyHand',
   lifesteal: 'lifesteal',
+  counterAttack: 'counterAttack',
+  poison: 'poison',
 };
 
 export const EffectDuration = {
@@ -44,17 +46,25 @@ export const EffectGroup = {
     EffectType.preventDmg,
     EffectType.resurrect,
     EffectType.aura,
+    EffectType.counterAttack,
   ],
 
   // Negative effects applied to the opponent.
-  debuff: [EffectType.debuffAtk, EffectType.debuffDef, EffectType.freeze],
+  debuff: [
+    EffectType.debuffAtk,
+    EffectType.debuffDef,
+    EffectType.freeze,
+    EffectType.poison,
+  ],
 
   // Only one effect of the same type can exist at a time. Can be either buff or debuff.
   unique: [
     EffectType.doubleDmg,
     EffectType.preventDmg,
     EffectType.resurrect,
+    EffectType.counterAttack,
     EffectType.freeze,
+    EffectType.poison,
   ],
 };
 
@@ -207,16 +217,16 @@ export const freeze = {
 };
 
 /**
- * Trigger positive instant effect(s) at the end of your turn.
+ * Trigger a positive instant effect at the end of your turn.
  */
-export const aura = (effectsToExecute, text) => {
+export const aura = (effect, text) => {
   return {
     type: EffectType.aura,
     duration: EffectDuration.enduring,
     target: EffectTarget.self,
     group: EffectGroupName.buff,
     text,
-    effectsToExecute,
+    effect,
   };
 };
 
@@ -266,4 +276,31 @@ export const lifesteal = (value) => {
     target: EffectTarget.opponent,
     value,
   };
+};
+
+/**
+ * Reduce the opponent's HP by value when attacked (cannot be reduced below 1).
+ * This effect will be triggered whenever a damage card targeting the player is played,
+ * regardless of whether any actual damage is dealt (e.g. miss/freeze/preventDamage/etc.)
+ */
+export const counterAttack = (value) => {
+  return {
+    type: EffectType.counterAttack,
+    duration: EffectDuration.enduring,
+    target: EffectTarget.self,
+    value,
+    group: EffectGroupName.buff,
+    text: `Counter Attack ${value}`,
+  };
+};
+
+/**
+ * All healing effects applied to the opponent are invalidated.
+ */
+export const poison = {
+  type: EffectType.poison,
+  duration: EffectDuration.enduring,
+  target: EffectTarget.opponent,
+  group: EffectGroupName.debuff,
+  text: 'Healing Invalidated',
 };

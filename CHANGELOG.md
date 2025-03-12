@@ -1,3 +1,17 @@
+# 🚀 Release v0.17 (2025-3-11)
+
+🦎 Level 7: Shadow Swamp
+
+- Level effect: Both players lost HP at the end of their turn.
+- New cards, music and artwork.
+
+🌟 UX improvements:
+
+- Add animation effects to elevate battle experience to the next level! - [5ff7308
+  ](https://github.com/ruichen199801/wizard-duel/commit/5ff7308f0e7438fbbf908b0811e97973c51d5bbb)
+- Introduce _secret_ test mode: Click Settings six times to unlock the latest level! Try it if you've completed the full run before, and share your feedback with the author! - [8ff1aa0
+  ](https://github.com/ruichen199801/wizard-duel/commit/8ff1aa01b4850844c10746ffa86091f083a94b0f)
+
 # 🚀 Release v0.16 (2025-2-20)
 
 🌊 Level 6: Coral Bay

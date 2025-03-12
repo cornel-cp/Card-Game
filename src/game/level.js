@@ -16,7 +16,9 @@ export const DrawMode = {
   select: 'select',
 };
 
-export const finalLevel = '6';
+export const finalLevel = '7';
+
+export const devTestLevel = '7'; // Update this when new level is developed
 
 export const maxTurn = 50;
 
@@ -49,11 +51,11 @@ export const levelConfigs = {
 
     playerHandOverride: randomPopulateHand(
       [Fireball1, Fireball2, Fireball3, Flame, Resurrect],
-      [0.3, 0.4, 0.25, 0.04, 0.01]
+      [0.3, 0.4, 0.2, 0.05, 0.05]
     ),
     enemyHandOverride: randomPopulateHand(
       [Fireball1, Fireball2, Fireball3, Flame, Resurrect],
-      [0.3, 0.4, 0.25, 0.04, 0.01]
+      [0.3, 0.4, 0.2, 0.05, 0.05]
     ),
 
     playerEffectsOverride: [],
@@ -152,6 +154,29 @@ export const levelConfigs = {
       drawMode: DrawMode.draw,
       showEnemyHand: false,
       shouldClearEffects: getClearEffectSchedule(maxTurn, 10),
+    },
+  },
+
+  7: {
+    playerStatsOverride: {
+      maxHp: 60,
+      hp: 60,
+    },
+    enemyStatsOverride: {
+      maxHp: 60,
+      hp: 60,
+    },
+
+    playerHandOverride: [],
+    enemyHandOverride: [],
+
+    playerEffectsOverride: [],
+    enemyEffectsOverride: [],
+
+    globalEffects: {
+      drawMode: DrawMode.draw,
+      showEnemyHand: false,
+      loseHpAmount: 3,
     },
   },
 };

@@ -1,5 +1,5 @@
 import { getNextCardsForLevel } from '../utils/assetPaths';
-import { startLevel } from '../utils/utils';
+import { startLevel } from '../utils/commonUtils';
 
 const NextLevelModal = ({ showNextLevelModal, level }) => {
   if (!showNextLevelModal) {

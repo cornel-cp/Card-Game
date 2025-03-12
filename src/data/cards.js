@@ -17,6 +17,8 @@ import {
   stealBuff,
   showEnemyHand,
   lifesteal,
+  counterAttack,
+  poison,
 } from './cardEffects';
 
 /**
@@ -26,8 +28,8 @@ export const CardKeyword = {
   // Cards that deal direct damage to your opponent
   damage: 'damage',
 
-  // Cards that restore your HP
-  heal: 'heal',
+  // Cards that heal or add additional HP
+  sustain: 'sustain',
 
   // Cards that impact you or your opponent's active effects
   effect: 'effect',
@@ -113,7 +115,7 @@ export const Heal1 = {
   name: 'Heal',
   text: '+5 HP',
   effects: [heal(5)],
-  keywords: [CardKeyword.heal],
+  keywords: [CardKeyword.sustain],
 };
 
 export const Heal2 = {
@@ -121,7 +123,7 @@ export const Heal2 = {
   name: 'Heal+',
   text: '+10 HP',
   effects: [heal(10)],
-  keywords: [CardKeyword.heal],
+  keywords: [CardKeyword.sustain],
 };
 
 export const Heal3 = {
@@ -129,7 +131,7 @@ export const Heal3 = {
   name: 'Heal++',
   text: '+15 HP',
   effects: [heal(15)],
-  keywords: [CardKeyword.heal],
+  keywords: [CardKeyword.sustain],
 };
 
 export const Blessing = {
@@ -209,7 +211,7 @@ export const Resurrect = {
   name: 'Resurrect',
   text: '+15 HP on Death',
   effects: [resurrect(15)],
-  keywords: [CardKeyword.heal, CardKeyword.effect],
+  keywords: [CardKeyword.sustain, CardKeyword.effect],
 };
 
 export const Petrify = {
@@ -224,8 +226,8 @@ export const Aura = {
   id: '23',
   name: 'Aura',
   text: '+3 HP per Turn',
-  effects: [aura([heal(3)], '+3 HP per Turn')],
-  keywords: [CardKeyword.heal, CardKeyword.effect],
+  effects: [aura(heal(3), '+3 HP per Turn')],
+  keywords: [CardKeyword.sustain, CardKeyword.effect],
 };
 
 export const Sandstorm = {
@@ -255,24 +257,24 @@ export const Wish2 = {
 export const Wish3 = {
   id: '27',
   name: 'Wish',
-  text: '+6 Attack',
-  effects: [buffAtk(6)],
+  text: '+8 Attack',
+  effects: [buffAtk(8)],
   keywords: [CardKeyword.effect],
 };
 
 export const Wish4 = {
   id: '28',
   name: 'Wish',
-  text: 'Remove Debuff and +10 HP',
-  effects: [removeDebuff, heal(10)],
-  keywords: [CardKeyword.effect, CardKeyword.heal],
+  text: 'Remove Debuff and +15 HP',
+  effects: [removeDebuff, heal(15)],
+  keywords: [CardKeyword.effect, CardKeyword.sustain],
 };
 
 export const Wish5 = {
   id: '29',
   name: 'Wish',
-  text: 'Damage 12',
-  effects: [damage(12)],
+  text: 'Damage 20',
+  effects: [damage(20)],
   keywords: [CardKeyword.damage],
 };
 
@@ -304,6 +306,22 @@ export const Tide = {
   id: '33',
   name: 'Tide',
   text: 'Damage 16 and + Same HP',
-  effects: [lifesteal(16)], 
-  keywords: [CardKeyword.damage, CardKeyword.heal],
+  effects: [lifesteal(16)],
+  keywords: [CardKeyword.damage, CardKeyword.sustain],
+};
+
+export const Revenge = {
+  id: '34',
+  name: 'Revenge',
+  text: 'Counter Attack 9',
+  effects: [counterAttack(9)],
+  keywords: [CardKeyword.effect],
+};
+
+export const Poison = {
+  id: '35',
+  name: 'Poison',
+  text: "Enemy Can't Heal",
+  effects: [poison],
+  keywords: [CardKeyword.effect],
 };

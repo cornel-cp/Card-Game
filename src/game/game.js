@@ -15,8 +15,9 @@ import {
   getCurrentLevel,
   applyLevelOverride,
   applyHandEffects,
+  executeEndOfTurnEffects,
+  executeGlobalEndOfTurnEffects,
 } from './gameUtils';
-import { undoEffect } from './effectUtils';
 
 const setupData = () => {
   let level = getCurrentLevel();
@@ -81,19 +82,9 @@ const playCard = ({ G, ctx }, index) => {
     });
   }
 
-  // Apply global effects that trigger at end of turn here
-  if (G.globalEffects.shouldClearEffects?.[ctx.turn - 1]) {
-    console.log(`Clearing all effects at turn ${ctx.turn}.`);
-    G.players[0].effects.forEach((e) => {
-      undoEffect(G, '0', e);
-    });
-    G.players[0].effects = [];
+  executeEndOfTurnEffects(G, ctx);
 
-    G.players[1].effects.forEach((e) => {
-      undoEffect(G, '1', e);
-    });
-    G.players[1].effects = [];
-  }
+  executeGlobalEndOfTurnEffects(G, ctx);
 
   removeCard(hand, index);
 

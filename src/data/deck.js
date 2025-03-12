@@ -29,6 +29,8 @@ import {
   Ambush,
   Vision,
   Tide,
+  Revenge,
+  Poison,
 } from './cards';
 
 const baseDeck = [
@@ -87,6 +89,22 @@ const levelDecks = {
     Ambush,
     Vision,
     Tide,
+  ],
+
+  7: [
+    ...baseDeck,
+    Flame,
+    Resurrect,
+    Petrify,
+    Aura,
+    Sandstorm,
+    Wish1,
+    Mutate,
+    Ambush,
+    Vision,
+    Tide,
+    Revenge,
+    Poison,
   ],
 };
 

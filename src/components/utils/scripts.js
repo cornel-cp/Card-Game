@@ -5,6 +5,7 @@ const levelNames = {
   4: 'Lost Desert',
   5: 'Misty Woods',
   6: 'Coral Bay',
+  7: 'Shadow Swamp',
 };
 const getLevelName = (level = '1') => levelNames[level];
 
@@ -15,6 +16,7 @@ const enemyNames = {
   4: 'Traveling Merchant',
   5: 'Forest Ranger',
   6: 'Murloc Oracle',
+  7: 'Crimson Witch',
 };
 const getEnemyName = (level = '1') => enemyNames[level];
 
@@ -25,6 +27,7 @@ const battleStartCaptions = {
   4: 'Level 4: Lost Desert',
   5: 'Level 5: Misty Woods',
   6: 'Level 6: Coral Bay',
+  7: 'Level 7: Shadow Swamp',
 };
 const getBattleStartCaption = (level = '1') => battleStartCaptions[level];
 
@@ -62,6 +65,12 @@ const battleStartInstrutions = {
   6: {
     intro: `Beneath the shimmering waves of Coral Bay, the tides shift in unpredictable ways. `,
     levelRule: `Every 10 turns, all buffs and debuffs are washed away.`,
+    outro: ``,
+  },
+
+  7: {
+    intro: `The cursed Shadow Swamp stands in your way before the final trial. `,
+    levelRule: `Both players lose 3 HP at the end of their turn (it can't drop below 1).`,
     outro: ``,
   },
 };

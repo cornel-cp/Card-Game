@@ -27,13 +27,23 @@ export const CardType = {
   placeholder: 'placeholder',
 };
 
-export const pauseInterval = 1200;
+// Animation target is separated from effect target, as animation is applied per card but a card can have multiple effects.
+// This enum can also be reused for level or game animations.
+export const AnimationTarget = {
+  enemy: 'enemy',
+  self: 'self',
+  both: 'both',
+  none: 'none',
+};
 
-export const smallScale = 0.9;
-export const mediumScale = 1.25;
+export const pauseInterval = 1200;
 
 export const cardHeight = 210;
 export const cardWidth = 150;
+export const cardSmallScale = 0.9;
+export const cardMediumScale = 1.25;
 
 export const avatarHeight = 125;
 export const avatarWidth = 125;
+export const avatarSmallScale = 0.9;
+export const avatarMediumScale = 1.1;

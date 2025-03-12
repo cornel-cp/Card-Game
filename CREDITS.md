@@ -19,6 +19,10 @@ This project uses audio resources from **Freesound.com**.
 - **[arrow_damage.wav](https://freesound.org/s/161098/)** by braqoon -- License: [Creative Commons 0](https://creativecommons.org/publicdomain/zero/1.0/)
 - **[OceanWaves.wav](https://freesound.org/s/58416/)** by darren1979 -- License: [Sampling+](https://creativecommons.org/licenses/sampling+/1.0/)
 
+## Animation Credits
+- Licensed animation assets purchased from [Frostwindz](https://frostwindz.itch.io/)
+- Fireball explosion effect by [weisinx7](https://weisinx7.itch.io/)
+
 ## Music Credits
 
 All music used in this project is created using **Suno.AI**.

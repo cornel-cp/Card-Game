@@ -51,27 +51,175 @@
 
 .fxstack-mb {
   position: relative;
-  bottom: 60px;
+  bottom: 35px;
 }
 
 .fxstack-mt {
   position: relative;
-  top: 60px;
+  top: 35px;
 }
 
 .w-80 {
   width: 80%;
 }
 
-.level-effect-img {
+.levelfx-img {
   height: 150px;
   object-fit: cover;
 }
 
-.ice-overlay {
+.stats-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.stats-text {
+  font-size: 1.1rem;
+}
+
+/* Styling static images over player avatars for level effects. */
+
+.overlay-ice {
   position: absolute;
   inset: 0;
   margin: auto;
   width: 80%;
-  opacity: 0.7;
+  opacity: 0.8;
+}
+
+/* Styling animated GIFs over player avatars for card effects. */
+
+.vfx-fireball {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform: scale(2) translateY(10px);
+}
+
+.vfx-freeze {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform: scale(1.8) translateX(-5px) translateY(15px);
+}
+
+.vfx-thunder {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 65%;
+}
+
+.vfx-heal {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+}
+
+.vfx-sword {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+}
+
+.vfx-shield {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform: scale(1.4);
+}
+
+.vfx-ghost-bounce {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform: scale(1.3);
+}
+
+.vfx-skull {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+}
+
+.vfx-hammer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform: scale(1.1);
+}
+
+.vfx-blood-strike {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform: scale(1.3);
+}
+
+.vfx-blood-burst {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+}
+
+.vfx-star-bounce {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform: scale(1.2);
+}
+
+.vfx-star-strike {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform: scale(1.3);
+}
+
+.vfx-star-impact {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform: scale(1.3);
+}
+
+.vfx-slime-swirl {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+}
+
+.vfx-slime-strike {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+}
+
+.vfx-water-explode {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+}
+
+.vfx-blood-cross-strike {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform: scale(1.2);
+}
+
+.vfx-slime-splash {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+  left: 10px;
+  bottom: 10px;
 }

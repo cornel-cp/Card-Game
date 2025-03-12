@@ -4,7 +4,8 @@ import useAudioPlayer from './hooks/useAudioPlayer';
 import useMusicPlayer from './hooks/useMusicPlayer';
 import useBsTooltip from './hooks/useBsTooltip';
 import useLog from './hooks/useLog';
-import { sleep } from './utils/utils';
+import useCardAnimation from './hooks/useCardAnimation';
+import { sleep } from './utils/commonUtils';
 import { GameState, pauseInterval } from './utils/constants';
 import {
   cardAudio,
@@ -14,6 +15,7 @@ import {
   miss,
   defrost,
   cleanse,
+  potion,
   getLocationForLevel,
   getMusicForLevel,
 } from './utils/assetPaths';
@@ -66,6 +68,12 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const { playMusic, pauseMusic, toggleMusic } = useMusicPlayer(
     getMusicForLevel(G.level)
   );
+  const {
+    cardAnimationData,
+    showPlayerAnimation,
+    showEnemyAnimation,
+    handleShowCardAnimation,
+  } = useCardAnimation(ctx, G);
   const [visibleCurrentTurn, setVisibleCurrentTurn] = useState(0);
 
   /**
@@ -73,14 +81,20 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
    *  1. If the played card contains the `effect` keyword and the current turn is set to clear all effects, play the `cleanse` audio.
    *  2. If the current player has an active `freeze` effect, play the `defrost` audio.
    *  3. If the played card contains the `damage` keyword and the current attack is set to miss, play the `miss` audio.
-   *  4. In all other cases, play the default audio associated with the card.
+   *  4. If the played card has single effect which is self-healing and the current player has `poison` effect, play the `potion` audio.
+   *  5. In all other cases, play the default audio associated with the card.
    */
   const playCardAudio = (card) => {
     const hasFreezeEffect = G.players[ctx.currentPlayer].effects.some(
       (e) => e.type === EffectType.freeze
     );
+    const hasPoisonEffect = G.players[ctx.currentPlayer].effects.some(
+      (e) => e.type === EffectType.poison
+    );
     const hasDamageKeyword = card.keywords.includes(CardKeyword.damage);
     const hasEffectKeyward = card.keywords.includes(CardKeyword.effect);
+    const isUniqueHealCard =
+      card.effects.length === 1 && card.effects[0].type === EffectType.heal;
     const shouldMiss = G.globalEffects.shouldMiss?.[ctx.turn - 1];
     const shouldClearEffects =
       G.globalEffects.shouldClearEffects?.[ctx.turn - 1];
@@ -91,6 +105,8 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
       playAudio(defrost);
     } else if (hasDamageKeyword && shouldMiss) {
       playAudio(miss);
+    } else if (isUniqueHealCard && hasPoisonEffect) {
+      playAudio(potion);
     } else {
       playAudio(cardAudio(card.id));
     }
@@ -175,6 +191,9 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
       moves.playCard(aiSelectedIndex);
       playCardAudio(aiSelectedCard);
+
+      handleShowCardAnimation(aiSelectedCard);
+
       addLogEntry(
         ctx.turn,
         G.players[1].name,
@@ -227,6 +246,9 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     if (gameState === GameState.endTurnEnabled) {
       moves.playCard(playerSelectedIndexToPlay);
       playCardAudio(selectedCardToPlay);
+
+      handleShowCardAnimation(selectedCardToPlay);
+
       addLogEntry(
         ctx.turn,
         G.players[0].name,
@@ -245,7 +267,12 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
     >
       <div className='row'>
         <div className='col-3'>
-          <PlayerStatsPanel player={G.players[1]} level={G.level} />
+          <PlayerStatsPanel
+            player={G.players[1]}
+            level={G.level}
+            showCardAnimation={showEnemyAnimation}
+            cardAnimationData={cardAnimationData}
+          />
         </div>
 
         <div className='col-6'>
@@ -291,7 +318,11 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
 
       <div className='row align-items-end'>
         <div className='col-3'>
-          <PlayerStatsPanel player={G.players[0]} />
+          <PlayerStatsPanel
+            player={G.players[0]}
+            showCardAnimation={showPlayerAnimation}
+            cardAnimationData={cardAnimationData}
+          />
         </div>
 
         <div className='col-6'>

@@ -1,4 +1,8 @@
-import { smallScale, avatarHeight, avatarWidth } from '../utils/constants';
+import {
+  avatarSmallScale,
+  avatarHeight,
+  avatarWidth,
+} from '../utils/constants';
 import { getAvatarForLevel } from '../utils/assetPaths';
 import {
   getEnemyName,
@@ -12,7 +16,7 @@ const MatchupModal = ({
   setShowMatchupModal,
   playMusic,
   level,
-  scale = smallScale,
+  scale = avatarSmallScale,
 }) => {
   const playerAvatar = getAvatarForLevel('0', level);
   const enemyAvatar = getAvatarForLevel('1', level);

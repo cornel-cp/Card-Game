@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import useAudioPlayer from './hooks/useAudioPlayer';
 import usePreloadAssets from './hooks/usePreloadAssets';
-import { cardFronts, click, IMAGES, AUDIO, MUSIC } from './utils/assetPaths';
+import {
+  cardFronts,
+  click,
+  IMAGES,
+  ANIMATION,
+  AUDIO,
+  MUSIC,
+} from './utils/assetPaths';
 import CardGalleryModal from './modals/CardGalleryModal';
 import HelpModal from './modals/HelpModal';
 
 const MainMenu = () => {
   // Preload to use cache and reduce latency
-  usePreloadAssets(IMAGES, AUDIO, MUSIC);
+  usePreloadAssets(IMAGES, ANIMATION, AUDIO, MUSIC);
 
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showCardGallery, setShowCardGallery] = useState(false);
@@ -37,7 +44,7 @@ const MainMenu = () => {
     <div className='d-flex flex-column bg-menu vh-100 justify-content-center align-items-center'>
       <div className='d-flex align-items-baseline mb-5'>
         <p className='font-cinzel-semibold menu-title-fs m-0'>Wizard Duel</p>
-        <span className='badge bg-secondary ms-2'>v0.16</span>
+        <span className='badge bg-dark ms-2'>v0.17</span>
       </div>
 
       {/* Without the beta tag

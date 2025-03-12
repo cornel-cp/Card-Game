@@ -1,4 +1,4 @@
-import { exitToMenu, resetGame, startLevel } from '../utils/utils';
+import { exitToMenu, resetGame, startLevel } from '../utils/commonUtils';
 import { finalLevel } from '../../game/level';
 import { click } from '../utils/assetPaths';
 

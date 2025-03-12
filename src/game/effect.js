@@ -1,8 +1,8 @@
 import {
   getTarget,
+  getEffects,
   hasEffect,
   hasSameEffect,
-  getEffects,
   removeEffects,
   selectEffectsByGroup,
   removeEffectsByGroup,
@@ -21,6 +21,15 @@ import { shuffle } from './gameUtils';
 
 const damage = (G, target, { value = 0 }, ctx) => {
   const player = target === '0' ? '1' : '0';
+
+  // Trigger counter attack.
+  if (hasEffect(G, target, EffectType.counterAttack)) {
+    G.players[player].hp = Math.max(
+      1,
+      G.players[player].hp -
+        getEffects(G, target, EffectType.counterAttack)[0].value
+    );
+  }
 
   // Calculate base damage: card damage + player's attack - target's defense.
   value = value + G.players[player].atk - G.players[target].def;
@@ -62,6 +71,10 @@ const damage = (G, target, { value = 0 }, ctx) => {
 };
 
 const heal = (G, target, { value = 0 }) => {
+  if (hasEffect(G, target, EffectType.poison)) {
+    return;
+  }
+
   G.players[target].hp += value;
 
   G.players[target].hp = Math.min(
@@ -197,6 +210,10 @@ const lifesteal = (G, target, effect, ctx) => {
   }
 };
 
+const counterAttack = () => {};
+
+const poison = () => {};
+
 const effectHandlers = {
   [EffectType.damage]: damage,
   [EffectType.heal]: heal,
@@ -216,9 +233,11 @@ const effectHandlers = {
   [EffectType.stealBuff]: stealBuff,
   [EffectType.showEnemyHand]: showEnemyHand,
   [EffectType.lifesteal]: lifesteal,
+  [EffectType.counterAttack]: counterAttack,
+  [EffectType.poison]: poison,
 };
 
-export const applyEffect = (G, ctx, effect, shouldProcessEoT = true) => {
+export const applyEffect = (G, ctx, effect) => {
   const handler = effectHandlers[effect.type];
 
   if (!handler) {
@@ -231,22 +250,17 @@ export const applyEffect = (G, ctx, effect, shouldProcessEoT = true) => {
   // If you are frozen, the card you play this turn has no effect.
   if (hasEffect(G, ctx.currentPlayer, EffectType.freeze)) {
     removeEffects(G, ctx.currentPlayer, EffectType.freeze);
-    executeEndOfTurnEffects(G, ctx, shouldProcessEoT);
     return;
   }
-
   // If you already have a non-stackable effect, playing the same card will have no effect.
   if (isUnique(effect) && hasEffect(G, target, effect.type)) {
-    executeEndOfTurnEffects(G, ctx, shouldProcessEoT);
     return;
   }
-
-  // If you already have an existing aura effect, playing the same card will have no effect.
+  // If you already have an existing aura effect of the exact same kind, playing the same card will have no effect.
   if (
     effect.type === EffectType.aura &&
     hasSameEffect(G, ctx.currentPlayer, effect)
   ) {
-    executeEndOfTurnEffects(G, ctx, shouldProcessEoT);
     return;
   }
 
@@ -255,21 +269,6 @@ export const applyEffect = (G, ctx, effect, shouldProcessEoT = true) => {
   if (effect.duration === EffectDuration.enduring) {
     G.players[target].effects.push(effect);
   }
-
-  executeEndOfTurnEffects(G, ctx, shouldProcessEoT);
-};
-
-const executeEndOfTurnEffects = (G, ctx, shouldProcessEoT) => {
-  if (shouldProcessEoT && hasEffect(G, ctx.currentPlayer, EffectType.aura)) {
-    const auraEffects = getEffects(G, ctx.currentPlayer, EffectType.aura);
-
-    auraEffects.forEach((auraEffect) => {
-      auraEffect.effectsToExecute.forEach((e) => {
-        applyEffect(G, ctx, e, false); // Skip the aura check to avoid recursive hell
-      });
-    });
-  }
-  // Add more end of turn effect types here
 };
 
 const applyDamageLevelEffects = (G, target, damage, ctx) => {

@@ -50,7 +50,7 @@ const LevelEffectModal = ({
                 <img
                   src={getLocationForLevel(level)}
                   alt='location'
-                  className='w-80 level-effect-img'
+                  className='w-80 levelfx-img'
                 />
               </div>
 

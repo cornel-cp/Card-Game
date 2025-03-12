@@ -1,6 +1,8 @@
-import { levelConfigs, finalLevel } from './level';
+import { levelConfigs, finalLevel, maxTurn } from './level';
 import { Wish2, Wish3, Wish4, Wish5 } from '../data/cards';
-import { maxTurn } from './level';
+import { EffectType } from '../data/cardEffects';
+import { applyEffect } from './effect';
+import { hasEffect, getEffects, undoEffect } from './effectUtils';
 
 /**
  * Shuffle a deck of cards using Fisher-Yates algorithm.
@@ -67,7 +69,10 @@ export const logPlay = (G, ctx, card) => {
  * Determine if the game has ended and return the result.
  */
 export const isVictory = ({ G, ctx }) => {
-  if ((G.players[0].hp <= 0 && G.players[1].hp <= 0) || ctx.turn >= maxTurn + 1) {
+  if (
+    (G.players[0].hp <= 0 && G.players[1].hp <= 0) ||
+    ctx.turn >= maxTurn + 1
+  ) {
     return { draw: true };
   } else if (G.players[0].hp <= 0) {
     return { winner: '1' };
@@ -194,7 +199,7 @@ export const applyLevelOverride = (G) => {
 };
 
 /**
- * Apply effects to the player's hand at the start of their turn.
+ * Apply effects to the player's hand at the start of their turn if any.
  */
 export const applyHandEffects = (G, ctx) => {
   const replaceWishCards = (hand) => {
@@ -218,4 +223,46 @@ export const applyHandEffects = (G, ctx) => {
   G.players[ctx.currentPlayer].hand = replaceWishCards(
     G.players[ctx.currentPlayer].hand
   );
+
+  // Add more effects here
+};
+
+/**
+ * Apply active end of turn effects on current player if any.
+ * This must be applied after all effects have been executed for a card to avoid duplicates.
+ */
+export const executeEndOfTurnEffects = (G, ctx) => {
+  if (hasEffect(G, ctx.currentPlayer, EffectType.aura)) {
+    const auraEffects = getEffects(G, ctx.currentPlayer, EffectType.aura);
+    auraEffects.forEach((aura) => {
+      applyEffect(G, ctx, aura.effect);
+    });
+  }
+};
+
+/**
+ * Apply global effects triggered at end of turn if any.
+ */
+export const executeGlobalEndOfTurnEffects = (G, ctx) => {
+  // Clear all buffs and debuffs on scheduled turns
+  if (G.globalEffects.shouldClearEffects?.[ctx.turn - 1]) {
+    console.log(`Clearing all effects at turn ${ctx.turn}.`);
+    G.players[0].effects.forEach((e) => {
+      undoEffect(G, '0', e);
+    });
+    G.players[0].effects = [];
+
+    G.players[1].effects.forEach((e) => {
+      undoEffect(G, '1', e);
+    });
+    G.players[1].effects = [];
+  }
+
+  // Lose HP every turn
+  if (G.globalEffects.loseHpAmount) {
+    const player = G.players[ctx.currentPlayer];
+    player.hp = Math.max(1, player.hp - G.globalEffects.loseHpAmount);
+  }
+
+  // Add more effects here
 };

@@ -3,6 +3,8 @@ import { Client } from 'boardgame.io/react';
 import { WizardDuel } from './game/game';
 import MainMenu from './components/MainMenu';
 import WizardDuelBoard from './components/WizardDuelBoard';
+import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Analytics } from '@vercel/analytics/react';
 
 const WizardDuelClient = Client({
   game: WizardDuel,
@@ -13,12 +15,19 @@ const WizardDuelClient = Client({
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<MainMenu />} />
-        <Route path='/game' element={<WizardDuelClient />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<MainMenu />} />
+          <Route path='/game' element={<WizardDuelClient />} />
+        </Routes>
+      </BrowserRouter>
+
+      {/* Provides website performance metrics */}
+      <SpeedInsights />
+      {/* Count visitors and page views */}
+      <Analytics />
+    </>
   );
 };
 

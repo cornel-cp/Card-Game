@@ -1,5 +1,7 @@
-import { exitToMenu, resetGame } from '../utils/utils';
+import { useState } from 'react';
+import { exitToMenu, resetGame, jumpToLevel } from '../utils/commonUtils';
 import { click } from '../utils/assetPaths';
+import { devTestLevel } from '../../game/level';
 
 const SettingsModal = ({
   showSettingsModal,
@@ -12,6 +14,9 @@ const SettingsModal = ({
   showEffectStack,
   setShowEffectStack,
 }) => {
+  const [headerClickCount, setHeaderClickCount] = useState(0);
+  const showJumpLevelOption = headerClickCount >= 6;
+
   if (!showSettingsModal) {
     return null;
   }
@@ -29,6 +34,10 @@ const SettingsModal = ({
     setShowEffectStack((prevState) => !prevState);
   };
 
+  const handleHeaderClick = () => {
+    setHeaderClickCount((prev) => prev + 1);
+  };
+
   return (
     <>
       <div
@@ -40,7 +49,10 @@ const SettingsModal = ({
         <div className='modal-dialog modal-dialog-centered'>
           <div className='modal-content bg-modal'>
             <div className='modal-header border-0'>
-              <h4 className='modal-title w-100 text-center font-lora-bold ms-3'>
+              <h4
+                className='modal-title w-100 text-center font-lora-bold ms-3'
+                onClick={handleHeaderClick}
+              >
                 Settings
               </h4>
               <button
@@ -91,13 +103,17 @@ const SettingsModal = ({
                   </button>
                 </div>
 
-                <div className='btn-group-vertical btn-width mb-2'>
+                <div
+                  className={`btn-group-vertical btn-width ${
+                    showJumpLevelOption ? 'mb-3' : 'mb-2'
+                  }`}
+                >
                   <button
                     type='button'
                     className='btn btn-dark mb-1'
                     onClick={resetGame}
                   >
-                    Reset Entire Game
+                    Reset Entire Run
                   </button>
                   <button
                     type='button'
@@ -107,6 +123,18 @@ const SettingsModal = ({
                     Exit to Title
                   </button>
                 </div>
+
+                {showJumpLevelOption && (
+                  <div className='btn-group-vertical btn-width mb-2'>
+                    <button
+                      type='button'
+                      className='btn btn-dark'
+                      onClick={() => jumpToLevel(devTestLevel)}
+                    >
+                      Test New Level
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
