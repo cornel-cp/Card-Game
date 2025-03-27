@@ -1,8 +1,5 @@
 import { click } from '../utils/assetPaths';
-import {
-  getBattleStartCaption,
-  getBattleStartInstructions,
-} from '../utils/scripts';
+import { getBattleStartCaption, getBattleInstructions } from '../utils/scripts';
 import { getLocationForLevel } from '../utils/assetPaths';
 
 const LevelEffectModal = ({
@@ -20,7 +17,7 @@ const LevelEffectModal = ({
     playAudio(click);
   };
 
-  const instructions = getBattleStartInstructions(level);
+  const instructions = getBattleInstructions(level);
 
   return (
     <>
@@ -61,6 +58,12 @@ const LevelEffectModal = ({
                   {instructions.outro}
                 </p>
               </div>
+
+              {instructions.tips !== '' && (
+                <div className='w-80 mx-auto'>
+                  <p className='fst-italic text-muted'>{instructions.tips}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

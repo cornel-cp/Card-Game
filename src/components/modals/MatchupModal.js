@@ -7,7 +7,7 @@ import { getAvatarForLevel } from '../utils/assetPaths';
 import {
   getEnemyName,
   getBattleStartCaption,
-  getBattleStartInstructions,
+  getBattleInstructions,
 } from '../utils/scripts';
 import useImageLoader from '../hooks/useImageLoader';
 
@@ -35,7 +35,7 @@ const MatchupModal = ({
   const height = avatarHeight * scale;
   const width = avatarWidth * scale;
 
-  const instructions = getBattleStartInstructions(level);
+  const instructions = getBattleInstructions(level);
 
   return (
     <>
@@ -93,6 +93,14 @@ const MatchupModal = ({
                       {instructions.outro}
                     </p>
                   </div>
+
+                  {instructions.tips !== '' && (
+                    <div className='w-80 mx-auto'>
+                      <p className='fst-italic text-muted'>
+                        {instructions.tips}
+                      </p>
+                    </div>
+                  )}
                 </>
               )}
             </div>

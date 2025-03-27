@@ -11,16 +11,21 @@ import {
   Resurrect,
 } from '../data/cards';
 
+// General constants
 export const DrawMode = {
   draw: 'draw',
   select: 'select',
 };
-
 export const finalLevel = '7';
-
-export const devTestLevel = '7'; // Update this when new level is developed
-
+export const devTestLevel = '7';
 export const maxTurn = 50;
+
+// Level specific constants
+export const handDistribution = [0.1, 0.4, 0.4, 0.05, 0.05]; // Level 2
+export const freezeRate = 0.3; // Level 3
+export const missRate = 0.25; // Level 4
+export const clearEffectInterval = 11; // Level 6
+export const loseHpAmount = 5; // Level 7
 
 export const levelConfigs = {
   1: {
@@ -41,21 +46,21 @@ export const levelConfigs = {
 
   2: {
     playerStatsOverride: {
-      maxHp: 35,
-      hp: 35,
+      maxHp: 50,
+      hp: 50,
     },
     enemyStatsOverride: {
-      maxHp: 35,
-      hp: 35,
+      maxHp: 50,
+      hp: 50,
     },
 
     playerHandOverride: randomPopulateHand(
       [Fireball1, Fireball2, Fireball3, Flame, Resurrect],
-      [0.3, 0.4, 0.2, 0.05, 0.05]
+      handDistribution
     ),
     enemyHandOverride: randomPopulateHand(
       [Fireball1, Fireball2, Fireball3, Flame, Resurrect],
-      [0.3, 0.4, 0.2, 0.05, 0.05]
+      handDistribution
     ),
 
     playerEffectsOverride: [],
@@ -69,12 +74,12 @@ export const levelConfigs = {
 
   3: {
     playerStatsOverride: {
-      maxHp: 40,
-      hp: 40,
+      maxHp: 55,
+      hp: 55,
     },
     enemyStatsOverride: {
-      maxHp: 40,
-      hp: 40,
+      maxHp: 55,
+      hp: 55,
     },
 
     playerHandOverride: [],
@@ -91,12 +96,12 @@ export const levelConfigs = {
 
   4: {
     playerStatsOverride: {
-      maxHp: 45,
-      hp: 45,
+      maxHp: 60,
+      hp: 60,
     },
     enemyStatsOverride: {
-      maxHp: 45,
-      hp: 45,
+      maxHp: 60,
+      hp: 60,
     },
 
     playerHandOverride: [],
@@ -108,18 +113,18 @@ export const levelConfigs = {
     globalEffects: {
       drawMode: DrawMode.draw,
       showEnemyHand: false,
-      shouldMiss: generateAttackOutcomes(maxTurn, 0.15),
+      shouldMiss: generateAttackOutcomes(maxTurn, missRate),
     },
   },
 
   5: {
     playerStatsOverride: {
-      maxHp: 50,
-      hp: 50,
+      maxHp: 65,
+      hp: 65,
     },
     enemyStatsOverride: {
-      maxHp: 50,
-      hp: 50,
+      maxHp: 65,
+      hp: 65,
     },
 
     playerHandOverride: [],
@@ -136,12 +141,12 @@ export const levelConfigs = {
 
   6: {
     playerStatsOverride: {
-      maxHp: 55,
-      hp: 55,
+      maxHp: 70,
+      hp: 70,
     },
     enemyStatsOverride: {
-      maxHp: 55,
-      hp: 55,
+      maxHp: 70,
+      hp: 70,
     },
 
     playerHandOverride: [],
@@ -153,18 +158,18 @@ export const levelConfigs = {
     globalEffects: {
       drawMode: DrawMode.draw,
       showEnemyHand: false,
-      shouldClearEffects: getClearEffectSchedule(maxTurn, 10),
+      shouldClearEffects: getClearEffectSchedule(maxTurn, clearEffectInterval),
     },
   },
 
   7: {
     playerStatsOverride: {
-      maxHp: 60,
-      hp: 60,
+      maxHp: 75,
+      hp: 75,
     },
     enemyStatsOverride: {
-      maxHp: 60,
-      hp: 60,
+      maxHp: 75,
+      hp: 75,
     },
 
     playerHandOverride: [],
@@ -176,7 +181,7 @@ export const levelConfigs = {
     globalEffects: {
       drawMode: DrawMode.draw,
       showEnemyHand: false,
-      loseHpAmount: 3,
+      loseHpAmount,
     },
   },
 };

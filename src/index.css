@@ -12,6 +12,7 @@
 }
 
 .bg-board::before {
+  /* Use ::before to apply opacity to background only */
   content: '';
   position: absolute;
   top: 0;
@@ -21,7 +22,7 @@
   background-image: var(--bg-image);
   background-size: cover;
   background-position: center;
-  opacity: 0.7;
+  opacity: 0.8;
   z-index: -1;
 }
 
@@ -35,6 +36,10 @@
 
 .bg-modal {
   background-color: #fef3e2;
+}
+
+.bg-panel {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .icon:hover {
@@ -51,12 +56,16 @@
 
 .fxstack-mb {
   position: relative;
-  bottom: 35px;
+  bottom: 25px;
 }
 
 .fxstack-mt {
   position: relative;
-  top: 35px;
+  top: 25px;
+}
+
+.fxstack-width {
+  max-width: 275px;
 }
 
 .w-80 {
@@ -68,13 +77,21 @@
   object-fit: cover;
 }
 
-.stats-icon {
+.pstats-icon {
   width: 36px;
   height: 36px;
 }
 
-.stats-text {
+.pstats-text {
   font-size: 1.1rem;
+}
+
+.pstats-panel-width {
+  min-width: 60px;
+}
+
+.gstats-panel-width {
+  min-width: 140px;
 }
 
 /* Styling static images over player avatars for level effects. */

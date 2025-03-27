@@ -18,6 +18,7 @@ import {
 } from '../data/cardEffects';
 import { getDeckForLevel } from '../data/deck';
 import { shuffle } from './gameUtils';
+import { freezeRate } from './level';
 
 const damage = (G, target, { value = 0 }, ctx) => {
   const player = target === '0' ? '1' : '0';
@@ -249,7 +250,6 @@ export const applyEffect = (G, ctx, effect) => {
 
   // If you are frozen, the card you play this turn has no effect.
   if (hasEffect(G, ctx.currentPlayer, EffectType.freeze)) {
-    removeEffects(G, ctx.currentPlayer, EffectType.freeze);
     return;
   }
   // If you already have a non-stackable effect, playing the same card will have no effect.
@@ -274,7 +274,7 @@ export const applyEffect = (G, ctx, effect) => {
 const applyDamageLevelEffects = (G, target, damage, ctx) => {
   switch (G.level) {
     case '3':
-      if (getChanceEffect(0.25)) {
+      if (getChanceEffect(freezeRate)) {
         G.players[target].effects.push(freezeEffect);
       }
       return damage;

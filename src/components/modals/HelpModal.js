@@ -22,7 +22,7 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, playAudio }) => {
           <div className='modal-content bg-modal h-50'>
             <div className='modal-header border-0'>
               <h4 className='modal-title w-100 text-center font-lora-bold'>
-                Game Instructions
+                Game Rules
               </h4>
               <button
                 type='button'
@@ -39,24 +39,24 @@ const HelpModal = ({ showHelpModal, setShowHelpModal, playAudio }) => {
                   Two players alternate turns. You go first.
                 </li>
                 <li className='mb-2'>
-                  Both players share a deck and start with <b>5</b> cards.
+                  The deck is shared and reshuffles when it runs out.
                 </li>
                 <li className='mb-2'>
-                  Each turn, a player can play <b>only one</b> card from hand.
+                  You draw <b>1</b> card from deck and play <b>1</b> card each
+                  turn.
                 </li>
                 <li className='mb-2'>
                   Click a card to preview it, then click "End Turn" to play it.
                 </li>
                 <li className='mb-2'>
-                  Game is over if a player's HP drops to <b>0</b> or after{' '}
-                  <b>50</b> turns.
+                  You win the game if your opponent's HP drops to <b>0</b>.
                 </li>
                 <li className='mb-2'>
-                  Damage = Card damage + Player attack - Enemy defense.
+                  The game ends in a draw after <b>50</b> turns pass.
                 </li>
                 <li>
-                  Win the game to unlock new cards and enter next level. If you
-                  lose, you can restart from previous level.
+                  Damage is calculated as: (card damage + your attack -
+                  opponent's shield) × any modifiers.
                 </li>
               </ol>
             </div>

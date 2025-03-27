@@ -1,6 +1,7 @@
 import { levelConfigs, finalLevel, maxTurn } from './level';
 import { Wish2, Wish3, Wish4, Wish5 } from '../data/cards';
 import { EffectType } from '../data/cardEffects';
+import { CardKeyword } from '../data/cards';
 import { applyEffect } from './effect';
 import { hasEffect, getEffects, undoEffect } from './effectUtils';
 
@@ -243,7 +244,12 @@ export const executeEndOfTurnEffects = (G, ctx) => {
 /**
  * Apply global effects triggered at end of turn if any.
  */
-export const executeGlobalEndOfTurnEffects = (G, ctx) => {
+export const executeGlobalEndOfTurnEffects = (
+  G,
+  ctx,
+  card,
+  freezeTriggered
+) => {
   // Clear all buffs and debuffs on scheduled turns
   if (G.globalEffects.shouldClearEffects?.[ctx.turn - 1]) {
     console.log(`Clearing all effects at turn ${ctx.turn}.`);
@@ -258,8 +264,12 @@ export const executeGlobalEndOfTurnEffects = (G, ctx) => {
     G.players[1].effects = [];
   }
 
-  // Lose HP every turn
-  if (G.globalEffects.loseHpAmount) {
+  // Lose HP when a non-damage card is played this turn
+  if (
+    G.globalEffects.loseHpAmount &&
+    !card.keywords.includes(CardKeyword.damage) &&
+    !freezeTriggered
+  ) {
     const player = G.players[ctx.currentPlayer];
     player.hp = Math.max(1, player.hp - G.globalEffects.loseHpAmount);
   }

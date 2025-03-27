@@ -2,17 +2,22 @@ import { useState } from 'react';
 import { exitToMenu, resetGame, jumpToLevel } from '../utils/commonUtils';
 import { click } from '../utils/assetPaths';
 import { devTestLevel } from '../../game/level';
+import { Algorithm } from '../../ai/ai';
 
 const SettingsModal = ({
   showSettingsModal,
   setShowSettingsModal,
   playAudio,
   toggleAudioMute,
+  isAudioMuted,
   toggleMusic,
+  isMusicMuted,
   showGameStats,
   setShowGameStats,
   showEffectStack,
   setShowEffectStack,
+  aiAlgorithm,
+  setAiAlgorithm,
 }) => {
   const [headerClickCount, setHeaderClickCount] = useState(0);
   const showJumpLevelOption = headerClickCount >= 6;
@@ -32,6 +37,12 @@ const SettingsModal = ({
 
   const toggleEffectStackDisplay = () => {
     setShowEffectStack((prevState) => !prevState);
+  };
+
+  const handleAiDifficultyChange = () => {
+    setAiAlgorithm((prevState) =>
+      prevState === Algorithm.filter ? Algorithm.optimal : Algorithm.filter
+    );
   };
 
   const handleHeaderClick = () => {
@@ -66,21 +77,32 @@ const SettingsModal = ({
 
             <div className='modal-body'>
               <div className='d-flex flex-column align-items-center'>
-                {/* Sound and music settings are effective for current game only and is not persistent */}
                 <div className='btn-group-vertical btn-width mb-3'>
                   <button
                     type='button'
                     className='btn btn-dark mb-1'
-                    onClick={toggleAudioMute}
+                    onClick={handleAiDifficultyChange}
                   >
-                    Toggle Sound
+                    {aiAlgorithm === Algorithm.filter
+                      ? 'AI Difficulty: Normal'
+                      : 'AI Difficulty: Hard'}
+                  </button>
+                </div>
+
+                <div className='btn-group-vertical btn-width mb-3'>
+                  <button
+                    type='button'
+                    className='btn btn-dark mb-1'
+                    onClick={toggleMusic}
+                  >
+                    {isMusicMuted ? 'Unmute Game Music' : 'Mute Game Music'}
                   </button>
                   <button
                     type='button'
                     className='btn btn-dark'
-                    onClick={toggleMusic}
+                    onClick={toggleAudioMute}
                   >
-                    Toggle Music
+                    {isAudioMuted ? 'Unmute Game Sounds' : 'Mute Game Sounds'}
                   </button>
                 </div>
 
@@ -91,15 +113,17 @@ const SettingsModal = ({
                     onClick={toggleEffectStackDisplay}
                   >
                     {showEffectStack
-                      ? 'Hide Player Effects'
-                      : 'Display Player Effects'}
+                      ? 'Hide Buffs & Debuffs'
+                      : 'Show Buffs & Debuffs'}
                   </button>
                   <button
                     type='button'
                     className='btn btn-dark'
                     onClick={toggleGameStatsDisplay}
                   >
-                    {showGameStats ? 'Hide Game Stats' : 'Display Game Stats'}
+                    {showGameStats
+                      ? 'Hide Turn & Deck Info'
+                      : 'Show Turn & Deck Info'}
                   </button>
                 </div>
 

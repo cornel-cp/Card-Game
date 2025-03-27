@@ -49,8 +49,8 @@ export const Fireball1 = {
 export const Fireball2 = {
   id: '1',
   name: 'Fireball+',
-  text: 'Damage 5',
-  effects: [damage(5)],
+  text: 'Damage 6',
+  effects: [damage(6)],
   keywords: [CardKeyword.damage],
 };
 
@@ -73,16 +73,16 @@ export const Frost1 = {
 export const Frost2 = {
   id: '4',
   name: 'Frost+',
-  text: 'Damage 6',
-  effects: [damage(6)],
+  text: 'Damage 8',
+  effects: [damage(8)],
   keywords: [CardKeyword.damage],
 };
 
 export const Frost3 = {
   id: '5',
   name: 'Frost++',
-  text: 'Damage 8',
-  effects: [damage(8)],
+  text: 'Damage 10',
+  effects: [damage(10)],
   keywords: [CardKeyword.damage],
 };
 
@@ -201,8 +201,8 @@ export const Block = {
 export const Flame = {
   id: '20',
   name: 'Flame',
-  text: 'Damage 9 and +5 Attack',
-  effects: [damage(9), buffAtk(5)],
+  text: 'Damage 12 and +5 Attack',
+  effects: [damage(12), buffAtk(5)],
   keywords: [CardKeyword.damage, CardKeyword.effect],
 };
 
@@ -226,7 +226,7 @@ export const Aura = {
   id: '23',
   name: 'Aura',
   text: '+3 HP per Turn',
-  effects: [aura(heal(3), '+3 HP per Turn')],
+  effects: [aura(heal(3), '+3 HP per Turn', '+3 HP per Turn')],
   keywords: [CardKeyword.sustain, CardKeyword.effect],
 };
 
@@ -257,8 +257,8 @@ export const Wish2 = {
 export const Wish3 = {
   id: '27',
   name: 'Wish',
-  text: '+8 Attack',
-  effects: [buffAtk(8)],
+  text: '+10 Attack',
+  effects: [buffAtk(10)],
   keywords: [CardKeyword.effect],
 };
 

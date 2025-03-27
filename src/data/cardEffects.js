@@ -106,6 +106,7 @@ export const buffAtk = (value) => {
     value,
     group: EffectGroupName.buff,
     text: `+${value} Attack`,
+    abbrevText: `+${value} Atk`,
   };
 };
 
@@ -120,6 +121,7 @@ export const buffDef = (value) => {
     value,
     group: EffectGroupName.buff,
     text: `+${value} Shield`,
+    abbrevText: `+${value} Def`,
   };
 };
 
@@ -134,6 +136,7 @@ export const debuffAtk = (value) => {
     value,
     group: EffectGroupName.debuff,
     text: `-${value} Attack`,
+    abbrevText: `-${value} Atk`,
   };
 };
 
@@ -148,6 +151,7 @@ export const debuffDef = (value) => {
     value,
     group: EffectGroupName.debuff,
     text: `-${value} Shield`,
+    abbrevText: `-${value} Def`,
   };
 };
 
@@ -178,6 +182,7 @@ export const doubleDmg = {
   target: EffectTarget.self,
   group: EffectGroupName.buff,
   text: 'Next Damage x2',
+  abbrevText: '2x Dmg',
 };
 
 /**
@@ -189,6 +194,7 @@ export const preventDmg = {
   target: EffectTarget.self,
   group: EffectGroupName.buff,
   text: 'Prevent Next Damage',
+  abbrevText: 'Prevent Dmg',
 };
 
 /**
@@ -202,6 +208,7 @@ export const resurrect = (value) => {
     value,
     group: EffectGroupName.buff,
     text: `+${value} HP on Death`,
+    abbrevText: `+${value} HP on Death`,
   };
 };
 
@@ -214,18 +221,20 @@ export const freeze = {
   target: EffectTarget.opponent,
   group: EffectGroupName.debuff,
   text: 'Next Card Invalidated',
+  abbrevText: 'Next Card Inval',
 };
 
 /**
  * Trigger a positive instant effect at the end of your turn.
  */
-export const aura = (effect, text) => {
+export const aura = (effect, text, abbrevText) => {
   return {
     type: EffectType.aura,
     duration: EffectDuration.enduring,
     target: EffectTarget.self,
     group: EffectGroupName.buff,
     text,
+    abbrevText,
     effect,
   };
 };
@@ -291,6 +300,7 @@ export const counterAttack = (value) => {
     value,
     group: EffectGroupName.buff,
     text: `Counter Attack ${value}`,
+    abbrevText: `Counter Atk ${value}`,
   };
 };
 
@@ -303,4 +313,5 @@ export const poison = {
   target: EffectTarget.opponent,
   group: EffectGroupName.debuff,
   text: 'Healing Invalidated',
+  abbrevText: 'Heal Inval',
 };

@@ -1,3 +1,12 @@
+# 🚀 Release v0.171 (2025-3-27)
+
+Game improvements.
+
+- AI is smarter now, and AI difficulty can be adjusted in Settings.
+- Player stats and card values are adjusted for better balance.
+- Lv4 and lv7 effects are redesigned to be more strategic.
+- Settings can be saved for the entire run, including music and sound preferences.
+
 # 🚀 Release v0.17 (2025-3-11)
 
 🦎 Level 7: Shadow Swamp
