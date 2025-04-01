@@ -4,6 +4,11 @@ import { EffectType } from '../data/cardEffects';
 import { CardKeyword } from '../data/cards';
 import { applyEffect } from './effect';
 import { hasEffect, getEffects, undoEffect } from './effectUtils';
+import {
+  applyPowerOverride,
+  applyStartOfTurnPowerEffects,
+  applyEndOfTurnPowerEffects,
+} from './powerUtils';
 
 /**
  * Shuffle a deck of cards using Fisher-Yates algorithm.
@@ -137,6 +142,8 @@ export const setPrevLevel = () => {
     }
     const prevLevel = parseInt(currentLevel, 10) - 1;
     sessionStorage.setItem('level', prevLevel);
+    sessionStorage.removeItem('power');
+    sessionStorage.removeItem('mode');
   } catch (e) {
     console.error('Error saving to sessionStorage:', e);
   }
@@ -149,6 +156,9 @@ export const setNextLevel = () => {
   try {
     const currentLevel = getCurrentLevel();
     if (currentLevel === finalLevel) {
+      sessionStorage.removeItem('level');
+      sessionStorage.removeItem('power');
+      sessionStorage.removeItem('mode');
       return;
     }
     const nextLevel = parseInt(currentLevel, 10) + 1;
@@ -197,15 +207,16 @@ export const applyLevelOverride = (G) => {
   G.players[1].effects.push(...enemyEffectsOverride);
 
   G.globalEffects = { ...globalEffects };
+
+  applyPowerOverride(G);
 };
 
 /**
- * Apply effects to the player's hand at the start of their turn if any.
+ * Apply effects at the start of turn if any, such as transforming the current player's hand.
  */
-export const applyHandEffects = (G, ctx) => {
+export const executeStartOfTurnEffects = (G, ctx) => {
   const replaceWishCards = (hand) => {
     const replacementOptions = [Wish2, Wish3, Wish4, Wish5];
-
     return hand.map((card) => {
       if (card.name === 'Wish') {
         const availableOptions = replacementOptions.filter(
@@ -219,13 +230,12 @@ export const applyHandEffects = (G, ctx) => {
       }
     });
   };
-
   // Transform `Wish` to a random effect
   G.players[ctx.currentPlayer].hand = replaceWishCards(
     G.players[ctx.currentPlayer].hand
   );
 
-  // Add more effects here
+  applyStartOfTurnPowerEffects(G, ctx);
 };
 
 /**
@@ -274,5 +284,5 @@ export const executeGlobalEndOfTurnEffects = (
     player.hp = Math.max(1, player.hp - G.globalEffects.loseHpAmount);
   }
 
-  // Add more effects here
+  applyEndOfTurnPowerEffects(G, ctx);
 };

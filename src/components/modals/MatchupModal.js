@@ -8,7 +8,9 @@ import {
   getEnemyName,
   getBattleStartCaption,
   getBattleInstructions,
+  getRuleByPower,
 } from '../utils/scripts';
+import { finalLevel } from '../../game/level';
 import useImageLoader from '../hooks/useImageLoader';
 
 const MatchupModal = ({
@@ -18,6 +20,8 @@ const MatchupModal = ({
   level,
   scale = avatarSmallScale,
 }) => {
+  const finalLevelRule = getRuleByPower();
+
   const playerAvatar = getAvatarForLevel('0', level);
   const enemyAvatar = getAvatarForLevel('1', level);
 
@@ -93,6 +97,15 @@ const MatchupModal = ({
                       {instructions.outro}
                     </p>
                   </div>
+
+                  {level === finalLevel && (
+                    <div className='w-80 mx-auto'>
+                      <p>
+                        {finalLevelRule.intro}
+                        <b>{finalLevelRule.rule}</b>
+                      </p>
+                    </div>
+                  )}
 
                   {instructions.tips !== '' && (
                     <div className='w-80 mx-auto'>

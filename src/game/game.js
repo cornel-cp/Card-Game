@@ -16,14 +16,13 @@ import {
   dealCards,
   getCurrentLevel,
   applyLevelOverride,
-  applyHandEffects,
+  executeStartOfTurnEffects,
   executeEndOfTurnEffects,
   executeGlobalEndOfTurnEffects,
 } from './gameUtils';
 
 const setupData = () => {
   let level = getCurrentLevel();
-  console.log(`Current level is ${level}`);
 
   let G = {
     players: {
@@ -49,7 +48,7 @@ const setupData = () => {
 const drawCard = ({ G, ctx }, cardId = '') => {
   if (ctx.turn <= 2) return;
 
-  applyHandEffects(G, ctx);
+  executeStartOfTurnEffects(G, ctx);
 
   const hand = G.players[ctx.currentPlayer].hand;
   if (hand.length >= 5 || G.deck.length === 0) return INVALID_MOVE;

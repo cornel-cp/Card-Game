@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { exitToMenu, resetGame, jumpToLevel } from '../utils/commonUtils';
 import { click } from '../utils/assetPaths';
-import { devTestLevel } from '../../game/level';
+import { preFinalLevel } from '../../game/level';
 import { Algorithm } from '../../ai/ai';
 
 const SettingsModal = ({
@@ -153,9 +153,9 @@ const SettingsModal = ({
                     <button
                       type='button'
                       className='btn btn-dark'
-                      onClick={() => jumpToLevel(devTestLevel)}
+                      onClick={() => jumpToLevel(preFinalLevel)}
                     >
-                      Test New Level
+                      Skip Levels!
                     </button>
                   </div>
                 )}

@@ -65,7 +65,7 @@
 }
 
 .fxstack-width {
-  max-width: 275px;
+  max-width: 290px;
 }
 
 .w-80 {
@@ -87,11 +87,49 @@
 }
 
 .pstats-panel-width {
-  min-width: 60px;
+  min-width: 75px;
 }
 
 .gstats-panel-width {
   min-width: 140px;
+}
+
+.pwr-li {
+  cursor: pointer;
+}
+
+.pwr-text {
+  margin-left: 5px;
+}
+
+.gameover-text {
+  font-size: 1.1rem;
+}
+
+/* Override Bootstrap border with custom colors. */
+
+.pwr-border-pyro {
+  border-color: #b22222 !important;
+}
+
+.pwr-border-cryo {
+  border-color: #add8e6 !important;
+}
+
+.pwr-border-psammo {
+  border-color: #d2b48c !important;
+}
+
+.pwr-border-dentro {
+  border-color: #2e8b57 !important;
+}
+
+.pwr-border-hydro {
+  border-color: #024873 !important;
+}
+
+.pwr-border-erebo {
+  border-color: #7d3fbd !important;
 }
 
 /* Styling static images over player avatars for level effects. */

@@ -6,6 +6,7 @@ const GameoverModal = ({
   showGameoverModal,
   setShowGameoverModal,
   setShowNextLevelModal,
+  setShowSelectPowerModal,
   winner,
   playAudio,
   level,
@@ -15,10 +16,18 @@ const GameoverModal = ({
   }
 
   const gameoverMessage = {
-    0:
-      level === finalLevel
-        ? 'You have defeated all your opponents. Thanks for playing, and stay tuned for more levels!'
-        : 'You have advanced to the next level!',
+    0: (() => {
+      const currentLevelInt = parseInt(level);
+      const finalLevelInt = parseInt(finalLevel);
+      switch (currentLevelInt) {
+        case finalLevelInt - 1:
+          return 'You have advanced to the final level!';
+        case finalLevelInt:
+          return 'You defeated every opponent and saved the world! Thanks for playing, and stay tuned for more updates!';
+        default:
+          return 'You have advanced to the next level!';
+      }
+    })(),
     1: 'Defeated... better luck next time!',
   };
 
@@ -29,7 +38,13 @@ const GameoverModal = ({
 
   const handleShowNextLevelModal = () => {
     setShowGameoverModal(false);
-    setShowNextLevelModal(true);
+
+    if (parseInt(level) === parseInt(finalLevel) - 1) {
+      setShowSelectPowerModal(true);
+    } else {
+      setShowNextLevelModal(true);
+    }
+
     playAudio(click);
   };
 
@@ -49,10 +64,17 @@ const GameoverModal = ({
               </h3>
             </div>
             <div className='modal-body'>
-              <p className='fs-5 ms-2 mb-4'>
+              <p className='ms-2 mb-4 gameover-text'>
                 {gameoverMessage[winner] ||
                   'Time runs out, the duel ends in a draw.'}
               </p>
+
+              {level === finalLevel && winner === '0' && (
+                <p className='ms-2 mb-4 gameover-text fst-italic text-muted'>
+                  Cheat code: Open Settings menu and click the header 6 times to
+                  skip early levels.
+                </p>
+              )}
             </div>
 
             <div className='modal-footer border-0 justify-content-end'>

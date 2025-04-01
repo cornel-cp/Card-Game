@@ -7,6 +7,7 @@ import {
 import { sleep } from '../utils/commonUtils';
 import { CardKeyword } from '../../data/cards';
 import { EffectType } from '../../data/cardEffects';
+import { PowerClass } from '../../game/power';
 
 const useCardAnimation = (ctx, G) => {
   const [showPlayerAnimation, setShowPlayerAnimation] = useState(false);
@@ -57,8 +58,10 @@ const useCardAnimation = (ctx, G) => {
     const hasDamageKeyword = card.keywords.includes(CardKeyword.damage);
     const hasEffectKeyward = card.keywords.includes(CardKeyword.effect);
     const isUniqueHealCard =
-      card.effects.length === 1 && card.effects[0].type === EffectType.heal;
+      (card.effects.length === 1 && card.effects[0].type === EffectType.heal) ||
+      card.id === '23';
     const shouldMiss = G.globalEffects.shouldMiss?.[ctx.turn - 1];
+    const shouldPlayerMiss = G.globalEffects.shouldPlayerMiss?.[ctx.turn - 1];
     const shouldClearEffects =
       G.globalEffects.shouldClearEffects?.[ctx.turn - 1];
 
@@ -66,7 +69,11 @@ const useCardAnimation = (ctx, G) => {
       (hasEffectKeyward && shouldClearEffects) ||
       hasFreezeEffect ||
       (hasDamageKeyword && shouldMiss) ||
-      (isUniqueHealCard && hasPoisonEffect)
+      (ctx.currentPlayer === '0' && hasDamageKeyword && shouldPlayerMiss) ||
+      (isUniqueHealCard && hasPoisonEffect) ||
+      (ctx.currentPlayer === '0' &&
+        isUniqueHealCard &&
+        sessionStorage.getItem('power') === PowerClass.cryo)
     ) {
       return false;
     }

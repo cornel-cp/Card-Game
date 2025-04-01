@@ -19,6 +19,7 @@ const avatarPaths = {
   5: `${avatarPrefix}/forest-ranger.svg`,
   6: `${avatarPrefix}/murloc-oracle.svg`,
   7: `${avatarPrefix}/crimson-witch.svg`,
+  8: `${avatarPrefix}/dark-knight.svg`,
 };
 const getAvatarForLevel = (playerId, level = '1') => {
   return playerId === '0' ? avatarPaths[0] : avatarPaths[level];
@@ -32,6 +33,7 @@ const locationPaths = {
   5: `${locationPrefix}/forest.svg`,
   6: `${locationPrefix}/ocean.svg`,
   7: `${locationPrefix}/marsh.svg`,
+  8: `${locationPrefix}/castle.svg`,
 };
 const getLocationForLevel = (level = '1') => locationPaths[level];
 
@@ -70,6 +72,7 @@ const nextLevelCards = {
   4: [cardFront('30'), cardFront('31')],
   5: [cardFront('32'), cardFront('33')],
   6: [cardFront('34'), cardFront('35')],
+  7: [],
 };
 const getNextCardsForLevel = (level = '1') => nextLevelCards[level];
 
@@ -270,7 +273,7 @@ const cardAnimation = {
     type: 'heal',
     target: AnimationTarget.self,
   },
-  24: null, 
+  24: null,
   25: null,
   26: {
     type: 'star-bounce',
@@ -296,7 +299,7 @@ const cardAnimation = {
     type: 'slime-strike',
     target: AnimationTarget.enemy,
   },
-  32: null, 
+  32: null,
   33: {
     type: 'water-explode',
     target: AnimationTarget.enemy,
@@ -374,6 +377,7 @@ const musicPaths = {
   5: `${musicPrefix}/misty-woods.mp3`,
   6: `${musicPrefix}/coral-bay.mp3`,
   7: `${musicPrefix}/shadow-swamp.mp3`,
+  8: `${musicPrefix}/black-castle.mp3`,
 };
 const getMusicForLevel = (level = '1') => musicPaths[level];
 

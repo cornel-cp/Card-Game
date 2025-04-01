@@ -1,3 +1,5 @@
+import { PowerClass, GameMode } from '../../game/power';
+
 const enemyNames = {
   1: 'Arden the Wise',
   2: 'G0B1N-X',
@@ -6,6 +8,7 @@ const enemyNames = {
   5: 'Kai Stormbow',
   6: 'Mystfin',
   7: 'Zara Shadowbane',
+  8: 'Nedra the Fallen',
 };
 const getEnemyName = (level = '1') => enemyNames[level];
 
@@ -17,6 +20,7 @@ const battleStartCaptions = {
   5: 'Level 5: Whisperwood',
   6: 'Level 6: Coral Bay',
   7: 'Level 7: Shadowland',
+  8: 'Level 8: Bloodmoon Castle',
 };
 const getBattleStartCaption = (level = '1') => battleStartCaptions[level];
 
@@ -37,9 +41,9 @@ const battleInstrutions = {
 
   3: {
     intro: `Mount Everfrost is shrouded in an eternal winter caused by Queen Shiro's frost magic. `,
-    levelRule: `Damage cards have a chance to freeze the target.`,
+    levelRule: `Damage cards may freeze the target (invalidate their next card).`,
     outro: ``,
-    tips: `Freezing a player invalidates their next card.`,
+    tips: ``,
   },
 
   4: {
@@ -65,11 +69,110 @@ const battleInstrutions = {
 
   7: {
     intro: `Zara Shadowbane rules the cursed Shadowland, draining the life of all who enter. `,
-    levelRule: `Non-damage cards cost 5 HP to play.`,
+    levelRule: `Non-damage cards cost 5 HP to play. HP can't drop below 1.`,
     outro: ``,
-    tips: `HP can’t drop below 1 in this way.`,
+    tips: ``,
+  },
+
+  8: {
+    intro: `Nedra plots to corrupt the world with dark magic. Defeat him in the final duel to save the world! `,
+    levelRule: ``,
+    outro: ``,
+    tips: ``,
   },
 };
 const getBattleInstructions = (level = '1') => battleInstrutions[level];
 
-export { getEnemyName, getBattleStartCaption, getBattleInstructions };
+const powers = [
+  {
+    level: '2',
+    name: 'Pyro',
+    class: PowerClass.pyro,
+    ruleText: {
+      [GameMode.normal]:
+        'you get a new fire hand at the end of your turns, but you lose after 40 turns.',
+      [GameMode.hard]:
+        'you get a new fire hand at the end of your turns, but you lose after 30 turns.',
+    },
+  },
+
+  {
+    level: '3',
+    name: 'Cryo',
+    class: PowerClass.cryo,
+    ruleText: {
+      [GameMode.normal]:
+        "your attacks may freeze enemy, but you can't heal. Extra damage cards are added to the deck.",
+      [GameMode.hard]: "your attacks may freeze enemy, but you can't heal.",
+    },
+  },
+
+  {
+    level: '4',
+    name: 'Psammo',
+    class: PowerClass.psammo,
+    ruleText: {
+      [GameMode.normal]:
+        'your cards may turn into wishes at the start of your turns, but your attacks occasionally miss.',
+      [GameMode.hard]:
+        'your cards may turn into wishes at the start of your turns, but your attacks have a moderate chance to miss.',
+    },
+  },
+
+  {
+    level: '5',
+    name: 'Dentro',
+    class: PowerClass.dentro,
+    ruleText: {
+      [GameMode.normal]:
+        'you pick a card instead of drawing, but enemy starts with 20 more HP.',
+      [GameMode.hard]:
+        'you pick a card instead of drawing, but enemy starts with 40 more HP.',
+    },
+  },
+
+  {
+    level: '6',
+    name: 'Hydro',
+    class: PowerClass.hydro,
+    ruleText: {
+      [GameMode.normal]:
+        'you may gain a random buff at the end of your turns, but enemy has +3 Attack/+3 Shield permanently.',
+      [GameMode.hard]:
+        'you may gain a random buff at the end of your turns, but enemy has +6 Attack/+6 Shield permanently.',
+    },
+  },
+
+  {
+    level: '7',
+    name: 'Erebo',
+    class: PowerClass.erebo,
+    ruleText: {
+      [GameMode.normal]:
+        'your damage cards reduce Max HP, but you start with 45 HP. HP swap is disabled.',
+      [GameMode.hard]:
+        'your damage cards reduce Max HP, but you start with 35 HP. HP swap is disabled.',
+    },
+  },
+];
+
+const getRuleByPower = () => {
+  const power = powers.find(
+    (power) => power.class === sessionStorage.getItem('power')
+  );
+  const mode = sessionStorage.getItem('mode') || GameMode.normal;
+  return power
+    ? {
+        intro: `Embraced by the ${power.name} power, `,
+        rule: `${power.ruleText[mode]}`,
+      }
+    : ``;
+};
+
+export {
+  getEnemyName,
+  getBattleStartCaption,
+  getBattleInstructions,
+  powers,
+  getRuleByPower,
+};

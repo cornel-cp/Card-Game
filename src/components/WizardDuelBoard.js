@@ -37,6 +37,7 @@ import PlayerHand from './PlayerHand';
 import PlayerStatsPanel from './PlayerStatsPanel';
 import SettingsModal from './modals/SettingsModal';
 import SelectCardModal from './modals/SelectCardModal';
+import SelectPowerModal from './modals/SelectPowerModal';
 
 const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   // Initialize Bootstrap tooltips
@@ -49,6 +50,7 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
   const [winner, setWinner] = useState(null);
   const [showGameoverModal, setShowGameoverModal] = useState(false);
   const [showNextLevelModal, setShowNextLevelModal] = useState(false);
+  const [showSelectPowerModal, setShowSelectPowerModal] = useState(false);
   const [showLevelEffectModal, setShowLevelEffectModal] = useState(false);
   const [showLogModal, setShowLogModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
@@ -314,11 +316,16 @@ const WizardDuelBoard = ({ ctx, G, moves, events, reset }) => {
         showGameoverModal={showGameoverModal}
         setShowGameoverModal={setShowGameoverModal}
         setShowNextLevelModal={setShowNextLevelModal}
+        setShowSelectPowerModal={setShowSelectPowerModal}
         winner={winner}
         playAudio={playAudio}
         level={G.level}
       />
       <NextLevelModal showNextLevelModal={showNextLevelModal} level={G.level} />
+      <SelectPowerModal
+        showSelectPowerModal={showSelectPowerModal}
+        playAudio={playAudio}
+      />
       <LevelEffectModal
         showLevelEffectModal={showLevelEffectModal}
         setShowLevelEffectModal={setShowLevelEffectModal}

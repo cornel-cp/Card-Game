@@ -10,7 +10,7 @@ export const sleep = (ms) => {
  * Returns to the menu.
  */
 export const exitToMenu = () => {
-  clearLevel();
+  clearSession();
   window.location.href = '/'; // Use full page rerender to keep the game state clean
 };
 
@@ -18,7 +18,7 @@ export const exitToMenu = () => {
  * Restarts the whole game from level 1.
  */
 export const resetGame = () => {
-  clearLevel();
+  clearSession();
   window.location.reload();
   // The alternative is to call reset() and clean up manual states on the client side
 };
@@ -31,8 +31,13 @@ export const startLevel = () => {
   window.location.reload();
 };
 
-const clearLevel = () => {
+/**
+ * Clear game configs (AI and display settings will still persist).
+ */
+const clearSession = () => {
   sessionStorage.removeItem('level');
+  sessionStorage.removeItem('power');
+  sessionStorage.removeItem('mode');
 };
 
 /**

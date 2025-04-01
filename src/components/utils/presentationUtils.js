@@ -1,13 +1,14 @@
 import { cleanse, defrost, miss, potion, cardAudio } from './assetPaths';
 import { EffectType } from '../../data/cardEffects';
 import { CardKeyword } from '../../data/cards';
+import { PowerClass } from '../../game/power';
 
 /**
  * Returns the corresponding audio path when a card is played.
  *  1. If the played card contains the `effect` keyword and the current turn is set to clear all effects, play the `cleanse` audio.
  *  2. If the current player has an active `freeze` effect, play the `defrost` audio.
  *  3. If the played card contains the `damage` keyword and the current attack is set to miss, play the `miss` audio.
- *  4. If the played card has single effect which is self-healing and the current player has `poison` effect, play the `potion` audio.
+ *  4. If the played card has single self-healing effect and the current player has `poison` effect, play the `potion` audio.
  *  5. In all other cases, play the default audio associated with the card.
  */
 export const resolveCardAudio = (card, G, ctx) => {
@@ -20,17 +21,27 @@ export const resolveCardAudio = (card, G, ctx) => {
   const hasDamageKeyword = card.keywords.includes(CardKeyword.damage);
   const hasEffectKeyward = card.keywords.includes(CardKeyword.effect);
   const isUniqueHealCard =
-    card.effects.length === 1 && card.effects[0].type === EffectType.heal;
+    (card.effects.length === 1 && card.effects[0].type === EffectType.heal) ||
+    card.id === '23';
   const shouldMiss = G.globalEffects.shouldMiss?.[ctx.turn - 1];
+  const shouldPlayerMiss = G.globalEffects.shouldPlayerMiss?.[ctx.turn - 1];
   const shouldClearEffects = G.globalEffects.shouldClearEffects?.[ctx.turn - 1];
 
   if (hasEffectKeyward && shouldClearEffects) {
     return cleanse;
   } else if (hasFreezeEffect) {
     return defrost;
-  } else if (hasDamageKeyword && shouldMiss) {
+  } else if (
+    (hasDamageKeyword && shouldMiss) ||
+    (ctx.currentPlayer === '0' && hasDamageKeyword && shouldPlayerMiss)
+  ) {
     return miss;
-  } else if (isUniqueHealCard && hasPoisonEffect) {
+  } else if (
+    (isUniqueHealCard && hasPoisonEffect) ||
+    (ctx.currentPlayer === '0' &&
+      isUniqueHealCard &&
+      sessionStorage.getItem('power') === PowerClass.cryo)
+  ) {
     return potion;
   } else {
     return cardAudio(card.id);

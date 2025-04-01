@@ -1,6 +1,11 @@
 import { click } from '../utils/assetPaths';
-import { getBattleStartCaption, getBattleInstructions } from '../utils/scripts';
+import {
+  getBattleStartCaption,
+  getBattleInstructions,
+  getRuleByPower,
+} from '../utils/scripts';
 import { getLocationForLevel } from '../utils/assetPaths';
+import { finalLevel } from '../../game/level';
 
 const LevelEffectModal = ({
   showLevelEffectModal,
@@ -18,6 +23,7 @@ const LevelEffectModal = ({
   };
 
   const instructions = getBattleInstructions(level);
+  const finalLevelRule = getRuleByPower();
 
   return (
     <>
@@ -58,6 +64,15 @@ const LevelEffectModal = ({
                   {instructions.outro}
                 </p>
               </div>
+
+              {level === finalLevel && (
+                <div className='w-80 mx-auto'>
+                  <p>
+                    {finalLevelRule.intro}
+                    <b>{finalLevelRule.rule}</b>
+                  </p>
+                </div>
+              )}
 
               {instructions.tips !== '' && (
                 <div className='w-80 mx-auto'>

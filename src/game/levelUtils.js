@@ -1,14 +1,7 @@
 /**
- * Randomly populate a player's starting hand with cards from a list of options and probabilities.
+ * Randomly populate a player's hand with cards from a list of options and probabilities.
  */
-export const randomPopulateHand = (options, probabilities) => {
-  if (!options || !probabilities) {
-    throw new Error('Options or probabilities array is not provided.');
-  }
-  if (options.length !== probabilities.length) {
-    throw new Error('Options and probabilities must have the same length.');
-  }
-
+export const randomPopulateHand = (options, probabilities, handSize) => {
   // Sum up all probablilities
   const totalProbability = probabilities.reduce((sum, prob) => sum + prob, 0);
 
@@ -17,7 +10,7 @@ export const randomPopulateHand = (options, probabilities) => {
     (prob) => prob / totalProbability
   );
 
-  const hand = Array.from({ length: 5 }, () => {
+  const hand = Array.from({ length: handSize }, () => {
     const randomValue = Math.random();
     let cumulativeProbability = 0;
 
@@ -27,7 +20,6 @@ export const randomPopulateHand = (options, probabilities) => {
         return options[i];
       }
     }
-
     return options[0]; // Fallback logic, will never reach this line
   });
 

@@ -1,3 +1,11 @@
+# 🚀 Release v0.18 (2025-3-31)
+
+☠️ Level 8: Bloodmoon Castle
+
+- Boss level: 6 unique level rules and 2 different modes (normal/hard).
+- New music and artwork.
+- Optimize sound volume.
+
 # 🚀 Release v0.171 (2025-3-27)
 
 Game improvements.

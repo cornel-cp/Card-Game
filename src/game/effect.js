@@ -18,7 +18,8 @@ import {
 } from '../data/cardEffects';
 import { getDeckForLevel } from '../data/deck';
 import { shuffle } from './gameUtils';
-import { freezeRate } from './level';
+import { levelFreezeRate } from './level';
+import { PowerClass, getPowerConfigs } from './power';
 
 const damage = (G, target, { value = 0 }, ctx) => {
   const player = target === '0' ? '1' : '0';
@@ -61,25 +62,34 @@ const damage = (G, target, { value = 0 }, ctx) => {
     G.players[target].hp <= value &&
     hasEffect(G, target, EffectType.resurrect)
   ) {
-    G.players[target].hp = 15;
+    G.players[target].hp = getEffects(G, target, EffectType.resurrect)[0].value;
     removeEffects(G, target, EffectType.resurrect);
     return 0;
   }
 
   // Apply the final damage to the target's HP.
   G.players[target].hp -= value;
+
+  if (target === '1' && sessionStorage.getItem('power') === PowerClass.erebo) {
+    G.players[target].maxHp -= value; // Erebo buff
+  }
+
   return value;
 };
 
 const heal = (G, target, { value = 0 }) => {
-  if (hasEffect(G, target, EffectType.poison)) {
+  if (
+    hasEffect(G, target, EffectType.poison) ||
+    (target === '0' && sessionStorage.getItem('power') === PowerClass.cryo) // Cryo debuff
+  ) {
     return;
   }
-
-  G.players[target].hp += value;
-
+  // Caused by playing Mutate in final level
+  if (G.players[target].maxHp < G.players[target].hp) {
+    return;
+  }
   G.players[target].hp = Math.min(
-    G.players[target].hp,
+    G.players[target].hp + value,
     G.players[target].maxHp
   );
 };
@@ -274,13 +284,24 @@ export const applyEffect = (G, ctx, effect) => {
 const applyDamageLevelEffects = (G, target, damage, ctx) => {
   switch (G.level) {
     case '3':
-      if (getChanceEffect(freezeRate)) {
+      if (getChanceEffect(levelFreezeRate)) {
         G.players[target].effects.push(freezeEffect);
       }
       return damage;
 
     case '4':
       return G.globalEffects.shouldMiss?.[ctx.turn - 1] ? -1 : damage;
+
+    case '8':
+      if (
+        target === '1' &&
+        sessionStorage.getItem('power') === PowerClass.cryo
+      ) {
+        if (getChanceEffect(getPowerConfigs().cryoFreezeRate)) {
+          G.players[target].effects.push(freezeEffect); // Cryo buff
+        }
+      }
+      return G.globalEffects.shouldPlayerMiss?.[ctx.turn - 1] ? -1 : damage;
 
     default:
       return damage;

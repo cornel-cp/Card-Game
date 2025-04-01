@@ -2,6 +2,7 @@ import { EffectGroupName } from '../../data/cardEffects';
 import { CardKeyword } from '../../data/cards';
 import { isUnique, hasEffect, getTarget } from '../../game/effectUtils';
 import { random } from './random';
+import { removeBuffCards, removeDebuffCards, uselessCards } from './algoUtils';
 
 /**
  * Filters unwanted card play from AI's hand based on a chain of rules.
@@ -12,10 +13,10 @@ import { random } from './random';
  */
 export const filterActions = (cards, G, ctx) => {
   let cardsBefore = cards;
-  for (const { rule, reason } of filters) {
+  for (const { rule } of filters) {
     const [result, cardsAfter] = applyFilter(cardsBefore, rule, G, ctx);
     if (result) {
-      console.log(`Exit from filter rule: ${reason}`);
+      // console.log(`Exit from filter rule: ${reason}`);
       return [result];
     }
     cardsBefore = cardsAfter;
@@ -25,8 +26,8 @@ export const filterActions = (cards, G, ctx) => {
 
 const filters = [
   {
-    rule: (card, G, ctx) => !['25', '32'].includes(card.id),
-    reason: 'Filter useless cards (Wish1, Vision)',
+    rule: (card, G, ctx) => !uselessCards.includes(card.id),
+    reason: 'Filter useless cards',
   },
   {
     rule: (card, G, ctx) =>
@@ -35,15 +36,15 @@ const filters = [
   },
   {
     rule: (card, G, ctx) =>
-      card.id !== '16' ||
+      !removeDebuffCards.includes(card.id) ||
       G.players[1].effects.some((e) => e.group === EffectGroupName.debuff),
-    reason: 'Filter Purify when AI has no debuff',
+    reason: 'Filter cards to remove debuff when AI has no debuff',
   },
   {
     rule: (card, G, ctx) =>
-      card.id !== '17' ||
+      !removeBuffCards.includes(card.id) ||
       G.players[0].effects.some((e) => e.group === EffectGroupName.buff),
-    reason: 'Filter Dispel when player has no buff',
+    reason: 'Filter cards to remove buff when player has no buff',
   },
   {
     rule: (card, G, ctx) =>

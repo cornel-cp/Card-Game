@@ -73,8 +73,8 @@ export const Frost1 = {
 export const Frost2 = {
   id: '4',
   name: 'Frost+',
-  text: 'Damage 8',
-  effects: [damage(8)],
+  text: 'Damage 7',
+  effects: [damage(7)],
   keywords: [CardKeyword.damage],
 };
 
@@ -89,8 +89,8 @@ export const Frost3 = {
 export const Thunder1 = {
   id: '6',
   name: 'Thunder',
-  text: 'Damage 7',
-  effects: [damage(7)],
+  text: 'Damage 8',
+  effects: [damage(8)],
   keywords: [CardKeyword.damage],
 };
 
@@ -105,8 +105,8 @@ export const Thunder2 = {
 export const Thunder3 = {
   id: '8',
   name: 'Thunder++',
-  text: 'Damage 18',
-  effects: [damage(18)],
+  text: 'Damage 16',
+  effects: [damage(16)],
   keywords: [CardKeyword.damage],
 };
 
@@ -305,8 +305,8 @@ export const Vision = {
 export const Tide = {
   id: '33',
   name: 'Tide',
-  text: 'Damage 16 and + Same HP',
-  effects: [lifesteal(16)],
+  text: 'Damage 18 and + Same HP',
+  effects: [lifesteal(18)],
   keywords: [CardKeyword.damage, CardKeyword.sustain],
 };
 

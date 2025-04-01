@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { icon } from './utils/assetPaths';
 import { EffectGroupName } from '../data/cardEffects';
 
@@ -6,7 +7,11 @@ const EffectStack = ({ opponentEffects, playerEffects, showEffectStack }) => {
     'list-group-item bg-panel p-0 px-1 border-0 fxstack-width';
   const fxIconStyle = 'ms-1 me-2 mb-1';
 
-  const isCompactDisplay = (effect) => effect.length > 5;
+  // Render compact mode when the number of effects is large enough to overflow the panel.
+  const isCompactDisplay = opponentEffects.length + playerEffects.length > 11;
+  const [isPlayerCompactFxHovered, setIsPlayerCompactFxHovered] =
+    useState(false);
+  const [isEnemyCompactFxHovered, setIsEnemyCompactFxHovered] = useState(false);
 
   // Sort by group first (buff then debuff), then name (group same non-unique effects together)
   const sortEffects = (effects) => {
@@ -29,7 +34,6 @@ const EffectStack = ({ opponentEffects, playerEffects, showEffectStack }) => {
     });
   };
 
-  // Roughly 10-11 effects can be rendered at a time without overflowing the panel
   const renderFxStack = (effects) => {
     return (
       <ul className='list-group'>
@@ -91,13 +95,21 @@ const EffectStack = ({ opponentEffects, playerEffects, showEffectStack }) => {
   return (
     showEffectStack && (
       <div className='d-flex flex-column h-100 justify-content-between'>
-        <div className='fxstack-mb'>
-          {isCompactDisplay(opponentEffects)
+        <div
+          className='fxstack-mb'
+          onMouseEnter={() => setIsEnemyCompactFxHovered(true)}
+          onMouseLeave={() => setIsEnemyCompactFxHovered(false)}
+        >
+          {isCompactDisplay && !isEnemyCompactFxHovered
             ? renderCompactFxStack([...opponentEffects])
             : renderFxStack([...opponentEffects])}
         </div>
-        <div className='fxstack-mt'>
-          {isCompactDisplay(playerEffects)
+        <div
+          className='fxstack-mt'
+          onMouseEnter={() => setIsPlayerCompactFxHovered(true)}
+          onMouseLeave={() => setIsPlayerCompactFxHovered(false)}
+        >
+          {isCompactDisplay && !isPlayerCompactFxHovered
             ? renderCompactFxStack([...playerEffects])
             : renderFxStack([...playerEffects])}
         </div>
