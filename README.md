@@ -6,7 +6,7 @@
 
 This is a single-player, turn-based card game. You are a young wizard in a magical showdown against powerful enemies. Play your cards wisely to outwit your opponent and reduce their health to zero to win the game.
 
-Try it out yourself at [Wizard Duel](https://wizard-duel-ten.vercel.app/).
+Try it out yourself at [Magic Card Duel](https://card-game-pink.vercel.app/).
 
 ## Built with
 
