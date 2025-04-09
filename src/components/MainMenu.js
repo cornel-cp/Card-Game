@@ -43,8 +43,8 @@ const MainMenu = () => {
   return (
     <div className='d-flex flex-column bg-menu vh-100 justify-content-center align-items-center'>
       <div className='d-flex align-items-baseline mb-5'>
-        <p className='font-cinzel-semibold menu-title-fs m-0'>Wizard Duel</p>
-        <span className='badge bg-dark ms-2'>v0.18</span>
+        <p className='font-cinzel-semibold menu-title-fs m-0'>Magic Card Duel</p>
+        <span className='badge bg-dark ms-2'>v0.19</span>
       </div>
 
       {/* Without the beta tag
