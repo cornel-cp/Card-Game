@@ -27,11 +27,9 @@
 }
 
 .bg-menu {
-  background: radial-gradient(
-    circle,
-    rgba(235, 205, 160, 0.8),
-    rgba(100, 70, 35, 0.8)
-  );
+  background-image: url("/public/images/back.png");
+  background-size: cover;
+
 }
 
 .bg-modal {

@@ -37,7 +37,7 @@ const MainMenu = () => {
   };
 
   const handleAboutClick = () => {
-    window.open('https://github.com/ruichen199801/wizard-duel', '_blank');
+    window.open('https://github.com/cornel-cp/card-game', '_blank');
   };
 
   return (
