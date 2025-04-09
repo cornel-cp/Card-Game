@@ -1,6 +1,5 @@
-# Wizard Duel
+# Card game Duel
 
-<img src=".github/game-screenshot.png" alt="game screenshot" width="500">
 
 ## About the Game
 
