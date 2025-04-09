@@ -1,5 +1,6 @@
 # Card game Duel
 ![localhost_3001_](https://github.com/user-attachments/assets/a8a84c3a-92a4-4d04-9d2a-c332dca4eb47)
+![Screenshot_3](https://github.com/user-attachments/assets/74861fbb-8877-4e30-8daf-459b74894634)
 
 
 ## About the Game
